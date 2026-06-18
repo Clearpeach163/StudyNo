@@ -1,0 +1,657 @@
+#Opgave_count {
+    color: rgb(145, 138, 160);
+    user-select: none;
+    font-weight: 600;
+    position: fixed;
+    left: 50%;
+    translate: -50% 0%;
+ 
+    bottom: 6.7%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+#Main_input {
+    border-radius: 999px;
+    width: 30%;
+    height: 7%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    position: fixed;
+    left: 35%;
+    top: 50%;
+    align-items: center;
+    text-align: center;
+    background: rgba(255,255,255,0.167);
+    backdrop-filter: blur(3px) saturate(200%);
+    -webkit-backdrop-filter: blur(3px) saturate(200%);
+
+    color: rgb(221, 197, 208);
+    font-size: 200%;
+    padding-left: 1%;
+
+    border: 1px solid transparent;
+    outline: none;
+
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.25),
+      0 8px 32px rgba(0,0,0,0.2);
+
+    transition:
+      backdrop-filter 0.4s ease,
+      box-shadow 0.4s ease,
+      background 0.4s ease,
+      border-color 0.4s ease;
+}
+
+#Main_input:focus {
+    outline: none;
+
+    background: rgba(255,255,255,0.22);
+
+    backdrop-filter: blur(3px) saturate(170%);
+    -webkit-backdrop-filter: blur(3px) saturate(170%);
+
+    border-color: rgba(255,255,255,0.3);
+
+    box-shadow:
+      inset 0 3px 3px rgba(255,255,255,0.25),
+      0 8px 40px rgba(0,0,0,0.3);
+}
+body {
+
+    /*background: hsla(348, 54%, 35%, 1);*/
+
+   /* background: linear-gradient(45deg, rgb(75, 24, 48) 0%, rgb(78, 28, 38) 19%, hsla(302, 47%, 13%, 1) 51%, rgb(19, 5, 56) 74%, rgb(47, 11, 105) 100%);*/
+
+   
+    background-image: url("background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
+}
+#h1 {
+  color: rgba(216, 194, 231, 0.704);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 700;
+  
+  position: fixed;
+  top: 30%;
+  left: 0;
+  right: 0;
+  
+  text-align: center;
+  
+  user-select: none;
+  font-size: 300%;
+}
+#back {
+    user-select: none;
+    color: white;
+    position: fixed;
+    top: 1vh;
+    left: 1vh;
+    border-radius: 99999px;
+    text-decoration: none;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.cookie-box {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(420px, 90%);
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    animation: fadeIn 0.4s ease;
+    color: white;
+    font-family: system-ui, sans-serif;
+    transition: all 0.4s ease;
+  }
+  .cookie-box:hover {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(420px, 90%);
+    background: rgba(255, 255, 255, 0.063);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.061);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    animation: fadeIn 0.4s ease;
+    color: white;
+    font-family: system-ui, sans-serif;
+  }
+  
+  .cookie-box h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .cookie-box p {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 15px;
+    opacity: 0.8;
+    line-height: 1.4;
+  }
+  
+  .buttons {
+    display: flex;
+    gap: 10px;
+    border-radius: 1000000px;
+    justify-content: flex-end;
+  }
+  
+  button {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 10000000000000px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  
+  .accept {
+    background: #7d4acecc;
+    color: white;
+  }
+  
+  .decline {
+    background: rgba(255,255,255,0.1);
+    color: white;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, 20px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+.fade-in {
+    animation: text 0.5s ease;
+}
+
+@keyframes text {
+  from {
+      opacity: 0;
+      transform: translateY(-20%); /* begint 20px hoger */
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0%); /* eindigt op normale plek */
+  }
+}
+#feedback {
+  position: fixed;
+  top: 30%;
+  left: 30%;
+  width: 40%;
+  height: 30%;
+
+  background: rgba(255, 255, 255, 0.068);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 30px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.87);
+ 
+  color: white;
+  font-family: system-ui, sans-serif;
+  transition: all 0.5s ease;
+}
+#correctwoord {
+  user-select: none;
+  text-align: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 280%;
+  top: 0%;
+
+}
+#juiste {
+  text-align: center;
+  user-select: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 200;
+}
+#feedback:hover {
+  background: rgba(255, 255, 255, 0.062);
+  backdrop-filter: blur(5px);
+  border-radius: 27px;
+  top: 28%;
+  left: 29.5%;
+  width: 41%;
+  height: 31%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+#goedrek {
+  background: rgba(115, 0, 182, 0.877);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(163, 24, 255, 0.438);
+  border-radius: 300000px;
+  padding: 1%;
+  right: 10px;
+  position: absolute;
+  display: flex;
+  width: 48%;
+  height: 13%;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.87);
+ 
+  color: white;
+  font-family: system-ui, sans-serif;
+}
+#foutrek {
+  background: rgba(255, 255, 255, 0.068);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 300000px;
+  padding: 1%;
+  height: 13%;
+  display: flex;
+  width: 48%;
+  position: absolute;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.87);
+ 
+  color: white;
+  font-family: system-ui, sans-serif;
+}
+#update {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: rgba(255, 255, 255, 0.411);
+  bottom: -10px;
+  font-size: 80%;
+  user-select: none;
+  position: fixed;
+}
+#submithref {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: rgba(218, 195, 239, 0.772);
+  bottom: 10px;
+  font-size: 70%;
+  text-decoration: none;
+  right: 1%;
+  user-select: none;
+  position: fixed;
+}
+.menu {
+  position: fixed;
+  top: 30%;
+  left: 30%;
+  
+ 
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.select {
+  position: relative;
+  margin-bottom: 1%;
+  border-radius: 9999px;
+  width: 95%;
+  left: 50%;
+  translate: -50% 0;
+  height: 5vh;
+  font-family: system-ui;
+  background: rgba(255,255,255,0.167);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+
+    color: rgb(221, 197, 208);
+    font-size: 100%;
+    padding-left: 1%;
+
+    border: 1px solid transparent;
+    outline: none;
+
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.25),
+      0 8px 32px rgba(0,0,0,0.2);
+
+  transition: all 0.3s ease;
+}
+
+.select:hover {
+  transform: scale(1.03);
+}
+
+.select:active {
+  transform: scale(0.97);
+}
+#homeh1 {
+  left: 10%;
+  top: 15%;
+  position: fixed;
+  font-size: 600%;
+  color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  animation: text 0.7s;
+}
+#homeh2 {
+  left: 10%;
+  top: 31%;
+  position: fixed;
+  font-size: 500%;
+  color: rgb(99, 28, 181);
+  user-select: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+animation: text 0.7s;
+animation-delay: 0.1s;
+animation-fill-mode: both;
+}
+#phome {
+  left: 10%;
+  position: fixed;
+  font-size: 100%;
+  top: 50%;
+  padding-right: 60%;
+  color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  animation: text 0.7s;
+  animation-delay: 0.7s;
+  animation-fill-mode: both;
+}
+#start {
+   border-radius: 999px;
+   position: fixed;
+   top: 65%;
+   left: 10%;
+  width: 12%;
+  height: 6%;
+  font-family: system-ui;
+  background: rgba(255,255,255,0.167);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    color: rgb(221, 197, 208);
+    font-size: 100%;
+    padding-left: 1%;
+    border: 1px solid transparent;
+    outline: none;
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.25),
+      0 8px 32px rgba(0,0,0,0.2);
+  transition: all 0.4s ease;
+  animation: text 0.7s ease forwards;
+  animation-fill-mode: both;
+  animation-delay: 0.6s;
+}
+#start:hover {
+  width: 15%;
+ 
+  height: 6.1%;
+    background: rgba(255, 255, 255, 0.113);
+      backdrop-filter: blur(3px) saturate(180%);
+    -webkit-backdrop-filter: blur(3px) saturate(180%);
+       box-shadow:
+      inset 0 3px 3px rgba(206, 144, 178, 0.105),
+      0 8px 32px rgba(0,0,0,0.2);
+
+}
+#logo {
+  position: fixed;
+  user-select: none;
+  width: 10%;
+  top: -0.5%;
+  left: -0.5%;
+  
+}
+#form {
+      position: fixed;
+    top: 20%;
+    left: 50%;
+    height: 60%;
+    transform: translateX(-50%);
+    width: 30%;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    animation: fadeIn 0.4s ease;
+    color: white;
+    font-family: system-ui, sans-serif;
+    transition: all 0.4s ease;
+}
+#form:hover {
+
+   
+    background: rgba(255, 255, 255, 0.063);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.061);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    animation: fadeIn 1s ease;
+} 
+#h1submit {
+    font-size: 250%;
+    text-align: center;
+}
+
+
+#mail:focus {
+      outline: none;
+
+    background: rgba(255,255,255,0.22);
+
+    backdrop-filter: blur(0px) saturate(170%);
+    -webkit-backdrop-filter: blur(0px) saturate(170%);
+
+    border-color: rgba(255,255,255,0.3);
+
+    box-shadow:
+      inset 0 3px 3px rgba(255,255,255,0.25),
+      0 8px 40px rgba(0,0,0,0.3);
+}
+
+#idea:focus {
+        outline: none;
+
+    background: rgba(255,255,255,0.22);
+
+    backdrop-filter: blur(0px) saturate(170%);
+    -webkit-backdrop-filter: blur(0px) saturate(170%);
+
+    border-color: rgba(255,255,255,0.3);
+
+    box-shadow:
+      inset 0 3px 3px rgba(255,255,255,0.25),
+      0 8px 40px rgba(0,0,0,0.3);
+}
+#mail {
+  border-radius: 9999999px;
+  width: 90%;
+  left: 5%;
+  margin-top: 6%;
+  height: 45px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  position: relative;
+  align-self: center;
+  text-align: center;
+  background: rgba(255,255,255,0.167);
+  backdrop-filter: blur(3px) saturate(200%);
+  -webkit-backdrop-filter: blur(3px) saturate(200%);
+  color: rgb(255, 255, 255);
+  font-size: 100%;
+  border: 1px solid transparent;
+  outline: none;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.25), 0 8px 32px rgba(0,0,0,0.2);
+  transition: backdrop-filter 0.4s ease, box-shadow 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+}
+
+#idea {
+  left: 5%;
+  padding-top: 5%;
+  border-radius: 30px;
+  width: 90%;
+  margin-top: 3%;
+  height: 200px;
+  resize: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  position: relative;
+  align-self: center;
+  text-align: center;
+  background: rgba(255,255,255,0.167);
+  backdrop-filter: blur(3px) saturate(200%);
+  -webkit-backdrop-filter: blur(3px) saturate(200%);
+  color: rgb(255, 255, 255);
+  font-size: 100%;
+  border: 1px solid transparent;
+  outline: none;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.25), 0 8px 32px rgba(0,0,0,0.2);
+  transition: backdrop-filter 0.4s ease, box-shadow 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+}
+
+#submit {
+  margin: 5%;
+  width: 90%;
+  height: 45px;
+  font-size: 100%;
+  align-self: center;
+  background: rgba(255, 255, 255, 0.068);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 300000px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.87);
+  color: white;
+  font-family: system-ui, sans-serif;
+  cursor: pointer;
+}
+a {
+  text-decoration: none;
+}
+  #nevermind {
+    color:rgba(185, 175, 207, 0.716);
+    transition: all 0.1s linear;
+  }
+  #nevermind:hover {
+    transform: translateY(-1px);
+    color:rgba(146, 118, 204, 0.591);
+  }
+  #back {
+  background: rgba(255, 255, 255, 0.068);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 300000px;
+
+
+  display: flex;
+
+  position: absolute;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.87);
+ 
+  color: white;
+  font-family: system-ui, sans-serif;
+  transition: all 0.5s ease-in-out;
+  }
+  #back:hover {
+ box-shadow: 0 10px 30px rgb(35, 28, 54);
+    border-top: 1px solid rgba(166, 148, 184, 0.274);
+    border-right: 1px solid rgba(166, 148, 184, 0.726);
+    border-bottom: 1px solid rgba(166, 148, 184, 0.279);
+    
+  }
+  #update-info {
+    color: white;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+  
+  
+  }
+ 
+
+  
+    
+summary {
+  color: white;
+  border-radius: 9999999px;
+  padding-left: 5%;
+  padding: 2%;
+  margin: 1%; 
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: rgba(255,255,255,0.167);
+   backdrop-filter: blur(3px) saturate(200%);
+   -webkit-backdrop-filter: blur(3px) saturate(200%);
+  width: 90%;
+   border: 1px solid transparent;
+   outline: none;
+
+   box-shadow:
+     inset 0 1px 1px rgba(255,255,255,0.25),
+     0 8px 32px rgba(0,0,0,0.2);
+}
+.toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.toggle button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  border-radius: 99999px;
+  transition: 0.2s ease;
+}
+
+.toggle button.active {
+  background: rgba(115, 0, 182, 0.486);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(163, 24, 255, 0.438);
+  border-radius: 300000px;
+
+
+
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.87);
+ 
+  color: white;
+  font-family: system-ui, sans-serif;
+}
+
+
+.toggle button:hover {
+  opacity: 0.8;
+}
+#togglemain {
+  border-radius: 999999px;
+  padding: 0.4%;
+
+  position: absolute;
+  background: rgba(255, 255, 255, 0.068);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 300000px;
+  right: 1%;
+  display: flex;
+
+ 
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.87);
+ 
+  color: white;
+  font-family: system-ui, sans-serif;
+}
+
+
