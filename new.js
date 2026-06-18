@@ -4,7 +4,7 @@ const whatsnew = `
     -Dropdown menu
     -easy github linked auto deploying code
     -better correction popup
-    -
+    
    
 
 `;
