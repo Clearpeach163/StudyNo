@@ -187,6 +187,13 @@ buttons.forEach(btn => {
     btn.classList.add("active");
 
     fnnf = btn.dataset.mode;
-    console.log("Selected mode:", fnnf);
+   if (fnnf === "FN") {
+      fnnf = 0;
+      console.log(fnnf);
+  } else if (fnnf === "NF") {
+      fnnf = 1;
+      console.log(fnnf);
+  }
+
   });
 });
