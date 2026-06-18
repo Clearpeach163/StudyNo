@@ -1,11 +1,11 @@
 const whatsnew = `
   What is new in the new version,
-    -back button in submission page (ideas.html)
-    -better back button (ingame.hmtl)
-    -update page with this information (whatsnew.html)
-    -procedural word lists (Script.js / Words.js)
-    -Better code
-    -Enter shortcut (feedback pop-up)
+    -fn nf shuffle slider
+    -Dropdown menu
+    -easy github linked auto deploying code
+    -better correction popup
+    -
+   
 
 `;
-const update = "17.6.26";
+const update = "18.6.26";
