@@ -14,6 +14,7 @@ let currentWord;
 let fnnf = 1;
 let words = [];
 const gehad = [];
+let shuffleran = 0;
 //Hoeveel letters fout? system:
 
 
@@ -42,7 +43,7 @@ words = lists[activeList]?.words || [];
         const h1 = document.getElementById("h1");
         const input = document.getElementById("Main_input");
 
-     
+
         function newWord() {
         
         random = Math.floor(Math.random() * words.length);
@@ -61,8 +62,17 @@ h1.classList.add("fade-in");
         // laat Nederlands zien
         if (fnnf === 0) {
         h1.textContent = currentWord.nl;
-        } else {
+        } else if (fnnf === 1){
+          
           h1.textContent = currentWord.taal;
+        } else if (fnnf === 2) {
+          shuffleran = Math.round(Math.random()); // 0 or 1
+          console.log("Shuffle chose" + shuffleran);
+          if (shuffleran === 0) {
+              h1.textContent = currentWord.nl;
+          } else {
+              h1.textContent = currentWord.taal;
+          }
         }
         input.value = "";
         }
@@ -193,6 +203,9 @@ buttons.forEach(btn => {
   } else if (fnnf === "NF") {
       fnnf = 1;
       console.log(fnnf);
+  } else if (fnnf === "Shuffle") {
+    fnnf = 2;
+    console.log(fnnf);
   }
 
   });
