@@ -2,6 +2,7 @@
     <head>
         <title>StudyNo</title>
         <link rel="stylesheet" href="Style.css">
+        <link rel="icon" type="image/x-icon" href="studyno logo.png">
     </head>
     <html>
        
@@ -16,13 +17,15 @@
             </div>
             <p id="Opgave_count">Geen opgave gemaakt</p>
            
-              <div id="feedback">
-            
-                  <h4 id="juiste">Juiste antwoord:</h4>
-                  <h3 id="correctwoord">Woord</h2>  
-                  <button id="foutrek" onclick="foutreken();">Fout rekenen</button>
-                  <button id="goedrek" onclick="goedreken();">Goed rekenen</button>
-              </div>
+<div id="feedback">
+  <h4 id="juiste">Juiste antwoord:</h4>
+  <h3 id="correctwoord">Woord</h3>
+  
+  <div class="button-row">
+    <button id="foutrek" onclick="foutreken();">Fout rekenen</button>
+    <button id="goedrek" onclick="goedreken();">Goed rekenen</button>
+  </div>
+</div>
               <p onclick="version();" id="update">V13.6.26</p>
       
             <div id="togglemain">

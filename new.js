@@ -1,11 +1,9 @@
 const whatsnew = `
   What is new in the new version,
-    -fn nf shuffle slider
-    -Dropdown menu
-    -easy github linked auto deploying code
-    -better correction popup
-    -Fn Nf selection + shuffle (Let's go we are actually better than studygo!)
+    -better back button
+    -favo icon
+    
    
 
 `;
-const update = "18.6.26";
+const update = "21.6.26";
