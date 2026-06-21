@@ -127,16 +127,18 @@ input.addEventListener("keydown", (e) => {
       goed++;
       newWord();
     } else {
-      fout++;
-      newWord();
+           document.getElementById("feedback").style.display = "block";
+        document.getElementById("correctwoord").innerText =
+          currentWord.nl;
     }
   } else if (shuffleran === 1) {
     if (answer === currentWord.nl.toLowerCase()) {
       goed++;
       newWord();
     } else {
-      fout++;
-      newWord();
+           document.getElementById("feedback").style.display = "block";
+        document.getElementById("correctwoord").innerText =
+          currentWord.nl;
     }
   }
 }
