@@ -79,6 +79,31 @@ words: [
 { taal: "toujours", nl: "altijd / nog steeds" },
 ]
 },
+  fr_marche4_fix: {
+title: "Frans - Fix Marche 3",
+words: [
+{ taal: "je dois", nl: "ik moet" },
+{ taal: "je crois", nl: "ik geloof" },
+{ taal: "j'ai besoin de", nl: "ik heb nodig" },
+{ taal: "j'ai mal", nl: "ik heb pijn" },
+{ taal: "j'aime", nl: "ik houd van" },
+{ taal: "tout", nl: "alles" },
+{ taal: "d'accord", nl: "oké" },
+{ taal: "le monde", nl: "de wereld" },
+{ taal: "tout le monde", nl: "iedereen" },
+{ taal: "la fois", nl: "de keer" },
+{ taal: "trop", nl: "te" },
+{ taal: "l'homme (M)", nl: "de man" },
+{ taal: "la femme", nl: "de vrouw" },
+{ taal: "monsieur", nl: "meneer" },
+{ taal: "madame", nl: "mevrouw" },
+{ taal: "le garçon", nl: "de jongen" },
+{ taal: "la fille", nl: "het meisje / de dochter" },
+{ taal: "c'est", nl: "het is" },
+{ taal: "sûr", nl: "zeker" },
+{ taal: "bien sûr", nl: "natuurlijk" },
+]
+},
   fr_marche5_fix: {
     title: "Frans - Marche 5 (Fix)",
     words: [
