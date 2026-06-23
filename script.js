@@ -129,7 +129,7 @@ input.addEventListener("keydown", (e) => {
     } else {
            document.getElementById("feedback").style.display = "block";
         document.getElementById("correctwoord").innerText =
-          currentWord.nl;
+          currentWord.taal;
     }
   } else if (shuffleran === 1) {
     if (answer === currentWord.nl.toLowerCase()) {
