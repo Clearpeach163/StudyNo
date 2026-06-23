@@ -1,4 +1,300 @@
  const lists = {
+  fr_marche1: {
+  title: "Frans - Marche 1",
+  words: [
+    { taal: "zéro", nl: "0" },
+    { taal: "un", nl: "1" },
+    { taal: "deux", nl: "2" },
+    { taal: "trois", nl: "3" },
+    { taal: "quatre", nl: "4" },
+    { taal: "cinq", nl: "5" },
+    { taal: "six", nl: "6" },
+    { taal: "sept", nl: "7" },
+    { taal: "huit", nl: "8" },
+    { taal: "neuf", nl: "9" },
+    { taal: "dix", nl: "10" },
+    { taal: "onze", nl: "11" },
+    { taal: "douze", nl: "12" },
+    { taal: "treize", nl: "13" },
+    { taal: "quatorze", nl: "14" },
+    { taal: "quinze", nl: "15" },
+    { taal: "seize", nl: "16" },
+    { taal: "dix-sept", nl: "17" },
+    { taal: "dix-huit", nl: "18" },
+    { taal: "dix-neuf", nl: "19" },
+    { taal: "vingt", nl: "20" }
+  ]
+},
+  fr_marche2: {
+  title: "Frans - Marche 2",
+  words: [
+    { taal: "je vais", nl: "ik ga" },
+    { taal: "aller", nl: "gaan" },
+    { taal: "je fais", nl: "ik maak / ik doe" },
+    { taal: "faire", nl: "maken / doen" },
+    { taal: "je peux", nl: "ik kan / ik mag" },
+    { taal: "pouvoir", nl: "kunnen / mogen" },
+    { taal: "je veux", nl: "ik wil" },
+    { taal: "vouloir", nl: "willen" },
+    { taal: "oui", nl: "ja" },
+    { taal: "non", nl: "nee" },
+    { taal: "toi", nl: "jij / jou" },
+    { taal: "comme", nl: "als / zoals" },
+    { taal: "ici", nl: "hier" },
+    { taal: "chez", nl: "bij / naar" },
+    { taal: "lui", nl: "hem / haar" },
+    { taal: "là-bas", nl: "daar" },
+    { taal: "ne…rien", nl: "niets" },
+    { taal: "par", nl: "door" },
+    { taal: "alors", nl: "dan" },
+    { taal: "maintenant", nl: "nu" },
+    { taal: "autre", nl: "andere" },
+    { taal: "bon-bonne", nl: "goed / lekker" },
+    { taal: "ou", nl: "of" },
+    { taal: "très", nl: "erg" }
+  ]
+},
+  fr_marche5_fix: {
+    title: "Frans - Marche 5 (Fix)",
+    words: [
+      { taal: "je dis", nl: "ik zeg" },
+      { taal: "je regarde", nl: "ik kijk naar" },
+      { taal: "je parle", nl: "ik praat / ik spreek" },
+  
+      { taal: "l'argent (M)", nl: "het geld" },
+      { taal: "la maison", nl: "het huis" },
+  
+      { taal: "grand", nl: "groot" },
+      { taal: "petit", nl: "klein" },
+  
+      { taal: "ne … personne", nl: "niemand" },
+      { taal: "vrai", nl: "waar / echt" },
+      { taal: "faux", nl: "niet waar / nep" },
+  
+      { taal: "donc", nl: "dus" },
+      { taal: "avant", nl: "voor" },
+      { taal: "depuis", nl: "sinds" },
+      { taal: "parce que", nl: "omdat" },
+      { taal: "beaucoup", nl: "veel" },
+      { taal: "mieux", nl: "beter" },
+      { taal: "après", nl: "na" },
+  
+      { taal: "bonjour", nl: "hallo" },
+      { taal: "au revoir", nl: "tot ziens" },
+      { taal: "salut", nl: "hoi / doei" },
+    ]
+  },
+  fr_marche5: {
+    title: "Frans - Marche 5",
+    words: [
+      { taal: "bleu", nl: "blauw" },
+      { taal: "rouge", nl: "rood" },
+      { taal: "jaune", nl: "geel" },
+      { taal: "vert", nl: "groen" },
+      { taal: "rose", nl: "roze" },
+      { taal: "violet", nl: "paars" },
+      { taal: "marron", nl: "bruin" },
+      { taal: "beige", nl: "beige" },
+      { taal: "orange", nl: "oranje" },
+      { taal: "gris", nl: "grijs" },
+      { taal: "noir", nl: "zwart" },
+      { taal: "blanc-blanche", nl: "wit" },
+  
+      { taal: "la robe", nl: "de jurk" },
+      { taal: "la jupe", nl: "de rok" },
+      { taal: "le jean", nl: "de spijkerbroek" },
+      { taal: "le short", nl: "de korte broek" },
+      { taal: "la veste", nl: "het jack" },
+      { taal: "le pull", nl: "de trui" },
+      { taal: "le T-shirt", nl: "het T-shirt" },
+      { taal: "la casquette", nl: "de pet" },
+      { taal: "la chaussure", nl: "de schoen" },
+      { taal: "la basket", nl: "de sneaker" },
+      { taal: "la tong", nl: "de slipper" },
+      { taal: "la botte", nl: "de laars" },
+      { taal: "la chaussette", nl: "de sok" },
+    ]
+  },
+  fr_marche6_fix: {
+    title: "Frans - Marche 6 (Fix)",
+    words: [
+      { taal: "j'arrive", nl: "ik kom aan / ik kom eraan" },
+      { taal: "j'appelle", nl: "ik roep" },
+      { taal: "je reste", nl: "ik blijf" },
+      { taal: "je pense", nl: "ik denk" },
+      { taal: "j'ai raison", nl: "ik heb gelijk" },
+      { taal: "j'ai peur de", nl: "ik ben bang voor" },
+  
+      { taal: "le matin", nl: "de ochtend" },
+      { taal: "le jour", nl: "de dag" },
+      { taal: "le soir", nl: "de avond" },
+      { taal: "la nuit", nl: "de nacht" },
+      { taal: "les gens", nl: "de mensen" },
+      { taal: "l'enfant", nl: "het kind" },
+  
+      { taal: "déjà", nl: "al" },
+      { taal: "voilà", nl: "alstublieft / hier is" },
+      { taal: "ce", nl: "deze (m) / dit (m)" },
+      { taal: "cette", nl: "deze (v) / dit (v)" },
+      { taal: "ces", nl: "deze (mv)" },
+  
+      { taal: "désolé", nl: "sorry / helaas" },
+      { taal: "moins", nl: "minder" },
+      { taal: "seul", nl: "alleen" },
+      { taal: "vite", nl: "snel" },
+      { taal: "puis", nl: "daarna" },
+    ]
+  },
+  fr_marche6: {
+    title: "Frans - Marche 6",
+    words: [
+      { taal: "dix", nl: "10" },
+      { taal: "vingt", nl: "20" },
+      { taal: "trente", nl: "30" },
+      { taal: "quarante", nl: "40" },
+      { taal: "cinquante", nl: "50" },
+      { taal: "soixante", nl: "60" },
+      { taal: "soixante-cinq", nl: "65" },
+      { taal: "soixante-dix", nl: "70" },
+      { taal: "soixante-quinze", nl: "75" },
+      { taal: "quatre-vingts", nl: "80" },
+      { taal: "quatre-vingt-trois", nl: "83" },
+      { taal: "quatre-vingt-dix", nl: "90" },
+      { taal: "quatre-vingt-treize", nl: "93" },
+      { taal: "cent", nl: "100" },
+      { taal: "deux cents", nl: "200" },
+      { taal: "mille", nl: "1000" },
+      { taal: "million", nl: "1000000" },
+    ]
+  },
+  fr_marche7_fix: {
+    title: "Frans - Marche 7 (Fix)",
+    words: [
+      { taal: "je prends", nl: "ik neem" },
+      { taal: "je comprends", nl: "ik begrijp" },
+      { taal: "plaire", nl: "bevallen" },
+      { taal: "j'attends", nl: "ik wacht op" },
+      { taal: "je passe", nl: "ik breng door" },
+      { taal: "j'arrête", nl: "ik stop" },
+      { taal: "j'aide", nl: "ik help" },
+  
+      { taal: "l'air (M)", nl: "de lucht" },
+      { taal: "l'amour (M)", nl: "de liefde" },
+      { taal: "le problème", nl: "het probleem" },
+      { taal: "la chance", nl: "het succes" },
+      { taal: "l'attention (F)", nl: "attentie / aandacht" },
+  
+      { taal: "hier", nl: "gisteren" },
+      { taal: "aujourd’hui", nl: "vandaag" },
+      { taal: "demain", nl: "morgen" },
+      { taal: "en", nl: "in / naar" },
+  
+      { taal: "haut", nl: "hoog" },
+      { taal: "bas-basse", nl: "laag" },
+      { taal: "assez", nl: "genoeg / nogal" },
+      { taal: "ni … ni", nl: "niet … ook niet" },
+    ]
+  },
+  fr_marche7: {
+    title: "Frans - Marche 7",
+    words: [
+      { taal: "lundi", nl: "maandag" },
+      { taal: "mardi", nl: "dinsdag" },
+      { taal: "mercredi", nl: "woensdag" },
+      { taal: "jeudi", nl: "donderdag" },
+      { taal: "vendredi", nl: "vrijdag" },
+      { taal: "samedi", nl: "zaterdag" },
+      { taal: "dimanche", nl: "zondag" },
+  
+      { taal: "janvier", nl: "januari" },
+      { taal: "février", nl: "februari" },
+      { taal: "mars", nl: "maart" },
+      { taal: "avril", nl: "april" },
+      { taal: "mai", nl: "mei" },
+      { taal: "juin", nl: "juni" },
+      { taal: "juillet", nl: "juli" },
+      { taal: "août", nl: "augustus" },
+      { taal: "septembre", nl: "september" },
+      { taal: "octobre", nl: "oktober" },
+      { taal: "novembre", nl: "november" },
+      { taal: "décembre", nl: "december" },
+  
+      { taal: "l'hiver (M)", nl: "de winter" },
+      { taal: "le printemps", nl: "de lente" },
+      { taal: "l'été (M)", nl: "de zomer" },
+      { taal: "l'automne (M)", nl: "de herfst" },
+    ]
+  },
+  fr_marche8_fix: {
+    title: "Frans - Marche 8 (Fix)",
+    words: [
+      { taal: "je connais", nl: "ik ken" },
+      { taal: "je pars", nl: "ik vertrek" },
+      { taal: "je revois", nl: "ik zie weer" },
+      { taal: "j'apprends", nl: "ik leer" },
+  
+      { taal: "le moment", nl: "het moment" },
+      { taal: "la seconde", nl: "de seconde" },
+      { taal: "la minute", nl: "de minuut" },
+      { taal: "l'heure (F)", nl: "het uur" },
+  
+      { taal: "tôt", nl: "vroeg" },
+      { taal: "tard", nl: "laat" },
+  
+      { taal: "l'ami (M)", nl: "de vriend" },
+      { taal: "l'amie (F)", nl: "de vriendin" },
+      { taal: "le corps", nl: "het lichaam" },
+      { taal: "la main", nl: "de hand" },
+      { taal: "la tête", nl: "het hoofd" },
+      { taal: "les yeux", nl: "de ogen" },
+  
+      { taal: "tant de", nl: "zoveel" },
+      { taal: "pendant", nl: "tijdens" },
+      { taal: "vieux / vieille", nl: "oud" },
+      { taal: "nouveau / nouvelle", nl: "nieuw" },
+    ]
+  },
+  fr_marche8: {
+    title: "Frans - Marche 8",
+    words: [
+      { taal: "qui", nl: "wie" },
+      { taal: "que / qu’est-ce que", nl: "wat" },
+      { taal: "quoi", nl: "wat" },
+      { taal: "comment", nl: "hoe" },
+      { taal: "combien", nl: "hoeveel" },
+      { taal: "où", nl: "waar" },
+      { taal: "pourquoi", nl: "waarom" },
+      { taal: "quand", nl: "wanneer" },
+      { taal: "quel / quelle", nl: "welk / welke" },
+    ]
+  },
+  fr_marche9_fix: {
+    title: "Frans - Marche 9 (Fix)",
+    words: [
+      { taal: "je sens", nl: "ik ruik / ik voel" },
+      { taal: "j'entends", nl: "ik hoor" },
+      { taal: "je cherche", nl: "ik zoek" },
+      { taal: "je demande", nl: "ik vraag" },
+      { taal: "je trouve", nl: "ik vind" },
+      { taal: "j'utilise", nl: "ik gebruik" },
+      { taal: "je travaille", nl: "ik werk" },
+  
+      { taal: "le travail", nl: "het werk" },
+      { taal: "la voiture", nl: "de auto" },
+      { taal: "le sens", nl: "de betekenis" },
+      { taal: "la part", nl: "het deel" },
+      { taal: "la porte", nl: "de deur" },
+      { taal: "le coup", nl: "de klap" },
+      { taal: "les lunettes", nl: "de bril" },
+      { taal: "le portable", nl: "het mobieltje" },
+      { taal: "le collier", nl: "de ketting" },
+  
+      { taal: "chaque", nl: "elke" },
+      { taal: "ensemble", nl: "samen" },
+      { taal: "moche", nl: "lelijk" },
+      { taal: "beau / belle", nl: "mooi" },
+    ]
+  },
     fr_marche9: {
     title: "Frans - Marche 9",
     words: [
@@ -8,6 +304,33 @@
       { taal: "notre / notre / nos", nl: "ons / onze" },
       { taal: "votre / votre / vos", nl: "jullie / uw" },
       { taal: "leur / leur / leurs", nl: "hun" },
+    ]
+  },
+  fr_marche10_fix: {
+    title: "Frans - Marche 10 (Fix)",
+    words: [
+      { taal: "je sors", nl: "ik ga uit" },
+      { taal: "je tiens", nl: "ik hou vast" },
+      { taal: "je finis", nl: "ik eindig / ik maak af" },
+      { taal: "je mets", nl: "ik zet" },
+      { taal: "je donne", nl: "ik geef" },
+  
+      { taal: "le sang", nl: "het bloed" },
+      { taal: "la question", nl: "de vraag" },
+      { taal: "l'histoire (F)", nl: "het verhaal / de geschiedenis" },
+      { taal: "le jour", nl: "de dag" },
+      { taal: "le calendrier", nl: "de kalender" },
+      { taal: "le mois", nl: "de maand" },
+      { taal: "l'année", nl: "het jaar" },
+  
+      { taal: "dehors", nl: "buiten" },
+      { taal: "fou-folle", nl: "gek" },
+      { taal: "la vérité", nl: "de waarheid" },
+      { taal: "le tour", nl: "de ronde" },
+      { taal: "la tour", nl: "de toren" },
+      { taal: "plutôt", nl: "liever" },
+      { taal: "meilleur", nl: "beter" },
+      { taal: "presque", nl: "bijna" },
     ]
   },
     fr_marche10: {
@@ -37,6 +360,33 @@
     { taal: "le crocodile", nl: "de krokodil" },
     { taal: "le serpent", nl: "de slang" },
     { taal: "la lionne", nl: "de leeuwin" },
+  ]
+},
+fr_marche11_fix: {
+  title: "Frans - Marche 11 (Fix)",
+  words: [
+    { taal: "je perds", nl: "ik verlies" },
+    { taal: "je laisse", nl: "ik laat" },
+    { taal: "je marche", nl: "ik loop" },
+    { taal: "je joue", nl: "ik speel" },
+    { taal: "j'écoute", nl: "ik luister" },
+
+    { taal: "la ville", nl: "de stad" },
+    { taal: "l'eau (F)", nl: "het water" },
+    { taal: "le cas", nl: "het geval" },
+    { taal: "la police", nl: "de politie" },
+    { taal: "la terre", nl: "de aarde" },
+    { taal: "la place", nl: "de plaats / het plein" },
+    { taal: "le car", nl: "de bus" },
+
+    { taal: "longtemps", nl: "lange tijd" },
+    { taal: "contre", nl: "tegen" },
+    { taal: "super", nl: "super" },
+    { taal: "voici", nl: "hier is / hier zijn" },
+    { taal: "vers", nl: "naar" },
+    { taal: "seulement", nl: "alleen maar" },
+    { taal: "eux", nl: "hen" },
+    { taal: "car", nl: "want" },
   ]
 },
 fr_marche11: {
