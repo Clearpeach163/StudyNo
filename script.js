@@ -127,6 +127,7 @@ input.addEventListener("keydown", (e) => {
       goed++;
       newWord();
     } else {
+        console.log("so the shuffle ran 0 and the answer was wrong but now i gotta display the french word");
            document.getElementById("feedback").style.display = "block";
         document.getElementById("correctwoord").innerText =
           currentWord.taal;
