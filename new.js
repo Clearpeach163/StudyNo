@@ -1,9 +1,11 @@
 const whatsnew = `
   What is new in the new version,
-    -better back button
-    -favo icon
+    - .Com domain!!
+    - fixed some bugs
+    - fnnf bug fixed
+    
     
    
 
 `;
-const update = "21.6.26";
+const update = "23.6.26";
