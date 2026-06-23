@@ -1,4 +1,57 @@
 const lists = {
+    fr_marche4_fix: {
+  title: "Frans - Fix Marche 3",
+  words: [
+  { taal: "je dois", nl: "ik moet" },
+  { taal: "je crois", nl: "ik geloof" },
+  { taal: "j'ai besoin de", nl: "ik heb nodig" },
+  { taal: "j'ai mal", nl: "ik heb pijn" },
+  { taal: "j'aime", nl: "ik houd van" },
+  { taal: "tout", nl: "alles" },
+  { taal: "d'accord", nl: "oké" },
+  { taal: "le monde", nl: "de wereld" },
+  { taal: "tout le monde", nl: "iedereen" },
+  { taal: "la fois", nl: "de keer" },
+  { taal: "trop", nl: "te" },
+  { taal: "l'homme (M)", nl: "de man" },
+  { taal: "la femme", nl: "de vrouw" },
+  { taal: "monsieur", nl: "meneer" },
+  { taal: "madame", nl: "mevrouw" },
+  { taal: "le garçon", nl: "de jongen" },
+  { taal: "la fille", nl: "het meisje / de dochter" },
+  { taal: "c'est", nl: "het is" },
+  { taal: "sûr", nl: "zeker" },
+  { taal: "bien sûr", nl: "natuurlijk" },
+  ]
+  },
+  fr_marche5: {
+  title: "Frans - Marche 5",
+  words: [
+    { taal: "le grand-père", nl: "de opa" },
+    { taal: "la grand-mère", nl: "de oma" },
+    { taal: "le père", nl: "de vader" },
+    { taal: "la mère", nl: "de moeder" },
+    { taal: "la soeur", nl: "de zus" },
+    { taal: "le frère", nl: "de broer" },
+    { taal: "l'oncle", nl: "de oom" },
+    { taal: "la tante", nl: "de tante" },
+    { taal: "le fils", nl: "de zoon" },
+    { taal: "la fille", nl: "de dochter" },
+    { taal: "le cousin", nl: "de neef" },
+    { taal: "la cousine", nl: "de nicht" },
+    { taal: "le neveu", nl: "de neef (van je oom of tante)" },
+    { taal: "la nièce", nl: "de nicht (van je oom of tante)" },
+    { taal: "le petit-fils", nl: "de kleinzoon" },
+    { taal: "la petite-fille", nl: "de kleindochter" },
+    { taal: "le petit ami", nl: "het vriendje" },
+    { taal: "la petite amie", nl: "het vriendinnetje" },
+    { taal: "le demi-frère", nl: "de halfbroer" },
+    { taal: "la demi-soeur", nl: "de halfzus" },
+    { taal: "le beau-frère", nl: "de stiefbroer" },
+    { taal: "la belle-soeur", nl: "de stiefzus" },
+    { taal: "les parents", nl: "de ouders" }
+  ]
+},
   fr_marche5_fix: {
     title: "Frans - Marche 5 (Fix)",
     words: [
