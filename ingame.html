@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+    <head>
+        <title>StudyNo</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/x-icon" href="studynologo.png">
+    </head>
+    <html>
+       
+        <body>
+            <button id="back" onclick="home();">  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="15 19 5 12 15 5"></polyline>
+  </svg></button>
+
+            <h1 id="h1">Woord</h1>
+            <div id="main_div">
+            <input type="text" id="Main_input">
+            </div>
+            <p id="Opgave_count">Geen opgave gemaakt</p>
+           
+<div id="feedback">
+  <h4 id="juiste">Juiste antwoord:</h4>
+  <h3 id="correctwoord">Woord</h3>
+
+  <div class="button-row">
+    <button id="foutrek" onclick="foutreken();">Fout rekenen</button>
+    <button id="goedrek" onclick="goedreken();">Goed rekenen</button>
+  </div>
+</div>
+              <p onclick="version();" id="update">V13.6.26</p>
+      
+            <div id="togglemain">
+              <div class="toggle" id="toggle">
+                <div class="indicator" id="indicator"></div>
+              
+       
+              </div>
+              <div class="toggle">
+                <button class="active" data-mode="FN">FN</button>
+                <button data-mode="NF">NF</button>
+                <button data-mode="Shuffle">Shuffle</button>
+              </div>
+              </div>
+         
+              
+           
+              
+               
+
+
+              
+        </body>
+        <script src="toggle.js"></script>
+        <script src="words.js"></script>
+        <script src="new.js"></script>
+        <script src="script.js"></script>
+    </html>
