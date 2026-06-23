@@ -25,7 +25,7 @@
     { taal: "vingt", nl: "20" }
   ]
 },
-  fr_marche2: {
+  fr_marche2_fix: {
   title: "Frans - Marche 2",
   words: [
     { taal: "je vais", nl: "ik ga" },
@@ -53,6 +53,31 @@
     { taal: "ou", nl: "of" },
     { taal: "très", nl: "erg" }
   ]
+},
+  fr_marche3_fix: {
+title: "Frans - Marche 3 fix",
+words: [
+{ taal: "je viens", nl: "ik kom" },
+{ taal: "je sais", nl: "ik weet" },
+{ taal: "je vois", nl: "ik zie" },
+{ taal: "merci", nl: "bedankt" },
+{ taal: "même", nl: "dezelfde / zelfs" },
+{ taal: "ne…jamais", nl: "nooit" },
+{ taal: "aussi", nl: "ook" },
+{ taal: "la chose", nl: "het ding" },
+{ taal: "quelque chose", nl: "iets" },
+{ taal: "tous", nl: "allemaal" },
+{ taal: "il faut", nl: "je moet / je hebt nodig" },
+{ taal: "encore", nl: "nog" },
+{ taal: "un peu", nl: "een beetje" },
+{ taal: "vraiment", nl: "echt" },
+{ taal: "le temps", nl: "de tijd / het weer" },
+{ taal: "la vie", nl: "het leven" },
+{ taal: "quelques", nl: "enkele" },
+{ taal: "sans", nl: "zonder" },
+{ taal: "juste", nl: "juist / precies" },
+{ taal: "toujours", nl: "altijd / nog steeds" },
+]
 },
   fr_marche5_fix: {
     title: "Frans - Marche 5 (Fix)",
