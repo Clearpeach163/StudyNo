@@ -317,7 +317,7 @@ function fireConfetti() {
       origin: { x: Math.random(), y: 0.6 },
       colors: [
         '#6D28D9',
-        '#433aed',
+        '#3d35d6',
         '#8B5CF6',
         '#4F46E5',
         '#6d235e'
