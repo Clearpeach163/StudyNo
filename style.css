@@ -812,10 +812,11 @@ nav{
     color:white;
     cursor:pointer;
     transition:.25s;
+    
 }
 
 .signin:hover{
-    transform:translateY(-2px);
+    transform:translateY(-2px) scale(1.03);
 }
 
 /* HERO */
@@ -845,11 +846,16 @@ nav{
     color:white;
     line-height:.95;
     margin-bottom:20px;
+  
+    
 }
 
 .gradient{
-    background:linear-gradient(90deg,var(--purple),var(--blue));
+    background: #7617CF;
+background: linear-gradient(to right, #7617CF 0%, #701883 100%);
+-webkit-text-fill-color: transparent;
     -webkit-background-clip:text;
+   
     -webkit-text-fill-color:transparent;
 }
 
@@ -875,7 +881,7 @@ nav{
 
 .cta:hover{
     transform:translateY(-4px) scale(1.03);
-    
+
 }
 
 /* FEATURES */
