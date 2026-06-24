@@ -80,7 +80,7 @@ function newWord() {
   input.value = "";
 }
 // hier is de check
-input.addEventListener("keydown", (e) => {
+input.addEventListener("keyup", (e) => {
   if (e.key !== "Enter") return;
 
   const answer = input.value.trim().toLowerCase(); //maakt het antwoord passend voor de check
