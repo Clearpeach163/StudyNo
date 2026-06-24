@@ -1,60 +1,97 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyNo</title>
+<link rel="stylesheet" href="style.css">
 <link rel="icon" type="image/x-icon" href="studynologo.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Onest:wght@100..900&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- Loading Screen -->
-<div id="loader" style="
-  position: fixed; inset: 0; z-index: 9999;
-  background: #0a0a0f;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 2rem; font-family: sans-serif;
-  transition: opacity 0.6s ease;
-">
-  <div style="position: relative; width: 64px; height: 64px;">
-    <div style="position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:#7F77DD;animation:spin 1s linear infinite;"></div>
-    <div style="position:absolute;inset:8px;border-radius:50%;border:2px solid transparent;border-top-color:#ff00dd;animation:spin 0.75s linear infinite reverse;"></div>
-  </div>
-  <div style="text-align: center;">
-    <p id="load-msg" style="color:#ffffffcc;font-size:15px;margin:0 0 8px;letter-spacing:.05em;">Loading…</p>
-    <div style="width:180px;height:2px;background:#ffffff18;border-radius:2px;overflow:hidden;">
-      <div id="load-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#7F77DD,#bf5dca);border-radius:2px;transition:width .3s ease;"></div>
-    </div>
-  </div>
-</div>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
 <style>
-@keyframes spin { to { transform: rotate(360deg); } }
+
 </style>
+</head>
+<body>
 
-<script src="loading.js"></script>
-             <div id="cookieBox" class="cookie-box" style="display:block;">
-                <h3>Cookies</h3>
-                <p>
-                    Hey there, Welcome to StudyNo, We use cookies to make your experience great again!
-                </p>
-            
-                <div class="buttons">
-                  <button class="decline" onclick="setCookie(false)">Weiger</button>
-                  <button class="accept" onclick="setCookie(true)">Accepteer</button>
-                </div>
+<!-- LOADER -->
 
-              </div>
-        <a href="ideas.html" id="submithref">Got feedback or ideas?</a>
-    <link rel="stylesheet" href="style.css">
-    <img src="StudyNo logo.png" id="logo">
-    <h1 id="homeh1">Study more</h1>
-    <h1 id="homeh2">Learn faster,</h1>
-    <p id="phome">Tired of ads and premium plans? Welcome to Studyno free now, Free forever!</p>
-    <button onclick="letsdo();" id="start">Let's do it!</button>
-     <p onclick="version();" id="update">Error loading version.. </p>
+
+<!-- NAV -->
+
+<nav>
+    <div class="logo">StudyNo</div>
+    <button class="signin" onclick="openLogin()">
+        Sign In
+    </button>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="badge">
+        ✨ Free forever • No ads • No premium plans
+    </div>
+
+    <h1>
+        Study More.
+        <br>
+        <span class="gradient">Learn Faster.</span>
+    </h1>
+
+    <p>
+        The simplest way to learn vocabulary, revise faster,
+        and stay focused without annoying subscriptions.
+    </p>
+
+    <button class="cta">
+        Let's do it 🚀
+    </button>
+
+</section>
+
+<!-- FEATURES -->
+
+<div class="features">
+
+    <div class="feature">
+        <div class="icon">⚡</div>
+        <h3>Instant Start</h3>
+        <p>No complicated setup. Start learning immediately.</p>
+    </div>
+
+    <div class="feature">
+        <div class="icon">🎯</div>
+        <h3>Focused Learning</h3>
+        <p>Designed to keep distractions out and progress in.</p>
+    </div>
+
+    <div class="feature">
+        <div class="icon">🔥</div>
+        <h3>Forever Free</h3>
+        <p>No subscriptions. No paywalls. Ever.</p>
+    </div>
+
+</div>
+
+<!-- LOGIN MODAL -->
+
+<div class="modal" id="loginModal">
+    <div class="modal-card">
+        <h2>Sign In</h2>
+
+        <input class="input" placeholder="Email">
+        <input class="input" placeholder="Password" type="password">
+
+        <button class="login-btn">
+            Continue
+        </button>
+    </div>
+</div>
 
 </body>
-
-<script src="new.js"></script>
-<script src="words.js"></script>
-<script src="script.js"></script>
+</html>
