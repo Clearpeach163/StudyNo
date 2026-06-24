@@ -8,11 +8,41 @@ let words = [];
 const gehad = [];
 let gehad_goed = [];
 let shuffleran = 0;
-const clickSound = new Audio("click.mp3");
+const popup = document.getElementById("popup");
+const clickSound = new Audio("Streak.mp3");
+const fnnfSound = new Audio("fnnfselect.mp3");
+const messages = [
+  "in a row streak! Keep it up!",
+  "Great job!",
+  "You are doing well!",
+  "Keep going!",
+  "Error 404: To much motivation",
+  "crazy streak, keep it up!",
+  "You are a learning machine!",
+  "Keep up the good work!",
+  "You are a genius!",
+  "is this a streak or a bug?",
+  
+];
+const inARowPhrases = [
+  "in a row",
+  "straight",
+  "back to back",
+  "consecutive",
+  "unbroken",
+  "continuous",
+  "on a streak",
+  "clean streak"
+];
 
-function playClick() {
+console.log(messages[Math.floor(Math.random() * messages.length)]);
+function playStreak() {
   clickSound.currentTime = 0; // reset zodat je snel kan spam-clicken
   clickSound.play();
+}
+function playFnnf() {
+  fnnfSound.currentTime = 0; // reset zodat je snel kan spam-clicken
+  fnnfSound.play();
 }
 // Hoeveel letters fout? system:
 
@@ -239,6 +269,7 @@ const buttons = document.querySelectorAll(".toggle button");
 
 buttons.forEach((btn) => {
   btn.addEventListener("click", () => {
+    playFnnf();
     buttons.forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
 
@@ -257,7 +288,21 @@ buttons.forEach((btn) => {
   });
 });
 function streakcheck() {
-if (streak === 5) { 
-  alert("Je hebt een streak van 5! Goed gedaan!");
+if (streak === 5 || streak === 10 || streak === 15 || streak === 20 || streak === 25 || streak === 30 || streak === 35 || streak === 40 || streak === 45 || streak === 50) { 
+  
+  showPopup(streak + " " + inARowPhrases[Math.floor(Math.random() * inARowPhrases.length)] + ", " + messages[Math.floor(Math.random() * messages.length)]);
+  
 }
+}
+
+
+function showPopup(message) {
+  playStreak();
+  popup.textContent = message;
+
+  popup.classList.add("show");
+
+  setTimeout(() => {
+    popup.classList.remove("show");
+  }, 2500);
 }
