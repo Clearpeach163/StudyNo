@@ -2,12 +2,18 @@ let goed = 0;
 let fout = 0;
 let random = 0;
 let currentWord;
+let streak = 0;
 let fnnf = 1;
 let words = [];
 const gehad = [];
 let gehad_goed = [];
 let shuffleran = 0;
+const clickSound = new Audio("click.mp3");
 
+function playClick() {
+  clickSound.currentTime = 0; // reset zodat je snel kan spam-clicken
+  clickSound.play();
+}
 // Hoeveel letters fout? system:
 
 function levenshtein(a, b) {
@@ -97,8 +103,11 @@ input.addEventListener("keyup", (e) => {
     // NORMALE CHECK
     if (answer === currentWord.taal.toLowerCase()) {
       goed++;
+
+      streak++;
       gehad_goed.push(currentWord);
       newWord();
+      
     } else {
      
     
@@ -114,8 +123,10 @@ input.addEventListener("keyup", (e) => {
 
     if (answer === currentWord.nl.toLowerCase()) {
       goed++;
+      streak++;
       gehad_goed.push(currentWord);
       newWord();
+      streakcheck();
     } else {
       
       
@@ -128,8 +139,10 @@ input.addEventListener("keyup", (e) => {
   if (shuffleran === 0) {
     if (answer === currentWord.taal.toLowerCase()) {
       goed++;
+      streak++;
       gehad_goed.push(currentWord);
       newWord();
+      streakcheck();
     } else {
         console.log("so the shuffle ran 0 and the answer was wrong but now i gotta display the french word");
            document.getElementById("feedback").style.display = "block";
@@ -139,8 +152,10 @@ input.addEventListener("keyup", (e) => {
   } else if (shuffleran === 1) {
     if (answer === currentWord.nl.toLowerCase()) {
       goed++;
+      streak++;
       gehad_goed.push(currentWord);
       newWord();
+      streakcheck();
     } else {
            document.getElementById("feedback").style.display = "block";
         document.getElementById("correctwoord").innerText =
@@ -182,7 +197,7 @@ window.onload = checkCookie;
 
 function foutreken() {
   fout++;
-
+  streak = 0;
   document.getElementById("feedback").style.display = "none";
   document.getElementById("Opgave_count").innerText =
     "Correct: " + goed + " | " + "Fout: " + fout;
@@ -192,7 +207,9 @@ function foutreken() {
 
 function goedreken() {
   goed++;
-gehad_goed.push(currentWord);
+  streak++;
+  gehad_goed.push(currentWord);
+  streakcheck();
   document.getElementById("feedback").style.display = "none";
   document.getElementById("Opgave_count").innerText =
     "Correct: " + goed + " | " + "Fout: " + fout;
@@ -239,3 +256,8 @@ buttons.forEach((btn) => {
     }
   });
 });
+function streakcheck() {
+if (streak === 5) { 
+  alert("Je hebt een streak van 5! Goed gedaan!");
+}
+}
