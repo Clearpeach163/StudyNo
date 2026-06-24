@@ -5,6 +5,7 @@ let currentWord;
 let fnnf = 1;
 let words = [];
 const gehad = [];
+let gehad_goed = [];
 let shuffleran = 0;
 
 // Hoeveel letters fout? system:
@@ -96,6 +97,7 @@ input.addEventListener("keydown", (e) => {
     // NORMALE CHECK
     if (answer === currentWord.taal.toLowerCase()) {
       goed++;
+      gehad_goed.push(currentWord);
       newWord();
     } else {
      
@@ -112,6 +114,7 @@ input.addEventListener("keydown", (e) => {
 
     if (answer === currentWord.nl.toLowerCase()) {
       goed++;
+      gehad_goed.push(currentWord);
       newWord();
     } else {
       
@@ -125,6 +128,7 @@ input.addEventListener("keydown", (e) => {
   if (shuffleran === 0) {
     if (answer === currentWord.taal.toLowerCase()) {
       goed++;
+      gehad_goed.push(currentWord);
       newWord();
     } else {
         console.log("so the shuffle ran 0 and the answer was wrong but now i gotta display the french word");
@@ -135,6 +139,7 @@ input.addEventListener("keydown", (e) => {
   } else if (shuffleran === 1) {
     if (answer === currentWord.nl.toLowerCase()) {
       goed++;
+      gehad_goed.push(currentWord);
       newWord();
     } else {
            document.getElementById("feedback").style.display = "block";
@@ -187,7 +192,7 @@ function foutreken() {
 
 function goedreken() {
   goed++;
-
+gehad_goed.push(currentWord);
   document.getElementById("feedback").style.display = "none";
   document.getElementById("Opgave_count").innerText =
     "Correct: " + goed + " | " + "Fout: " + fout;
