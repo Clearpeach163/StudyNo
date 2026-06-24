@@ -289,7 +289,7 @@ buttons.forEach((btn) => {
 });
 function streakcheck() {
 if (streak === 5 || streak === 10 || streak === 15 || streak === 20 || streak === 25 || streak === 30 || streak === 35 || streak === 40 || streak === 45 || streak === 50) { 
-  
+  fireConfetti();
   showPopup(streak + " " + inARowPhrases[Math.floor(Math.random() * inARowPhrases.length)] + ", " + messages[Math.floor(Math.random() * messages.length)]);
   
 }
@@ -305,4 +305,27 @@ function showPopup(message) {
   setTimeout(() => {
     popup.classList.remove("show");
   }, 2500);
+}
+function fireConfetti() {
+  const duration = 100;
+  const end = Date.now() + duration;
+
+  (function frame() {
+    confetti({
+      particleCount: 10,
+      spread: 160,
+      origin: { x: Math.random(), y: 0.6 },
+      colors: [
+        '#6D28D9',
+        '#433aed',
+        '#8B5CF6',
+        '#4F46E5',
+        '#6d235e'
+      ]
+    });
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  })();
 }
