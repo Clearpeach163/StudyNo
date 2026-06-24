@@ -729,6 +729,7 @@ summary {
   margin: 20px;
     transition: max-height 0.4s ease, opacity 0.3s ease;
   border-radius: 18px;
+  user-select: none;
   overflow: hidden;
   backdrop-filter: blur(12px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.822);
@@ -736,7 +737,7 @@ summary {
 }
 .accordion details:hover {
     margin: 20px;
-  
+  user-select: none;
   border-radius: 25px;
   overflow: hidden;
   backdrop-filter: blur(12px);

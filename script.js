@@ -319,7 +319,7 @@ function fireConfetti() {
         '#6D28D9',
         '#3d35d6',
         '#8B5CF6',
-        '#4F46E5',
+        '#4a42e1',
         '#6d235e'
       ]
     });
