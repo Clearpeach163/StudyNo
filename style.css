@@ -865,16 +865,17 @@ nav{
     border:none;
     cursor:pointer;
     padding:18px 34px;
-    border-radius:18px;
+    border-radius:99999px;
     font-size:1rem;
     font-weight:700;
     color:white;
-    background:linear-gradient(135deg,var(--purple),var(--blue));
+
     transition:.25s;
 }
 
 .cta:hover{
     transform:translateY(-4px) scale(1.03);
+    
 }
 
 /* FEATURES */
