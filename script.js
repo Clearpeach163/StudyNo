@@ -82,9 +82,9 @@ const h1 = document.getElementById("h1");
 const input = document.getElementById("Main_input");
 
 function newWord() {
-  random = Math.floor(Math.random() * words.length);
-  gehad.push(random);
-  currentWord = words[random];
+    random = Math.floor(Math.random() * words.length);
+    gehad.push(random);
+    currentWord = words[random];
 
   // if (gehad.includes(random)) {
   //   console.log("Al gehad twin...");
@@ -123,7 +123,7 @@ input.addEventListener("keyup", (e) => {
 
   // ALS FEEDBACK OPEN IS
   if (document.getElementById("feedback").style.display === "block") {
-    goedreken();
+    foutreken();
     return;
   }
 
