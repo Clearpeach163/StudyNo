@@ -4,13 +4,48 @@
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/x-icon" href="studynologo.png">
         <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    </head>
+  <script src="words.js" defer></script>
+<script src="script.js" defer></script>
+<script src="new.js" defer></script>
+    <div class="terminal hidden" id="terminal">
+    <div class="terminal-header" id="terminal-header">
+        <div class="dots">
+
+        </div>
+        <div class="title">terminal</div>
+    </div>
+
+    <div class="output"></div>
+
+    <div class="input-line">
+        <span>$</span>
+        <input id="terminal-input"/>
+    </div>
+
+    <!-- resize handle -->
+    <div class="resizer" id="resizer"></div>
+    </div>
+        <script src="terminal.js" defer></script>
+  
+      </head>
     <html>
+
        
         <body>
      
 
+<div id="terminal" class="terminal hidden">
+  <div id="terminal-output" class="output"></div>
 
+  <div class="input-line">
+    <div class="input-wrap">
+  <div id="ghost"></div>
+  <input id="terminal-input" autocomplete="off" />
+</div>
+    <span>&gt;</span>
+    <input id="terminal-input" type="text" autocomplete="off" />
+  </div>
+</div>
   <div id="popup" class="popup">
     Error loading popup, please report this to the developer.<br>
   </div>
@@ -57,8 +92,4 @@
 
               
         </body>
-        <script src="toggle.js"></script>
-        <script src="words.js"></script>
-        <script src="new.js"></script>
-        <script src="script.js"></script>
-    </html>
+        </html>
