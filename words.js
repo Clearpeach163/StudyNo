@@ -16,6 +16,7 @@ async function loadLists() {
 
 async function startApp() {
   await loadLists();
+  newWord();
   initApp();
 }
 
