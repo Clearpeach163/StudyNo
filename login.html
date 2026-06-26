@@ -36,19 +36,37 @@
 
 <script>
 // Plak hier de URL van jouw Apps Script deployment
-const URL_API = "https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnRxj1c-qgqlmJtUaYGErYGvPyqA8i0LCwJTnF0eRSd-htgqikoDxnN7Eu0xfqGwv6Ust957IzaA01ayIWNCmEd5ZQPRtwMpv2OTXcFBSqHVxiA0VikpzUPsFb55peGtojEixBkNs5G5Uzfc1Gnr1ura93z_FYhqqUkSsKaCsuxjtf4wgvirfm9aRDLIHvmTuFw6Smo9oE-xsHwB-6sflkP5EMkzxSYyqFYENU91ETPlvK96T5aqfk5eL2mkAFhwTnJSwTZW0fS1WPcEYnth8b5LSlhVpA&lib=MJtSS66l_0dYzpPus0gRoiE1aweLcwlla";
+const URL_API = "https://script.google.com/macros/s/AKfycbxX56GJJZGpG6Acu2vCNOc2IfeOYALod8wKoxh4-24/dev";
 
 let currentUser = null;
 
-async function callApi(payload) {
-  const res = await fetch(URL_API, {
-    method: "POST",
-    // text/plain voorkomt dat de browser een CORS-preflight (OPTIONS) stuurt,
-    // wat Apps Script webapps niet goed afhandelen.
-    headers: { "Content-Type": "text/plain;charset=utf-8" },
-    body: JSON.stringify(payload)
+let jsonpCounter = 0;
+
+function callApi(payload) {
+  return new Promise((resolve, reject) => {
+    const callbackName = "jsonpCallback_" + (jsonpCounter++);
+    const params = new URLSearchParams(payload);
+    params.set("callback", callbackName);
+
+    window[callbackName] = function (data) {
+      resolve(data);
+      cleanup();
+    };
+
+    const script = document.createElement("script");
+    script.src = URL_API + "?" + params.toString();
+    script.onerror = function () {
+      reject(new Error("Kon de API niet bereiken"));
+      cleanup();
+    };
+
+    function cleanup() {
+      delete window[callbackName];
+      script.remove();
+    }
+
+    document.body.appendChild(script);
   });
-  return res.json();
 }
 
 async function signup() {
