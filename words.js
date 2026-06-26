@@ -10,7 +10,7 @@ async function loadLists() {
     lists = await res.json();
   } catch (err) {
     console.error(err);
-    lists = {};
+    lis = {};
   }
 }
 
