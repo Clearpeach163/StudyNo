@@ -1,6 +1,10 @@
 const history = [];
 let historyIndex = -1;
 
+// Eigen API-link voor het login/streak-systeem, los van SHEET_API_URL
+// (vul hier dezelfde URL in die je ook in index.html / ingame.html gebruikt)
+const STUDYNO_API_URL = "https://script.google.com/macros/s/AKfycbxX56GJJZGpG6Acu2vCNOc2IfeOYALod8wKoxh4-24/dev";
+
 const state = {
   role: "user"
 };
@@ -58,6 +62,69 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ======================
+  // API CALL (JSONP, zelfde truc als in index.html/ingame.html)
+  // ======================
+  let jsonpCounter = 0;
+  function callApi(payload) {
+    return new Promise((resolve, reject) => {
+      const callbackName = "jsonpCallback_" + (jsonpCounter++);
+      const params = new URLSearchParams(payload);
+      params.set("callback", callbackName);
+
+      window[callbackName] = function (data) {
+        resolve(data);
+        cleanup();
+      };
+
+      const script = document.createElement("script");
+      script.src = STUDYNO_API_URL + "?" + params.toString();
+      script.onerror = function () {
+        reject(new Error("Kon de API niet bereiken"));
+        cleanup();
+      };
+
+      function cleanup() {
+        delete window[callbackName];
+        script.remove();
+      }
+
+      document.body.appendChild(script);
+    });
+  }
+
+  // ======================
+  // TABLE FORMATTING
+  // ======================
+  function padCol(value, width) {
+    return String(value).padEnd(width).slice(0, width);
+  }
+
+  function formatAccountsTable(users) {
+    if (!users.length) return "no accounts found";
+
+    const cols = [
+      ["username", 18],
+      ["streak", 8],
+      ["learningTime(s)", 16],
+      ["lastLogin", 22]
+    ];
+
+    const header = cols.map(([name, w]) => padCol(name, w)).join("");
+    const separator = "-".repeat(cols.reduce((a, [, w]) => a + w, 0));
+
+    const rows = users.map((u) =>
+      [
+        padCol(u.username, cols[0][1]),
+        padCol(u.streak, cols[1][1]),
+        padCol(u.learningTime, cols[2][1]),
+        padCol(u.lastLogin || "-", cols[3][1])
+      ].join("")
+    );
+
+    return [header, separator, ...rows].join("\n").replace(/\n/g, "<br>");
+  }
+
+  // ======================
   // COMMANDS
   // ======================
   const commands = {
@@ -108,6 +175,20 @@ document.addEventListener("DOMContentLoaded", () => {
       if (state.role !== "admin") return "access denied (admin only)";
       clipboard();
       return "database_url: " + SHEET_API_URL;
+    },
+
+    ls: async (args) => {
+      if (state.role !== "admin") return "access denied (admin only)";
+      if (args[0] !== "accounts") return "usage: ls accounts";
+
+      log("fetching accounts...");
+      try {
+        const result = await callApi({ action: "getAllUsers" });
+        if (!result.success) return "error: " + result.message;
+        return formatAccountsTable(result.users);
+      } catch (err) {
+        return "error: " + err.message;
+      }
     }
   };
 
@@ -243,7 +324,15 @@ document.addEventListener("DOMContentLoaded", () => {
         ? commands[cmd](args)
         : `zsh: command not found: ${cmd}`;
 
-      if (result) log(result);
+      // commando's zoals "ls accounts" geven een Promise terug (moeten eerst
+      // op de API wachten) -> die afhandelen zonder de rest te blokkeren
+      if (result && typeof result.then === "function") {
+        result.then((text) => {
+          if (text) log(text);
+        });
+      } else if (result) {
+        log(result);
+      }
 
       return;
     }

@@ -272,6 +272,9 @@ function letsdo() {
 function home() {
   location.href = "homescreen.html";
 }
+function openLogin() {
+  location.href = "login.html";
+}
 
 
 
