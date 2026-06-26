@@ -1,9 +1,8 @@
 const history = [];
 let historyIndex = -1;
 
-// Eigen API-link voor het login/streak-systeem, los van SHEET_API_URL
-// (vul hier dezelfde URL in die je ook in index.html / ingame.html gebruikt)
-const STUDYNO_API_URL = "https://script.google.com/macros/s/AKfycbxX56GJJZGpG6Acu2vCNOc2IfeOYALod8wKoxh4-24/dev";
+const STUDYNO_API_URL =
+  "https://script.google.com/macros/s/AKfycbxX56GJJZGpG6Acu2vCNOc2IfeOYALod8wKoxh4-24/exec";
 
 const state = {
   role: "user"
@@ -20,18 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!terminal || !input) return;
 
-  // ======================
-  // PROMPT
-  // ======================
   function getPrompt() {
     const role = state.role === "admin" ? "root" : "user";
     const device = navigator.platform || "device";
     return `${role}@studyno-${device}:~$`;
   }
 
-  // ======================
-  // TERMINAL TOGGLE
-  // ======================
   function toggleTerminal() {
     terminal.classList.toggle("hidden");
     if (!terminal.classList.contains("hidden")) {
@@ -46,61 +39,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ======================
-  // OUTPUT
-  // ======================
   function log(text) {
     const output = document.querySelector(".output");
     if (output) output.innerHTML += `<div>${text}</div>`;
   }
 
-  function clipboard() {
-    navigator.clipboard.writeText(SHEET_API_URL).then(
-      () => log("Copied to clipboard"),
-      (err) => log("Failed to copy: " + err)
-    );
+  async function callApi(payload) {
+    try {
+      const res = await fetch(STUDYNO_API_URL, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      return await res.json();
+    } catch (err) {
+      throw new Error("API unreachable: " + err.message);
+    }
   }
 
-  // ======================
-  // API CALL (JSONP, zelfde truc als in index.html/ingame.html)
-  // ======================
-  let jsonpCounter = 0;
-  function callApi(payload) {
-    return new Promise((resolve, reject) => {
-      const callbackName = "jsonpCallback_" + (jsonpCounter++);
-      const params = new URLSearchParams(payload);
-      params.set("callback", callbackName);
-
-      window[callbackName] = function (data) {
-        resolve(data);
-        cleanup();
-      };
-
-      const script = document.createElement("script");
-      script.src = STUDYNO_API_URL + "?" + params.toString();
-      script.onerror = function () {
-        reject(new Error("Kon de API niet bereiken"));
-        cleanup();
-      };
-
-      function cleanup() {
-        delete window[callbackName];
-        script.remove();
-      }
-
-      document.body.appendChild(script);
-    });
-  }
-
-  // ======================
-  // TABLE FORMATTING
-  // ======================
   function padCol(value, width) {
     return String(value).padEnd(width).slice(0, width);
   }
 
   function formatAccountsTable(users) {
-    if (!users.length) return "no accounts found";
+    if (!users?.length) return "no accounts found";
 
     const cols = [
       ["username", 18],
@@ -109,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ["lastLogin", 22]
     ];
 
-    const header = cols.map(([name, w]) => padCol(name, w)).join("");
+    const header = cols.map(([n, w]) => padCol(n, w)).join("");
     const separator = "-".repeat(cols.reduce((a, [, w]) => a + w, 0));
 
     const rows = users.map((u) =>
@@ -124,22 +89,19 @@ document.addEventListener("DOMContentLoaded", () => {
     return [header, separator, ...rows].join("\n").replace(/\n/g, "<br>");
   }
 
-  // ======================
-  // COMMANDS
-  // ======================
   const commands = {
     sudo: (args) => {
       if (args[0] === "href" && args[1]) {
         window.location.href = args[1];
         return "redirecting...";
       }
-      return "Command ran successfully";
+      return "Command executed";
     },
 
     echo: (args) => args.join(" "),
 
     run: (args) => {
-      if (state.role !== "admin") return "access denied (admin only)";
+      if (state.role !== "admin") return "access denied";
       try {
         new Function(args.join(" "))();
         return "code executed";
@@ -172,19 +134,23 @@ document.addEventListener("DOMContentLoaded", () => {
     help: () => Object.keys(commands).join("\n"),
 
     data_url: () => {
-      if (state.role !== "admin") return "access denied (admin only)";
-      clipboard();
-      return "database_url: " + SHEET_API_URL;
+      if (state.role !== "admin") return "access denied";
+      return "backend: " + STUDYNO_API_URL;
     },
 
     ls: async (args) => {
-      if (state.role !== "admin") return "access denied (admin only)";
+      if (state.role !== "admin") return "access denied";
       if (args[0] !== "accounts") return "usage: ls accounts";
 
-      log("fetching accounts...");
       try {
-        const result = await callApi({ action: "getAllUsers" });
+        log("fetching accounts...");
+
+        const result = await callApi({
+          action: "getAllUsers"
+        });
+
         if (!result.success) return "error: " + result.message;
+
         return formatAccountsTable(result.users);
       } catch (err) {
         return "error: " + err.message;
@@ -194,38 +160,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const commandList = Object.keys(commands);
 
-  // ======================
-  // TAB STATE
-  // ======================
-  let tabState = {
-    matches: [],
-    index: 0,
-    lastInput: ""
-  };
-
-  // ======================
-  // GHOST AUTOCOMPLETE
-  // ======================
   function updateGhost() {
     const value = input.value;
-
-    if (!value) {
-      ghost.textContent = "";
-      return;
-    }
+    if (!value) return (ghost.textContent = "");
 
     const first = value.split(" ")[0];
 
-    const match = commandList.find(cmd =>
-      cmd.startsWith(first) && cmd !== first
+    const match = commandList.find(
+      (cmd) => cmd.startsWith(first) && cmd !== first
     );
 
     ghost.textContent = match || "";
   }
 
-  // ======================
-  // INPUT MASK (LOGIN)
-  // ======================
   function renderInputMask() {
     if (loginMode) {
       input.value = loginBuffer + "•".repeat(realPassword.length);
@@ -264,38 +211,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderInputMask();
-    updateGhost();
   });
 
-  // ======================
-  // KEY HANDLER
-  // ======================
   input.addEventListener("keydown", (e) => {
     const raw = input.value.trim();
 
-    // ======================
-    // TAB AUTOCOMPLETE
-    // ======================
     if (e.key === "Tab") {
       e.preventDefault();
-
       const first = input.value.split(" ")[0];
-
-      const match = commandList.find(cmd =>
-        cmd.startsWith(first)
-      );
-
-      if (!match) return;
-
-      input.value = match;
-
+      const match = commandList.find((cmd) => cmd.startsWith(first));
+      if (match) input.value = match;
       ghost.textContent = "";
       return;
     }
 
-    // ======================
-    // ENTER
-    // ======================
     if (e.key === "Enter") {
       ghost.textContent = "";
       if (!raw) return;
@@ -317,43 +246,31 @@ document.addEventListener("DOMContentLoaded", () => {
       historyIndex = history.length;
 
       log(`<span class="prompt">${getPrompt()}</span> ${raw}`);
-
       input.value = "";
 
       const result = commands[cmd]
         ? commands[cmd](args)
-        : `zsh: command not found: ${cmd}`;
+        : `command not found: ${cmd}`;
 
-      // commando's zoals "ls accounts" geven een Promise terug (moeten eerst
-      // op de API wachten) -> die afhandelen zonder de rest te blokkeren
-      if (result && typeof result.then === "function") {
-        result.then((text) => {
-          if (text) log(text);
-        });
+      if (result?.then) {
+        result.then((t) => t && log(t));
       } else if (result) {
         log(result);
       }
-
-      return;
     }
 
-    // ======================
-    // HISTORY
-    // ======================
     if (e.key === "ArrowUp") {
       e.preventDefault();
       if (!history.length) return;
-
       historyIndex = Math.max(0, historyIndex - 1);
       input.value = history[historyIndex] || "";
     }
 
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      if (!history.length) return;
-
       historyIndex = Math.min(history.length, historyIndex + 1);
-      input.value = historyIndex === history.length ? "" : history[historyIndex];
+      input.value =
+        historyIndex === history.length ? "" : history[historyIndex];
     }
   });
 });
