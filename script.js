@@ -9,6 +9,18 @@ let fnnf = 1;
 const gehad = [];
 let gehad_goed = [];
 let shuffleran = 0;
+const intro = document.getElementById("intro");
+
+if (localStorage.getItem("introPlayed")) {
+  intro.remove(); // meteen weg
+} else {
+  intro.play().catch(() => {});
+
+  intro.onended = () => {
+    localStorage.setItem("introPlayed", "true");
+    intro.remove(); // verdwijnt en site is “normaal”
+  };
+}
 
 const clickSound = new Audio("Streak.mp3");
 const fnnfSound = new Audio("fnnfselect.mp3");
@@ -77,9 +89,7 @@ function levenshtein(a, b) {
 
 let list;
 
-if (typeof update !== "undefined") { //zorgt dat als update er niet is dat dan niet heel de website crashet
-  document.getElementById("update").innerText = update;
-}
+
 const feedbackEl = document.getElementById("feedback");
 if (feedbackEl) feedbackEl.style.display = "none";
 
