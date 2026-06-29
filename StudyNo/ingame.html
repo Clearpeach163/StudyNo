@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+    <head>
+        <title>StudyNo</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/x-icon" href="studynologo.png">
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="words.js" defer></script>
+<script src="script.js" defer></script>
+<script src="new.js" defer></script>
+    <div class="terminal hidden" id="terminal">
+    <div class="terminal-header" id="terminal-header">
+        <div class="dots">
+
+        </div>
+        <div class="title">terminal</div>
+    </div>
+
+    <div class="output"></div>
+
+    <div class="input-line">
+        <span>$</span>
+        <input id="terminal-input"/>
+    </div>
+
+    <!-- resize handle -->
+    <div class="resizer" id="resizer"></div>
+    </div>
+        <script src="terminal.js" defer></script>
+  
+      </head>
+    <html>
+
+       
+        <body>
+     
+
+<div id="terminal" class="terminal hidden">
+  <div id="terminal-output" class="output"></div>
+
+  <div class="input-line">
+    <div class="input-wrap">
+  <div id="ghost"></div>
+  <input id="terminal-input" autocomplete="off" />
+</div>
+    <span>&gt;</span>
+    <input id="terminal-input" type="text" autocomplete="off" />
+  </div>
+</div>
+  <div id="popup" class="popup">
+    Error loading popup, please report this to the developer.<br>
+  </div>
+
+            <button id="back" onclick="home();">  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="15 19 5 12 15 5"></polyline>
+  </svg></button>
+
+            <h1 id="h1">Error 404 Please report!</h1>
+            <div id="main_div">
+            <input type="text" id="Main_input">
+            </div>
+            <button id="Opgave_count">Geen opgave gemaakt</button>
+           
+<div id="feedback">
+  <h4 id="juiste">Juiste antwoord:</h4>
+  <h3 id="correctwoord">Woord</h3>
+
+  <div class="button-row">
+    <button id="foutrek" onclick="foutreken();">Fout rekenen</button>
+    <button id="goedrek" onclick="goedreken();">Goed rekenen</button>
+  </div>
+</div>
+              <p onclick="version();" id="update">error loading version....</p>
+      
+        <div id="togglemain">
+  <div class="toggle" id="toggle">
+    <div class="indicator" id="indicator"></div>
+
+    <button data-mode="FN">FN</button>
+    <button class="active" data-mode="NF">NF</button>
+    <button data-mode="Shuffle">Shuffle</button>
+  </div>
+</div>
+         
+              
+           
+              
+               
+
+
+              
+        </body>
+        </html>
