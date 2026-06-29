@@ -1,27 +1,14 @@
-
 let goed = 0;
 let fout = 0;
 let random = 0;
 let currentWord;
 let streak = 0;
 let fnnf = 1;
-
+let words = [];
 const gehad = [];
 let gehad_goed = [];
 let shuffleran = 0;
-const intro = document.getElementById("intro");
-
-if (localStorage.getItem("introPlayed")) {
-  intro.remove(); // meteen weg
-} else {
-  intro.play().catch(() => {});
-
-  intro.onended = () => {
-    localStorage.setItem("introPlayed", "true");
-    intro.remove(); // verdwijnt en site is “normaal”
-  };
-}
-
+const popup = document.getElementById("popup");
 const clickSound = new Audio("Streak.mp3");
 const fnnfSound = new Audio("fnnfselect.mp3");
 const messages = [
@@ -47,7 +34,6 @@ const inARowPhrases = [
   "on a streak",
   "clean streak"
 ];
-
 
 console.log(messages[Math.floor(Math.random() * messages.length)]);
 function playStreak() {
@@ -84,23 +70,21 @@ function levenshtein(a, b) {
   return dp[a.length][b.length];
 }
 
-//const activeList = localStorage.getItem("activeList");
-//words = lists[activeList]?.words || [];
+const activeList = localStorage.getItem("activeList");
+words = lists[activeList]?.words || [];
 
 let list;
 
-
-const feedbackEl = document.getElementById("feedback");
-if (feedbackEl) feedbackEl.style.display = "none";
+document.getElementById("update").innerText = update;
+document.getElementById("feedback").style.display = "none";
 
 const h1 = document.getElementById("h1");
 const input = document.getElementById("Main_input");
 
 function newWord() {
-  let currentListKey = localStorage.getItem("activeList") || "fr_marche6_fix";
-    random = Math.floor(Math.random() * lists[currentListKey].words.length);
+    random = Math.floor(Math.random() * words.length);
     gehad.push(random);
-    currentWord = lists[currentListKey].words[random];
+    currentWord = words[random];
 
   // if (gehad.includes(random)) {
   //   console.log("Al gehad twin...");
@@ -122,19 +106,17 @@ function newWord() {
     shuffleran = Math.round(Math.random()); // 0 or 1
     console.log("Shuffle chose" + shuffleran);
 
-    if (shuffleran === 0) { 
+    if (shuffleran === 0) {
       h1.textContent = currentWord.nl;
     } else {
       h1.textContent = currentWord.taal;
     }
   }
 
-  document.getElementById("Main_input").value = ""; //makes sure the input is empty when a new word is generated
+  input.value = "";
 }
 // hier is de check
-
 input.addEventListener("keyup", (e) => {
-  log("currentWord:", currentWord); // ← tijdelijk
   if (e.key !== "Enter") return;
 
   const answer = input.value.trim().toLowerCase(); //maakt het antwoord passend voor de check
@@ -282,58 +264,31 @@ function letsdo() {
 function home() {
   location.href = "homescreen.html";
 }
-function openLogin() {
-  location.href = "login.html";
-}
-
-
 
 const buttons = document.querySelectorAll(".toggle button");
-const indicator = document.getElementById("indicator");
-
-function updateIndicator(button) {
-  indicator.style.left = `${button.offsetLeft}px`;
-  indicator.style.width = `${button.offsetWidth}px`;
-}
 
 buttons.forEach((btn) => {
   btn.addEventListener("click", () => {
     playFnnf();
-
     buttons.forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
 
-    updateIndicator(btn);
+    fnnf = btn.dataset.mode;
 
-    switch (btn.dataset.mode) {
-      case "FN":
-        fnnf = 0;
-        break;
-
-      case "NF":
-        fnnf = 1;
-        break;
-
-      case "Shuffle":
-        fnnf = 2;
-        break;
+    if (fnnf === "FN") {
+      fnnf = 0;
+      console.log(fnnf);
+    } else if (fnnf === "NF") {
+      fnnf = 1;
+      console.log(fnnf);
+    } else if (fnnf === "Shuffle") {
+      fnnf = 2;
+      console.log(fnnf);
     }
-
-    console.log(fnnf);
   });
 });
-
-// Indicator op de actieve knop zetten bij het laden
-window.addEventListener("DOMContentLoaded", () => {
-  const activeButton = document.querySelector(".toggle button.active");
-  if (activeButton) {
-    updateIndicator(activeButton);
-  }
-});
-
-
 function streakcheck() {
-if (streak > 0 && streak % 5 === 0) {  //ik had eerst hardcoded
+if (streak === 5 || streak === 10 || streak === 15 || streak === 20 || streak === 25 || streak === 30 || streak === 35 || streak === 40 || streak === 45 || streak === 50) { 
   fireConfetti();
   showPopup(streak + " " + inARowPhrases[Math.floor(Math.random() * inARowPhrases.length)] + ", " + messages[Math.floor(Math.random() * messages.length)]);
   
@@ -342,11 +297,10 @@ if (streak > 0 && streak % 5 === 0) {  //ik had eerst hardcoded
 
 
 function showPopup(message) {
-
   playStreak();
   popup.textContent = message;
 
-  document.getElementById("popup").classList.add("show");
+  popup.classList.add("show");
 
   setTimeout(() => {
     popup.classList.remove("show");
