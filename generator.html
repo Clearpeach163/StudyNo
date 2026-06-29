@@ -76,8 +76,7 @@ button:hover{
 
 <h2>VOCAB GENERATOR // SYSTEM</h2>
 
-<input id="key" placeholder="KEY (e.g. fr_aller)">
-<input id="title" placeholder="TITLE (e.g. Frans - Aller)">
+<input id="key" placeholder="fr_marche6fr">
 
 <textarea id="input" placeholder="FORMAT:
 je vais = ik ga
@@ -93,7 +92,6 @@ il va = hij gaat"></textarea>
 function generate(){
 
     const key = document.getElementById("key").value.trim();
-    const title = document.getElementById("title").value.trim();
 
     const lines = document.getElementById("input").value
         .split("\n")
@@ -101,7 +99,6 @@ function generate(){
         .filter(Boolean);
 
     let result = `${key}: {\n`;
-    result += `  title: "${title}",\n`;
     result += `  words: [\n`;
 
     for(const line of lines){
@@ -118,12 +115,6 @@ function generate(){
     result += `},`;
 
     document.getElementById("output").value = result;
-}
-
-function copyOutput(){
-    navigator.clipboard.writeText(
-        document.getElementById("output").value
-    );
 }
 </script>
 
