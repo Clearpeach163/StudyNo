@@ -399,4 +399,31 @@ fr_er: {
     { taal: "-ent", nl: "ils / elles (niet uitspreken)" },
   ]
 },
+fr_aller: {
+  title: "Frans - Aller",
+  words: [
+    { taal: "je vais", nl: "ik ga" },
+    { taal: "tu vas", nl: "jij gaat" },
+    { taal: "il va", nl: "hij gaat" },
+    { taal: "elle va", nl: "zij gaat" },
+    { taal: "nous allons", nl: "wij gaan" },
+    { taal: "vous allez", nl: "jullie gaan / u gaat" },
+    { taal: "ils vont", nl: "zij gaan" },
+    { taal: "elles vont", nl: "zij gaan" },
+  ]
+},
+fr_faire: {
+  title: "Frans - Faire",
+  words: [
+    { taal: "je fais", nl: "ik doe / maak" },
+    { taal: "tu fais", nl: "jij doet / maakt" },
+    { taal: "il fait", nl: "hij doet / maakt" },
+    { taal: "elle fait", nl: "zij doet / maakt" },
+    { taal: "nous faisons", nl: "wij doen / maken" },
+    { taal: "vous faites", nl: "jullie doen / maken" },
+    { taal: "ils font", nl: "zij doen / maken" },
+    { taal: "elles font", nl: "zij doen / maken" },
+  ]
+},
+
 };
