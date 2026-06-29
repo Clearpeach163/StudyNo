@@ -1,9 +1,6 @@
 const history = [];
 let historyIndex = -1;
 
-const STUDYNO_API_URL =
-  "https://script.google.com/macros/s/AKfycbxX56GJJZGpG6Acu2vCNOc2IfeOYALod8wKoxh4-24/exec";
-
 const state = {
   role: "user"
 };
@@ -19,12 +16,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!terminal || !input) return;
 
+  // ======================
+  // PROMPT
+  // ======================
   function getPrompt() {
     const role = state.role === "admin" ? "root" : "user";
     const device = navigator.platform || "device";
     return `${role}@studyno-${device}:~$`;
   }
 
+  // ======================
+  // TERMINAL TOGGLE
+  // ======================
   function toggleTerminal() {
     terminal.classList.toggle("hidden");
     if (!terminal.classList.contains("hidden")) {
@@ -39,69 +42,37 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // ======================
+  // OUTPUT
+  // ======================
   function log(text) {
     const output = document.querySelector(".output");
     if (output) output.innerHTML += `<div>${text}</div>`;
   }
 
-  async function callApi(payload) {
-    try {
-      const res = await fetch(STUDYNO_API_URL, {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-
-      return await res.json();
-    } catch (err) {
-      throw new Error("API unreachable: " + err.message);
-    }
-  }
-
-  function padCol(value, width) {
-    return String(value).padEnd(width).slice(0, width);
-  }
-
-  function formatAccountsTable(users) {
-    if (!users?.length) return "no accounts found";
-
-    const cols = [
-      ["username", 18],
-      ["streak", 8],
-      ["learningTime(s)", 16],
-      ["lastLogin", 22]
-    ];
-
-    const header = cols.map(([n, w]) => padCol(n, w)).join("");
-    const separator = "-".repeat(cols.reduce((a, [, w]) => a + w, 0));
-
-    const rows = users.map((u) =>
-      [
-        padCol(u.username, cols[0][1]),
-        padCol(u.streak, cols[1][1]),
-        padCol(u.learningTime, cols[2][1]),
-        padCol(u.lastLogin || "-", cols[3][1])
-      ].join("")
+  function clipboard() {
+    navigator.clipboard.writeText(SHEET_API_URL).then(
+      () => log("Copied to clipboard"),
+      (err) => log("Failed to copy: " + err)
     );
-
-    return [header, separator, ...rows].join("\n").replace(/\n/g, "<br>");
   }
 
+  // ======================
+  // COMMANDS
+  // ======================
   const commands = {
     sudo: (args) => {
       if (args[0] === "href" && args[1]) {
         window.location.href = args[1];
         return "redirecting...";
       }
-      return "Command executed";
+      return "Command ran successfully";
     },
 
     echo: (args) => args.join(" "),
 
     run: (args) => {
-      if (state.role !== "admin") return "access denied";
+      if (state.role !== "admin") return "access denied (admin only)";
       try {
         new Function(args.join(" "))();
         return "code executed";
@@ -125,6 +96,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       return "wrong password";
     },
+    href: (args) => {
+      window.location.href = args
+      return "href successful!"
+    },
 
     logout: () => {
       state.role = "user";
@@ -134,45 +109,46 @@ document.addEventListener("DOMContentLoaded", () => {
     help: () => Object.keys(commands).join("\n"),
 
     data_url: () => {
-      if (state.role !== "admin") return "access denied";
-      return "backend: " + STUDYNO_API_URL;
-    },
-
-    ls: async (args) => {
-      if (state.role !== "admin") return "access denied";
-      if (args[0] !== "accounts") return "usage: ls accounts";
-
-      try {
-        log("fetching accounts...");
-
-        const result = await callApi({
-          action: "getAllUsers"
-        });
-
-        if (!result.success) return "error: " + result.message;
-
-        return formatAccountsTable(result.users);
-      } catch (err) {
-        return "error: " + err.message;
-      }
+      if (state.role !== "admin") return "access denied (admin only)";
+      clipboard();
+      return "database_url: " + SHEET_API_URL;
     }
   };
 
   const commandList = Object.keys(commands);
 
+  // ======================
+  // TAB STATE
+  // ======================
+  let tabState = {
+    matches: [],
+    index: 0,
+    lastInput: ""
+  };
+
+  // ======================
+  // GHOST AUTOCOMPLETE
+  // ======================
   function updateGhost() {
     const value = input.value;
-    if (!value) return (ghost.textContent = "");
+
+    if (!value) {
+      ghost.textContent = "";
+      return;
+    }
 
     const first = value.split(" ")[0];
 
-    const match = commandList.find(
-      (cmd) => cmd.startsWith(first) && cmd !== first
+    const match = commandList.find(cmd =>
+      cmd.startsWith(first) && cmd !== first
     );
 
     ghost.textContent = match || "";
   }
 
+  // ======================
+  // INPUT MASK (LOGIN)
+  // ======================
   function renderInputMask() {
     if (loginMode) {
       input.value = loginBuffer + "•".repeat(realPassword.length);
@@ -211,20 +187,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderInputMask();
+    updateGhost();
   });
 
+  // ======================
+  // KEY HANDLER
+  // ======================
   input.addEventListener("keydown", (e) => {
     const raw = input.value.trim();
 
+    // ======================
+    // TAB AUTOCOMPLETE
+    // ======================
     if (e.key === "Tab") {
       e.preventDefault();
+
       const first = input.value.split(" ")[0];
-      const match = commandList.find((cmd) => cmd.startsWith(first));
-      if (match) input.value = match;
+
+      const match = commandList.find(cmd =>
+        cmd.startsWith(first)
+      );
+
+      if (!match) return;
+
+      input.value = match;
+
       ghost.textContent = "";
       return;
     }
 
+    // ======================
+    // ENTER
+    // ======================
     if (e.key === "Enter") {
       ghost.textContent = "";
       if (!raw) return;
@@ -246,31 +240,35 @@ document.addEventListener("DOMContentLoaded", () => {
       historyIndex = history.length;
 
       log(`<span class="prompt">${getPrompt()}</span> ${raw}`);
+
       input.value = "";
 
       const result = commands[cmd]
         ? commands[cmd](args)
-        : `command not found: ${cmd}`;
+        : `zsh: command not found: ${cmd}`;
 
-      if (result?.then) {
-        result.then((t) => t && log(t));
-      } else if (result) {
-        log(result);
-      }
+      if (result) log(result);
+
+      return;
     }
 
+    // ======================
+    // HISTORY
+    // ======================
     if (e.key === "ArrowUp") {
       e.preventDefault();
       if (!history.length) return;
+
       historyIndex = Math.max(0, historyIndex - 1);
       input.value = history[historyIndex] || "";
     }
 
     if (e.key === "ArrowDown") {
       e.preventDefault();
+      if (!history.length) return;
+
       historyIndex = Math.min(history.length, historyIndex + 1);
-      input.value =
-        historyIndex === history.length ? "" : history[historyIndex];
+      input.value = historyIndex === history.length ? "" : history[historyIndex];
     }
   });
 });

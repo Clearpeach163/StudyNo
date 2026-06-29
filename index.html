@@ -12,51 +12,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
 
-<script>
-const video = document.getElementById("introVideo");
-const audio = document.getElementById("introAudio");
 
-const played = localStorage.getItem("introPlayed");
-
-if (played) {
-  video.remove();
-} else {
-  video.muted = true;
-  video.play();
-
-  // audio klaarzetten maar nog NIET spelen
-  audio.volume = 1;
-
-  // user interaction unlock
-  document.addEventListener("click", () => {
-    audio.play().catch(() => {});
-  }, { once: true });
-
-  // sync: start audio wanneer video start
-  video.addEventListener("play", () => {
-    audio.currentTime = 0;
-  });
-
-  // einde intro
-  video.addEventListener("ended", () => {
-    localStorage.setItem("introPlayed", "true");
-    video.remove();
-    audio.pause();
-    audio.currentTime = 0;
-  });
-}
-</script>
 </head>
 <body>
-<video id="introVideo" autoplay muted playsinline>
-  <source src="intro.mp4" type="video/mp4">
-</video>
-
-<audio id="introAudio" src="intro.mp3"></audio>
-
-
-
-
 
 <nav>
     <div class="logo">StudyNo.</div>

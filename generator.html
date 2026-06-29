@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vocabulary Generator</title>
+
+<style>
+body{
+    background:#000;
+    color:#fff;
+    font-family: "Courier New", Courier, monospace;
+    padding:30px;
+}
+
+/* layout */
+h2{
+    letter-spacing:2px;
+    border-bottom:1px solid #fff;
+    padding-bottom:10px;
+    margin-bottom:20px;
+}
+
+/* inputs */
+input, textarea{
+    width:100%;
+    margin:10px 0;
+    padding:12px;
+    font-size:14px;
+    background:#000;
+    color:#fff;
+    border:1px solid #fff;
+    outline:none;
+    font-family: inherit;
+}
+
+input:focus, textarea:focus{
+    box-shadow:0 0 8px #fff;
+}
+
+/* textarea sizing */
+textarea{
+    height:220px;
+    resize:none;
+}
+
+/* buttons */
+button{
+    background:#000;
+    color:#fff;
+    border:1px solid #fff;
+    padding:10px 16px;
+    margin-right:10px;
+    cursor:pointer;
+    font-family: inherit;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+button:hover{
+    background:#fff;
+    color:#000;
+}
+
+/* output */
+#output{
+    height:300px;
+    margin-top:20px;
+    background:#000;
+    border:1px solid #fff;
+    white-space:pre;
+}
+</style>
+</head>
+
+<body>
+
+<h2>VOCAB GENERATOR // SYSTEM</h2>
+
+<input id="key" placeholder="KEY (e.g. fr_aller)">
+<input id="title" placeholder="TITLE (e.g. Frans - Aller)">
+
+<textarea id="input" placeholder="FORMAT:
+je vais = ik ga
+tu vas = jij gaat
+il va = hij gaat"></textarea>
+
+<button onclick="generate()">EXECUTE</button>
+<button onclick="copyOutput()">COPY</button>
+
+<textarea id="output" readonly></textarea>
+
+<script>
+function generate(){
+
+    const key = document.getElementById("key").value.trim();
+    const title = document.getElementById("title").value.trim();
+
+    const lines = document.getElementById("input").value
+        .split("\n")
+        .map(x => x.trim())
+        .filter(Boolean);
+
+    let result = `${key}: {\n`;
+    result += `  title: "${title}",\n`;
+    result += `  words: [\n`;
+
+    for(const line of lines){
+        const parts = line.split("=");
+        if(parts.length < 2) continue;
+
+        const taal = parts[0].trim().replaceAll('"','\\"');
+        const nl = parts.slice(1).join("=").trim().replaceAll('"','\\"');
+
+        result += `    { taal: "${taal}", nl: "${nl}" },\n`;
+    }
+
+    result += `  ]\n`;
+    result += `},`;
+
+    document.getElementById("output").value = result;
+}
+
+function copyOutput(){
+    navigator.clipboard.writeText(
+        document.getElementById("output").value
+    );
+}
+</script>
+
+</body>
+</html>
