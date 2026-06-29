@@ -259,7 +259,7 @@ function prep() {
           document.getElementById("correctwoord").innerText =
           currentWord.taal;
      } else if (fnnf === 1) {
-        alert("fnnf is 1" + currentWord.nl);
+        
           document.getElementById("correctwoord").innerText = currentWord.nl;
      } else if (fnnf === 2) {
           if (shuffleran === 0) {
@@ -270,8 +270,11 @@ function prep() {
                currentWord.nl;
           }
      }
-   
-    document.getElementById("jijhad").innerText = input.value;
+   if (input.value === "") {
+       document.getElementById("jijhad").innerText = "-";
+   } else {
+       document.getElementById("jijhad").innerText = input.value;
+   }
 };
 
 const buttons = document.querySelectorAll(".toggle button");
