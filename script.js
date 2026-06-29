@@ -123,6 +123,7 @@ input.addEventListener("keyup", (e) => {
 
   // ALS FEEDBACK OPEN IS
   if (document.getElementById("feedback").style.display === "block") {
+    
     foutreken();
     return;
   }
@@ -139,13 +140,8 @@ input.addEventListener("keyup", (e) => {
       newWord();
       
     } else {
+        prep();
      
-    
-
-   
-        document.getElementById("feedback").style.display = "block";
-        document.getElementById("correctwoord").innerText =
-          currentWord.taal;
       
     }
   } else if (fnnf === 1) {
@@ -158,11 +154,7 @@ input.addEventListener("keyup", (e) => {
       newWord();
       streakcheck();
     } else {
-      
-      
-        document.getElementById("feedback").style.display = "block";
-        document.getElementById("correctwoord").innerText =
-          currentWord.nl;
+      prep();
       
     }
    } else if (fnnf === 2) {
@@ -175,9 +167,7 @@ input.addEventListener("keyup", (e) => {
       streakcheck();
     } else {
         console.log("so the shuffle ran 0 and the answer was wrong but now i gotta display the french word");
-           document.getElementById("feedback").style.display = "block";
-        document.getElementById("correctwoord").innerText =
-          currentWord.taal;
+          prep();
     }
   } else if (shuffleran === 1) {
     if (answer === currentWord.nl.toLowerCase()) {
@@ -187,9 +177,7 @@ input.addEventListener("keyup", (e) => {
       newWord();
       streakcheck();
     } else {
-           document.getElementById("feedback").style.display = "block";
-        document.getElementById("correctwoord").innerText =
-          currentWord.nl;
+          prep();
     }
   }
 }
@@ -264,6 +252,27 @@ function letsdo() {
 function home() {
   location.href = "homescreen.html";
 }
+function prep() {
+
+     document.getElementById("feedback").style.display = "block";
+     if (fnnf === 0) {
+          document.getElementById("correctwoord").innerText =
+          currentWord.taal;
+     } else if (fnnf === 1) {
+        alert("fnnf is 1" + currentWord.nl);
+          document.getElementById("correctwoord").innerText = currentWord.nl;
+     } else if (fnnf === 2) {
+          if (shuffleran === 0) {
+               document.getElementById("correctwoord").innerText =
+               currentWord.taal;
+          } else if (shuffleran === 1) {
+               document.getElementById("correctwoord").innerText =
+               currentWord.nl;
+          }
+     }
+   
+    document.getElementById("jijhad").innerText = input.value;
+};
 
 const buttons = document.querySelectorAll(".toggle button");
 

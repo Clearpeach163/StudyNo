@@ -206,128 +206,192 @@ body {
   }
 }
 #feedback {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  
-  width: min(90vw, 520px);
-  min-height: 260px;
-  padding: 20px;
-  box-sizing: border-box;
 
-  background: rgba(255, 255, 255, 0.068);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+                 "Inter", "Segoe UI", Roboto, sans-serif;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: min(92vw, 460px);
+    padding: clamp(28px, 5vw, 40px) clamp(26px, 5vw, 36px);
+    box-sizing: border-box;
+
+    background: rgba(255, 255, 255, 0.068);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 30px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.87);
 
-  color: white;
-  font-family: system-ui, sans-serif;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 18px;
-
-  overflow: hidden;
-  transition: all 0.35s ease;
-}
-
-#feedback:hover {
-  background: rgba(255, 255, 255, 0.048);
-  border-radius: 28px;
-  transform: translate(-50%, -50%) scale(1.01);
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
-}
-
-#juiste {
-  text-align: center;
-  user-select: none;
-  margin: 0;
-  font-weight: 200;
-  font-size: 1.1rem;
-}
-
-#correctwoord {
-  user-select: none;
-  text-align: center;
-  margin: 0;
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  line-height: 1;
-  font-weight: 700;
-}
-
-.button-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  width: 100%;
   
-}
 
-#goedrek,
-#foutrek {
-  width: 100%;
-  min-height: 52px;
-  padding: 12px 16px;
-  box-sizing: border-box;
+    box-shadow:
+      0 25px 60px -10px rgba(0, 0, 0, 0.45),
+      0 8px 28px rgba(130, 40, 210, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+    color: white;
+    display: flex;
+    flex-direction: column;
 
-  color: white;
-  font-family: system-ui, sans-serif;
-  font-size: 1rem;
-  cursor: pointer;
+    position: fixed; /* herhaald zodat de regel hierboven niet overschreven wordt */
+    overflow: hidden;
+    isolation: isolate;
 
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+    animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  #feedback:hover::before {
+    opacity: 1;
+  }
 
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
+  #feedback:hover {
+    transform: translate(-50%, -50%) scale(1.008);
+    box-shadow:
+      0 30px 70px -10px rgba(0, 0, 0, 0.4),
+      0 10px 32px rgba(130, 40, 210, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+  }
 
-#foutrek {
-  background: rgba(255, 255, 255, 0.041);
-}
+  @keyframes popIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.94); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
 
-#goedrek {
-  background: rgba(115, 0, 182, 0.877);
-  border: 1px solid rgba(163, 24, 255, 0.438);
-}
+  #feedback > * {
+    position: relative;
+    z-index: 1;
+  }
 
-#foutrek:hover,
-#goedrek:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.38);
-}
+  #juiste {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    user-select: none;
+    margin: 0 0 6px 0;
+    font-weight: 500;
+    font-size: 1rem;
 
-#foutrek:active,
-#goedrek:active {
-  transform: translateY(0);
-}
+    
+    color: rgba(255, 255, 255, 0.5);
+  }
 
-#foutrek:focus-visible,
-#goedrek:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.75);
-  outline-offset: 2px;
-}
+  #jijhad {
+    text-align: center;
+    user-select: none;
+    margin: 0 0 22px 0;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: rgba(255, 150, 160, 0.85);
+  }
 
-@media (max-width: 480px) {
-  #feedback {
-    width: min(92vw, 420px);
-    min-height: 240px;
-    padding: 16px;
-    border-radius: 24px;
+  #correctwoord {
+    user-select: none;
+    text-align: center;
+    margin: 0 0 28px 0;
+    font-size: clamp(2.1rem, 7vw, 3.4rem);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    background: linear-gradient(135deg, #ffffff, #d6b3ff 80%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 28px rgba(163, 24, 255, 0.32));
   }
 
   .button-row {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
   }
-}
+
+  #goedrek,
+  #foutrek {
+    width: 100%;
+    min-height: 54px;
+    padding: 12px 16px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border-radius: 9999px;
+    font-size: 0.96rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    cursor: pointer;
+
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    transition: all 0.4s;
+  }
+
+  #foutrek {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.92);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+
+  #goedrek {
+    background: linear-gradient(180deg, rgba(178, 92, 255, 0.95), rgba(120, 18, 198, 0.95));
+    border: 1px solid rgba(202, 144, 255, 0.4);
+    color: white;
+    box-shadow: 0 8px 22px rgba(130, 30, 210, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+
+  #goedrek:hover {
+   
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.135), inset 0 1px 0 rgba(255, 255, 255, 0.212);
+  }
+
+  #foutrek:hover,
+  #goedrek:hover {
+    transform: translateY(-1px);
+  }
+
+  #foutrek:active,
+  #goedrek:active {
+    transform: translateY(0) scale(0.96);
+  }
+
+  #foutrek:focus-visible,
+  #goedrek:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.75);
+    outline-offset: 2px;
+  }
+
+  #foutrek svg,
+  #goedrek svg {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 420px) {
+    #feedback { border-radius: 26px; }
+    .button-row { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #feedback, #feedback::before, #foutrek, #goedrek {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
 #update {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: rgba(255, 255, 255, 0.411);
