@@ -1,12 +1,14 @@
 let goed = 0;
 let fout = 0;
 let random = 0;
+let feedbackOpen = false;
 let currentWord;
 let streak = 0;
 let fnnf = 1;
 let words = [];
 let gehad_goed = [];
 let shuffleran = 0;
+
 const popup = document.getElementById("popup");
 const clickSound = new Audio("Streak.mp3");
 const fnnfSound = new Audio("fnnfselect.mp3");
@@ -207,6 +209,7 @@ function checkCookie() {
 window.onload = checkCookie;
 
 function foutreken() {
+  feedbackOpen = false;
   fout++;
   streak = 0;
   document.getElementById("feedback").style.display = "none";
@@ -217,6 +220,7 @@ function foutreken() {
 }
 
 function goedreken() {
+  feedbackOpen = false;
   goed++;
   streak++;
   gehad_goed.push(currentWord);
@@ -247,7 +251,7 @@ function home() {
   location.href = "homescreen.html";
 }
 function prep() {
-
+  feedbackOpen = true;
      document.getElementById("feedback").style.display = "block";
      if (fnnf === 0) {
           document.getElementById("correctwoord").innerText =
@@ -334,4 +338,140 @@ function fireConfetti() {
       requestAnimationFrame(frame);
     }
   })();
+}
+
+const charMenu = document.getElementById("charMenu");
+
+const variants = {
+  a: ["a", "á", "à", "â", "ä", "ã", "å", "ā"],
+  c: ["c", "ç"],
+  e: ["e", "é", "è", "ê", "ë", "ē"],
+  i: ["i", "í", "ì", "î", "ï", "ī"],
+  n: ["n", "ñ"],
+  o: ["o", "ó", "ò", "ô", "ö", "õ", "ō", "ø"],
+  s: ["s", "ß"],
+  u: ["u", "ú", "ù", "û", "ü", "ū"]
+};
+
+let holdTimer = null;
+let activeKey = null;
+
+// --------------------
+// KEY HOLD DETECTION
+// --------------------
+input.addEventListener("keydown", (e) => {
+  if (feedbackOpen) return;
+  if (e.repeat) return;
+  if (!variants[e.key]) return;
+
+  activeKey = e.key;
+
+  holdTimer = setTimeout(() => {
+    showCharMenu(input, variants[e.key]);
+  }, 600);
+});
+
+input.addEventListener("keyup", () => {
+  clearTimeout(holdTimer);
+  holdTimer = null;
+  activeKey = null;
+});
+
+// --------------------
+// SHOW MENU
+// --------------------
+function showCharMenu(input, chars) {
+  charMenu.innerHTML = "";
+
+  const topRow = document.createElement("div");
+  const bottomRow = document.createElement("div");
+
+  topRow.className = "row top";
+  bottomRow.className = "row bottom";
+
+  chars.forEach((char, i) => {
+    const letter = document.createElement("span");
+    letter.textContent = char;
+    letter.onclick = () => selectChar(i);
+
+    const num = document.createElement("span");
+    num.textContent = String(i + 1);
+    num.onclick = () => selectChar(i);
+
+    topRow.appendChild(letter);
+    bottomRow.appendChild(num);
+  });
+
+  charMenu.appendChild(topRow);
+  charMenu.appendChild(bottomRow);
+
+  const rect = input.getBoundingClientRect();
+
+  charMenu.style.left = rect.left + "px";
+  charMenu.style.top = rect.top - 60 + "px";
+
+  charMenu.classList.remove("hidden");
+
+  window.addEventListener("keydown", numberSelectHandler);
+   window.addEventListener("keyup", closeMenu);
+}
+
+// --------------------
+// SELECT CHAR
+// --------------------
+function selectChar(index) {
+  const list = variants[activeKey];
+  if (!list) return;
+
+  insertChar(list[index]);
+  closeMenu();
+}
+
+// --------------------
+// NUMBER KEY SELECT
+// --------------------
+function numberSelectHandler(e) {
+  if (!activeKey) return;
+
+  const n = parseInt(e.key);
+  if (isNaN(n) || n === 0) return;
+
+  const list = variants[activeKey];
+  const index = n - 1;
+
+  if (index >= list.length) return;
+
+  selectChar(index);
+}
+
+// --------------------
+// INSERT CHAR
+// --------------------
+function insertChar(char) {
+  const pos = input.selectionStart;
+
+  input.value =
+    input.value.slice(0, pos - 1) +
+    char +
+    input.value.slice(input.selectionEnd);
+
+  input.setSelectionRange(pos, pos);
+  input.focus();
+}
+
+// --------------------
+// CLOSE MENU
+// --------------------
+function closeMenu() {
+  charMenu.classList.add("hidden");
+
+  window.removeEventListener("keydown", numberSelectHandler);
+
+  holdTimer = null;
+  activeKey = null;
+}
+if (!localStorage.getItem("seen")) {
+ showPopup("Hey there, Did you know you can add accents like: ë by holding the letter!");
+
+  localStorage.setItem("seen", "true");
 }

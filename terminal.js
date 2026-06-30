@@ -1,3 +1,8 @@
+  function getPrompt() {
+    const role = state.role === "admin" ? "root" : "user";
+    const device = navigator.platform || "device";
+    return `${role}@studyno-${device}:~$`;
+  }
 const history = [];
 let historyIndex = -1;
 
@@ -19,11 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ======================
   // PROMPT
   // ======================
-  function getPrompt() {
-    const role = state.role === "admin" ? "root" : "user";
-    const device = navigator.platform || "device";
-    return `${role}@studyno-${device}:~$`;
-  }
+
 
   // ======================
   // TERMINAL TOGGLE
@@ -99,6 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
     href: (args) => {
       window.location.href = args
       return "href successful!"
+    },
+    clear_localstorage: () => {
+      localStorage.clear();
+      return "cleared localStorage on: ";
     },
 
     logout: () => {
