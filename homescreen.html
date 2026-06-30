@@ -1,75 +1,301 @@
-<!DOCTYPE html>
-    <html>
-        <head>
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Onest:wght@100..900&display=swap" rel="stylesheet">
-        <script src="words.js"></script>
-<script src="script.js"></script>
-<script src="new.js" defer></script>
-<script src="toggle.js"></script>
-            <title>StudyNo</title>
-            <link rel="icon" type="image/x-icon" href="studynologo.png">
-            <link rel="stylesheet" href="style.css">
-        </head>
-        <body>
-            
-               
-    <a href="ideas.html" id="submithref">Got feedback or ideas?</a>
 
-                       <p onclick="version();" id="update">error loading version....</p>
-                  <div id="main_menu_div">
-            <div class="menu">
-          
-            <div class="accordion">
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>StudyNo</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body {
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 24px;
+    font-family: sans-serif;
+    color: white;
+  }
 
-                <details>
-                    <summary>Frans</summary>
-                    <div class="content">
-                        <button onclick="setlist('fr_marche6');" class="select">Frans marche 6 </button>
-                        <button onclick="setlist('fr_marche6_fix');" class="select">Frans marche 6 (Fix) </button>
-                        <button onclick="setlist('fr_marche7');" class="select">Frans marche 7 </button>
-                        <button onclick="setlist('fr_marche7_fix');" class="select">Frans marche 7 (Fix) </button>
-                        <button onclick="setlist('fr_marche8');" class="select">Frans marche 8 </button>
-                        <button onclick="setlist('fr_marche8_fix');" class="select">Frans marche 8 (fix)</button>
-                        <details>
-                            <summary>Frans - Werkwoorden</summary>
-                            <div class="content">
-                                  <button onclick="setlist('fr_etre');" class="select">Etre</button>
-                        <button onclick="setlist('fr_avoir');" class="select">Avoir</button>
-                        <button onclick="setlist('fr_er');" class="select">Regelmatige -ER Werkwoorden</button>
-                        <button onclick="setlist('fr_aller');" class="select">Aller</button>
-                        <button onclick="setlist('fr_faire');" class="select">Faire</button> 
-                                </div>
-                        </details>
-                      
-                    </div>
-                </details>
-            
-                <details>
-                    <summary>Engels</summary>
-                    <div class="content">
-                           <details>
-                                <summary>England</summary>
-                                <div class="content">
-                                    <button onclick="setlist('eng_h1.2');" class="select">England - h1.2</button>
-                        
-                                </div>
-                           </details>
-                    </div>
-                </details>
-            
-                <details>
-                    <summary>Duits</summary>
-                    <div class="content">
-                    
-                      
-                    </div>
-                </details>
-            </div>
-            
+  h1 {
+    text-align: center;
+        font-size:clamp(1.5rem,4vw,3.5rem);
+  }
+
+  .language {
+    margin-bottom: 8px;
+        background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-radius: 19px;
+    padding: 2%;
+    animation: fadeIn_home 0.5s ease forwards;
+    transition: all 0.3s ease;
+  }
+@keyframes fadeIn_home {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.language:hover {
+    translate: 0px -3px;
+}
+
+  summary {
+    padding: 12px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+  }
+  summary::-webkit-details-marker { display: none; }
+
+  .grades {
+    display: flex;
+    gap: 8px;
+    padding: 8px 12px;
+    
+    overflow-x: auto;
+  }
+
+  .grade {
+    padding: 4px 10px;
+    cursor: pointer;
+  }
+
+  .grade.active {
+    text-decoration: underline;
+  }
+
+  .chapters {
+    padding: 0 12px 12px;
+  }
+
+  .chapter {
+    display: flex;
+    gap: 10px;
+    padding: 8px 0;
+  }
+
+  .chapter.hidden {
+    display: none;
+  }
+
+  .chapter .num {
+    width: 16px;
+  }
+
+  .chapter .title {
+    flex: 1;
+  }
+
+  button {
+    width: 100%;
+    border-radius: 999px;
+       margin-bottom: 8px;
+        background: rgba(157, 61, 201, 0.075);
+    backdrop-filter: blur(3px) saturate(90%);
+    -webkit-backdrop-filter: blur(3px) saturate(90%);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.242);;
+    border-radius: 19px;
+    padding: 2%;
+ 
+    animation: fadeIn_home 0.5s ease forwards;
+       animation-delay: 0.3s;
+    animation-fill-mode: both;
+    transition: all 0.3s ease;
+    padding: 8px;
+  }
+    button:hover {
+      
+  }
+  #chooselang {
+        opacity: 0.6;
+        text-align: center;
+        padding: 5px;
+        font-size:clamp(1rem,0vw,1rem);
+  }
+  .mainmenu {
+       margin-bottom: 8px;
+        background: rgba(107, 107, 107, 0.054);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-radius: 19px;
+    padding: 2%;
+    animation: fadeIn_home 0.5s ease forwards;
+    transition: all 0.3s ease;
+
+  }
+</style>
+</head>
+<body>
+
+  <h1>StudyNo</h1>
+  <p id="chooselang">Choose a language to continue,</p>
+<div class="mainmenu">
+  <!-- FRANS -->
+  <div class="language">
+    <details open>
+      <summary>
+     
+        <span>Frans</span>
+       
+
+        <span>6 leerjaren</span>
+      </summary>
+
+      <div class="grades" data-grades>
+        <span class="grade" data-grade="1">1e</span>
+        <span class="grade" data-grade="2">2e</span>
+        <span class="grade active" data-grade="3">3e</span>
+        <span class="grade" data-grade="4">4e</span>
+        <span class="grade" data-grade="5">5e</span>
+        <span class="grade" data-grade="6">6e</span>
+      </div>
+      <div class="chapters" data-chapters>
+        <div class="chapter" data-grade="1">
+          <span class="num">1</span><span class="title" onclick="setlist('fr_marche7');">Marche 7 woordgroep</span><span class="count">38 woorden</span>
         </div>
+        <div class="chapter" data-grade="1">
+          <span class="num">2</span><span class="title" onclick="setlist('fr_marche8_fix');">marche 7 fix</span><span class="count">45 woorden</span>
         </div>
-        </body>
+        <div class="chapter" data-grade="1">
+          <span class="num">3</span><span class="title">-</span><span class="count">52 woorden</span>
+        </div>
 
-    </html>
+        <div class="chapter" data-grade="3">
+          <span class="num">1</span><span class="title">-</span><span class="count">41 woorden</span>
+        </div>
+        <div class="chapter" data-grade="3">
+          <span class="num">2</span><span class="title">-</span><span class="count">36 woorden</span>
+        </div>
+        <div class="chapter" data-grade="3">
+          <span class="num">3</span><span class="title">-</span><span class="count">47 woorden</span>
+        </div>
+        <div class="chapter" data-grade="3">
+          <span class="num">4</span><span class="title"></span><span class="count">29 woorden</span>
+        </div>
+        <div class="chapter" data-grade="3">
+          <span class="num">5</span><span class="title">La météo</span><span class="count">31 woorden</span>
+        </div>
+
+        <div class="chapter" data-grade="6">
+          <span class="num">1</span><span class="title">Le monde du travail</span><span class="count">58 woorden</span>
+        </div>
+        <div class="chapter" data-grade="6">
+          <span class="num">2</span><span class="title">La politique</span><span class="count">49 woorden</span>
+        </div>
+      </div>
+
+      <button data-show-all>Toon alle hoofdstukken</button>
+    </details>
+  </div>
+ 
+
+  <!-- ENGELS -->
+  <div class="language">
+    <details>
+      <summary>
+        <span>Engels</span>
+        <span>2 woordenlijsten</span>
+      </summary>
+      <div class="chapters">
+        <div class="chapter">
+          <span class="num">1</span><span class="title">Engels → Nederlands</span><span class="count">1.250 woorden</span>
+        </div>
+        <div class="chapter">
+          <span class="num">2</span><span class="title">Nederlands → Engels</span><span class="count">1.102 woorden</span>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- DUITS -->
+  <div class="language">
+    <details>
+      <summary>
+        <span>Duits</span>
+        <span>4 leerjaren</span>
+      </summary>
+
+      <div class="grades" data-grades>
+        <span class="grade active" data-grade="1">1e</span>
+        <span class="grade" data-grade="2">2e</span>
+        <span class="grade" data-grade="3">3e</span>
+        <span class="grade" data-grade="4">4e</span>
+      </div>
+
+      <div class="chapters" data-chapters>
+        <div class="chapter" data-grade="1">
+          <span class="num">1</span><span class="title">Begrüßung</span><span class="count">22 woorden</span>
+        </div>
+        <div class="chapter" data-grade="2">
+          <span class="num">1</span><span class="title">Die Schule</span><span class="count">40 woorden</span>
+        </div>
+        <div class="chapter" data-grade="3">
+          <span class="num">1</span><span class="title">Einkaufen</span><span class="count">33 woorden</span>
+        </div>
+        <div class="chapter" data-grade="4">
+          <span class="num">1</span><span class="title">Reisen</span><span class="count">37 woorden</span>
+        </div>
+      </div>
+    </details>
+  </div>
+</div>
+<script>
+  // grade tab switching: click a grade -> show only chapters with matching data-grade
+  document.querySelectorAll('[data-grades]').forEach(function (gradeBar) {
+    var chaptersBox = gradeBar.parentElement.querySelector('[data-chapters]');
+    gradeBar.addEventListener('click', function (e) {
+      var target = e.target.closest('.grade');
+      if (!target) return;
+
+      gradeBar.querySelectorAll('.grade').forEach(function (g) {
+        g.classList.toggle('active', g === target);
+      });
+
+      var grade = target.dataset.grade;
+      chaptersBox.querySelectorAll('.chapter').forEach(function (ch) {
+        ch.classList.toggle('hidden', ch.dataset.grade !== grade);
+      });
+    });
+  });
+
+  // show-all button: reveals chapters past the first 4 in that language
+  document.querySelectorAll('[data-show-all]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var box = btn.previousElementSibling;
+      box.querySelectorAll('.chapter:not(.hidden)').forEach(function (ch, i) {
+        if (i >= 4) ch.style.display = 'flex';
+      });
+      btn.style.display = 'none';
+    });
+  });
+
+  // initial state: hide chapters beyond the 4th in the visible grade
+  document.querySelectorAll('[data-chapters]').forEach(function (box) {
+    box.querySelectorAll('.chapter:not(.hidden)').forEach(function (ch, i) {
+      if (i >= 4) ch.style.display = 'none';
+    });
+  });
+</script>
+
+</body>
+</html>
