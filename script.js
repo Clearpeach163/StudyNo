@@ -288,10 +288,10 @@ buttons.forEach((btn) => {
     fnnf = btn.dataset.mode;
 
     if (fnnf === "FN") {
-      fnnf = 0;
+      fnnf = 1;
       console.log(fnnf);
     } else if (fnnf === "NF") {
-      fnnf = 1;
+      fnnf = 0;
       console.log(fnnf);
     } else if (fnnf === "Shuffle") {
       fnnf = 2;
