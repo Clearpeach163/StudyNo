@@ -38,8 +38,13 @@
                 <label>
                     <textarea name="message" id="idea" placeholder="Write your idea here"></textarea>
                 </label>
-                <button type="submit" id="submit">Submit!</button>
+                <button type="submit" id="submit" onclick="redirectideas();">Submit!</button>
             </form>
         </div>
+        <script>
+            function redirectideas() {
+                window.location.href = "index.html"
+            }
+        </script>
     </body>
     </html>

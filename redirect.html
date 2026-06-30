@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Thank You</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+
+@keyframes floatGlow{
+
+    from{
+        transform:translateY(-30px) scale(1);
+    }
+
+    to{
+        transform:translateY(30px) scale(1.15);
+    }
+
+}
+
+/* ---------- Card ---------- */
+
+.card{
+
+    width:480px;
+    max-width:92%;
+
+    padding:60px;
+
+    text-align:center;
+
+    border-radius:34px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.18);
+
+    backdrop-filter:blur(28px) saturate(180%);
+    -webkit-backdrop-filter:blur(28px) saturate(180%);
+
+    box-shadow:
+        0 30px 70px rgba(0,0,0,.45),
+        inset 0 1px rgba(255,255,255,.25);
+
+    position:relative;
+
+    overflow:hidden;
+
+    animation:
+        cardIn .7s cubic-bezier(.18,1.3,.3,1) forwards,
+        floating 6s ease-in-out infinite;
+}
+
+/* moving light reflection */
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-80%;
+    left:-70%;
+
+    width:70%;
+    height:260%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.02),
+        transparent
+    );
+
+    transform:rotate(25deg);
+
+    animation:shine 3.5s linear infinite;
+
+}
+
+@keyframes shine{
+
+    from{
+        left:-70%;
+    }
+
+    to{
+        left:170%;
+    }
+
+}
+
+@keyframes floating{
+
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-6px);
+    }
+
+}
+
+@keyframes cardIn{
+
+    from{
+
+        opacity:0;
+        transform:scale(.94);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:scale(1);
+
+    }
+
+}
+
+/* ---------- Check ---------- */
+
+.check{
+
+    font-size:70px;
+
+    margin-bottom:20px;
+
+    transform:scale(0);
+
+    animation:pop .55s .15s cubic-bezier(.2,1.8,.3,1) forwards;
+
+}
+
+@keyframes pop{
+
+    to{
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ---------- Title ---------- */
+
+.title{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:18px;
+
+    font-size:48px;
+
+    font-weight:700;
+
+    color:white;
+
+    letter-spacing:-1px;
+
+}
+
+.title span{
+
+    opacity:0;
+
+    filter:blur(10px);
+
+    transform:translateY(25px) scale(.75);
+
+    animation:letter .6s forwards;
+
+}
+
+@keyframes letter{
+
+    to{
+
+        opacity:1;
+
+        filter:blur(0);
+
+        transform:translateY(0) scale(1);
+
+    }
+
+}
+
+/* ---------- Subtitle ---------- */
+
+.subtitle{
+
+    color:rgba(255,255,255,.78);
+
+    font-size:18px;
+
+    line-height:1.5;
+
+    margin-bottom:35px;
+
+    opacity:0;
+
+    transform:translateY(20px);
+
+    animation:fadeUp .8s .8s forwards;
+
+}
+
+@keyframes fadeUp{
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ---------- Redirect ---------- */
+
+.redirect{
+
+    font-size:15px;
+
+    color:rgba(255,255,255,.6);
+
+    letter-spacing:1px;
+
+}
+
+.dots::after{
+
+    content:"";
+
+    animation:dots 1.2s infinite;
+
+}
+
+@keyframes dots{
+
+    0%{content:"";}
+    25%{content:".";}
+    50%{content:"..";}
+    75%{content:"...";}
+    100%{content:"";}
+
+}
+
+/* ---------- Fade Out ---------- */
+
+.fadeOut{
+
+    animation:fadeOut .45s forwards;
+
+}
+
+@keyframes fadeOut{
+
+    to{
+
+        opacity:0;
+        transform:scale(.96);
+
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+
+    <div class="check">✓</div>
+
+    <h1 class="title" id="title"></h1>
+
+    <p class="subtitle">
+        Your submission has been received successfully.
+    </p>
+
+    <div class="redirect">
+        Redirecting<span class="dots"></span>
+    </div>
+
+</div>
+
+<script>
+
+const text = "Thank You!";
+
+const title = document.getElementById("title");
+
+text.split("").forEach((letter,index)=>{
+
+    const span=document.createElement("span");
+
+    span.textContent=letter;
+
+    span.style.animationDelay=(0.25 + index*0.05)+"s";
+
+    title.appendChild(span);
+
+});
+
+// Fade before redirect
+
+setTimeout(()=>{
+
+    document.getElementById("card").classList.add("fadeOut");
+
+},2500);
+
+// Redirect
+
+setTimeout(()=>{
+
+    // Change destination
+    window.location.href="index.html";
+
+},3000);
+
+</script>
+
+</body>
+</html>
