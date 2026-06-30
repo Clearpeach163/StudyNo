@@ -5,7 +5,6 @@ let currentWord;
 let streak = 0;
 let fnnf = 1;
 let words = [];
-const gehad = [];
 let gehad_goed = [];
 let shuffleran = 0;
 const popup = document.getElementById("popup");
@@ -82,38 +81,30 @@ const h1 = document.getElementById("h1");
 const input = document.getElementById("Main_input");
 
 function newWord() {
-    random = Math.floor(Math.random() * words.length);
-    gehad.push(random);
-    currentWord = words[random];
+    const remaining = words.filter(word => !gehad_goed.includes(word));
+  console.log(remaining);
+    if (remaining.length === 0) {
 
-  // if (gehad.includes(random)) {
-  //   console.log("Al gehad twin...");
-  //   currentWord = words[Math.floor(Math.random() * words.length)];
-  // }
-
-  const h1 = document.getElementById("h1");
-
-  h1.classList.remove("fade-in");
-  void h1.offsetWidth;
-  h1.classList.add("fade-in");
-
-  // laat Nederlands zien
-  if (fnnf === 0) {
-    h1.textContent = currentWord.nl;
-  } else if (fnnf === 1) {
-    h1.textContent = currentWord.taal;
-  } else if (fnnf === 2) {
-    shuffleran = Math.round(Math.random()); // 0 or 1
-    console.log("Shuffle chose" + shuffleran);
-
-    if (shuffleran === 0) {
-      h1.textContent = currentWord.nl;
+        window.location.href = "index.html"
+        
     } else {
-      h1.textContent = currentWord.taal;
+        currentWord = remaining[Math.floor(Math.random() * remaining.length)];
     }
-  }
 
-  input.value = "";
+    h1.classList.remove("fade-in");
+    void h1.offsetWidth;
+    h1.classList.add("fade-in");
+
+    if (fnnf === 0) {
+        h1.textContent = currentWord.nl;
+    } else if (fnnf === 1) {
+        h1.textContent = currentWord.taal;
+    } else {
+        shuffleran = Math.round(Math.random());
+        h1.textContent = shuffleran ? currentWord.taal : currentWord.nl;
+    }
+
+    input.value = "";
 }
 // hier is de check
 input.addEventListener("keyup", (e) => {
@@ -227,6 +218,7 @@ function goedreken() {
   goed++;
   streak++;
   gehad_goed.push(currentWord);
+  alert(currentWord);
   streakcheck();
   document.getElementById("feedback").style.display = "none";
   document.getElementById("Opgave_count").innerText =

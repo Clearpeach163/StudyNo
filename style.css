@@ -984,7 +984,7 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
     border:1px solid var(--border);
     border-radius:28px;
     padding:30px;
-    transition: 0.5s;
+    transition: 0.2s;
 }
 .feature:hover{
     transform:translateY(-4px) scale(1.03);
