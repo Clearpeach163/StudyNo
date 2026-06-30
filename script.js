@@ -84,8 +84,10 @@ function newWord() {
     const remaining = words.filter(word => !gehad_goed.includes(word));
   console.log(remaining);
     if (remaining.length === 0) {
-
-        window.location.href = "index.html"
+        sessionStorage.setItem("goed", goed);
+        sessionStorage.setItem("fout", fout);
+   
+        window.location.href = "end_course.html"
         
     } else {
         currentWord = remaining[Math.floor(Math.random() * remaining.length)];
@@ -218,7 +220,7 @@ function goedreken() {
   goed++;
   streak++;
   gehad_goed.push(currentWord);
-  alert(currentWord);
+
   streakcheck();
   document.getElementById("feedback").style.display = "none";
   document.getElementById("Opgave_count").innerText =

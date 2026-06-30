@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StudyNo - Results</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<style>
+    body {
+            
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial;
+      
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    
+    }
+</style>
+
+<body>
+
+<div id="main_endsection">
+
+  <div class="card">
+    <p class="label">Goed</p>
+    <p class="big" id="end_goed">0</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Fout</p>
+    <p class="big" id="end_fout">0</p>
+  </div>
+
+  <div class="card">
+    <p class="label">Score</p>
+    <p id="percentage">0%</p>
+    <p id="cijfer">Cijfer: 0</p>
+  </div>
+
+  <div class="card">
+    <div class="chartwrap">
+    <canvas id="chart"></canvas>
+    </div>
+  </div>
+
+  <div class="card" style="grid-column: span 2;">
+    <p class="label">Totaal gemaakte opgaven</p>
+    <p class="big" id="totaal">0</p>
+  </div>
+
+  <button id="continue_end">Continue</button>
+
+</div>
+
+<script>
+  let end_goed = Number(sessionStorage.getItem("goed")) || 0;
+  let end_fout = Number(sessionStorage.getItem("fout")) || 0;
+
+  let totaal = end_goed + end_fout;
+
+  let percentage = totaal === 0 ? 0 : Math.round((end_goed / totaal) * 100);
+  let cijfer = totaal === 0 ? 0 : Math.round(((end_goed / totaal) * 9 + 1) * 10) / 10;
+
+  document.getElementById("end_goed").innerText = end_goed;
+  document.getElementById("end_fout").innerText = end_fout;
+  document.getElementById("percentage").innerText = percentage + "%";
+  document.getElementById("cijfer").innerText = "Cijfer: " + cijfer;
+  document.getElementById("totaal").innerText = totaal;
+
+  // Chart
+  new Chart(document.getElementById("chart"), {
+    type: "doughnut",
+    data: {
+      labels: ["Goed", "Fout"],
+      datasets: [{
+        data: [end_goed, end_fout],
+        backgroundColor: ["#432266", "#8f7ea3"],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          labels: { color: "white" }
+        }
+      }
+    }
+  });
+
+  document.getElementById("continue_end").onclick = () => {
+    window.location.href = "index.html";
+  };
+</script>
+
+</body>
+</html>

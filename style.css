@@ -1166,5 +1166,129 @@ z-index: 99999999;
  white-space: pre;
  z-index: 1;
 }
+#main_endsection {
+  border: 1px solid rgba(255,255,255,0.12);
+
+  width: 30%;
+
+  max-height: 90h;
+max-width: 40%;
+  padding: clamp(12px, 2.5vw, 24px);
+
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(10px, 1.5vw, 16px);
+
+  overflow: hidden;
+}
+    @keyframes fadein_down {
+        from {
+            opacity: 0;
+  transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+    }
+
+   .card {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+
+  padding: clamp(10px, 2vw, 16px);
+
+  transition: all 0.3s ease;
+  animation: fadein_down 0.5s ease;
+  animation-fill-mode: both;
+  animation-delay: 0.2s;
+}
+.chartwrap {
+  width: 90%;
+  height: 90%;
+
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+    .card:hover {
+      transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(8px);
+      box-shadow:  0 10px 10px rgba(0, 0, 0, 0.348);
+      
+    }
+
+    .big {
+      font-size: 34px;
+      font-weight: 700;
+    }
+
+    .label {
+      opacity: 0.7;
+      font-size: clamp(11px, 1.5vw, 14px);
+    }
+
+    #grade_section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    #percentage {
+      font-size: 42px;
+      font-weight: bold;
+    }
+
+    #cijfer {
+      font-size: 24px;
+      opacity: 0.8;
+    }
 
 
+
+    #continue_end {
+
+                 background: rgba(255, 255, 255, 0.06);
+                 box-shadow:  0 10px 10px rgba(0, 0, 0, 0.148);
+      backdrop-filter: blur(-5px);
+      
+      grid-column: span 2;
+      padding: 14px;
+      border: none;
+      border-radius: 999px;
+      
+   
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      animation: fadein_down 0.5s ease; 
+      animation-delay: 1s;
+      animation-fill-mode: both;
+    }
+
+    #continue_end:hover {
+      box-shadow:  0 10px 10px rgba(0, 0, 0, 0.348);
+      transform: scale(1.01);
+    }
+
+    @media (max-width: 700px) {
+      #main_endsection {
+        grid-template-columns: 1fr;
+      }
+
+      #continue_end {
+        grid-column: span 1;
+      }
+    }
