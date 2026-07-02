@@ -8,7 +8,7 @@ let fnnf = 1;
 let words = [];
 let gehad_goed = [];
 let shuffleran = 0;
-
+let list;
 const popup = document.getElementById("popup");
 const clickSound = new Audio("Streak.mp3");
 const fnnfSound = new Audio("fnnfselect.mp3");
@@ -74,7 +74,7 @@ function levenshtein(a, b) {
 const activeList = localStorage.getItem("activeList");
 words = lists[activeList]?.words || [];
 
-let list;
+
 
 document.getElementById("update").innerText = update;
 document.getElementById("feedback").style.display = "none";
@@ -241,6 +241,7 @@ function version() {
 function setlist(listName) {
   localStorage.setItem("activeList", listName);
   location.href = "ingame.html";
+  
 }
 
 function letsdo() {

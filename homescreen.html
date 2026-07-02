@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <title>StudyNo</title>
 <link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
 <style>
   body {
     max-width: 580px;
@@ -143,6 +144,30 @@
     transition: all 0.3s ease;
 
   }
+  .language-name {
+    font-weight: bold;
+    font-size:clamp(1rem,4vw,1.5rem);
+    top: 0;
+    
+}
+.language-description {
+    font-size:clamp(0.8rem,4vw,1rem);
+    opacity: 0.6;
+
+    position: absolute;
+}
+#stripe {
+    height: 2px;
+    width: 90%;
+    top: 40%;
+    border: none;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.587);
+    border-radius: 10px;    
+}
+a {
+    color: white;
+}
 </style>
 </head>
 <body>
@@ -155,53 +180,33 @@
     <details open>
       <summary>
      
-        <span>Frans</span>
-       
-
-        <span>6 leerjaren</span>
-      </summary>
+        <p class="language-name">Frans</p>
+        <span class="language-description">6 leerjaren</span>
+  
+    </summary>
 
       <div class="grades" data-grades>
-        <span class="grade" data-grade="1">1e</span>
+        <span class="grade active" data-grade="1">1e</span>
         <span class="grade" data-grade="2">2e</span>
-        <span class="grade active" data-grade="3">3e</span>
+        <span class="grade" data-grade="3">3e</span>
         <span class="grade" data-grade="4">4e</span>
         <span class="grade" data-grade="5">5e</span>
         <span class="grade" data-grade="6">6e</span>
       </div>
       <div class="chapters" data-chapters>
         <div class="chapter" data-grade="1">
-          <span class="num">1</span><span class="title" onclick="setlist('fr_marche7');">Marche 7 woordgroep</span><span class="count">38 woorden</span>
+          <span class="num">1</span><a onclick="setlist('fr_marche7');" class="title">Marche 7 woordgroep</a><span class="count">38 woorden</span>
         </div>
         <div class="chapter" data-grade="1">
-          <span class="num">2</span><span class="title" onclick="setlist('fr_marche8_fix');">marche 7 fix</span><span class="count">45 woorden</span>
+          <span class="num">2</span><a onclick="setlist('fr_marche7_fix');" class="title">marche 7 fix</a><span class="count">45 woorden</span>
         </div>
         <div class="chapter" data-grade="1">
-          <span class="num">3</span><span class="title">-</span><span class="count">52 woorden</span>
+          <span class="num">3</span><a onclick="setlist('fr_marche8');" class="title">Marche 8 woordgroep</a><span class="count">52 woorden</span>
         </div>
-
-        <div class="chapter" data-grade="3">
-          <span class="num">1</span><span class="title">-</span><span class="count">41 woorden</span>
+        <div class="chapter" data-grade="1">
+          <span class="num">1</span><a class="title" onclick="setlist('fr_marche8_fix');">Marche 8 fix</a><span class="count">41 woorden</span>
         </div>
-        <div class="chapter" data-grade="3">
-          <span class="num">2</span><span class="title">-</span><span class="count">36 woorden</span>
-        </div>
-        <div class="chapter" data-grade="3">
-          <span class="num">3</span><span class="title">-</span><span class="count">47 woorden</span>
-        </div>
-        <div class="chapter" data-grade="3">
-          <span class="num">4</span><span class="title"></span><span class="count">29 woorden</span>
-        </div>
-        <div class="chapter" data-grade="3">
-          <span class="num">5</span><span class="title">La météo</span><span class="count">31 woorden</span>
-        </div>
-
-        <div class="chapter" data-grade="6">
-          <span class="num">1</span><span class="title">Le monde du travail</span><span class="count">58 woorden</span>
-        </div>
-        <div class="chapter" data-grade="6">
-          <span class="num">2</span><span class="title">La politique</span><span class="count">49 woorden</span>
-        </div>
+        
       </div>
 
       <button data-show-all>Toon alle hoofdstukken</button>
