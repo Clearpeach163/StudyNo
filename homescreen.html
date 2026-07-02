@@ -47,6 +47,16 @@
     transform: translateY(0);
   }
 }
+@keyframes fadeIn_homeback {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
 .language:hover {
     translate: 0px -3px;
 }
@@ -63,18 +73,69 @@
   .grades {
     display: flex;
     gap: 8px;
-    padding: 8px 12px;
-    
+    padding: 7px;
+    padding-left: 7px;
+    margin: 12px;
+    margin-bottom: 8px;
+    text-align: center;
     overflow-x: auto;
-  }
+    
 
-  .grade {
+    border-radius: 888px;
+
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.136),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+
+      animation: fadeIn_home 0.5s ease forwards;
+      transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .grades:hover {
+    translate: 0px -3px;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.472),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  }
+  .grade{
     padding: 4px 10px;
     cursor: pointer;
+
+    border-radius: 16px;
+
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0);
+
+
+
+      animation: fadeIn_home 0.1s ease forwards;
+      transition: all 0.3s ease;
+ 
+  }
+  .grade:hover {
+    translate: 0px -1px;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.472),
+      inset 0 1px 0 rgba(255, 255, 255, 0.113);
+
   }
 
   .grade.active {
-    text-decoration: underline;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+
+      animation: fadeIn_home 0.1s ease forwards;
+      transition: all 0.3s ease;
   }
 
   .chapters {
@@ -95,10 +156,30 @@
     width: 16px;
   }
 
-  .chapter .title {
-    flex: 1;
-  }
+.chapter .title {
+  flex: 1;
+  position: relative; /* Needed */
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
 
+.chapter .title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 0;
+  
+  height: 2px;
+  background: linear-gradient(90deg,rgba(155, 109, 173, 0.66) 0%, rgba(124, 83, 237, 0) 100%); /* Give it a color */
+  transition: width 0.25s ease;
+}
+
+.chapter .title:hover::after {
+  width: 90%;
+}
   button {
     width: 100%;
     border-radius: 999px;
@@ -117,9 +198,9 @@
     transition: all 0.3s ease;
     padding: 8px;
   }
-    button:hover {
+
       
-  }
+  
   #chooselang {
         opacity: 0.6;
         text-align: center;
@@ -156,10 +237,16 @@
 
     position: absolute;
 }
+.klas-selecttext {
+    font-size:clamp(0.8rem,4vw,1rem);
+    opacity: 0.6;
+    top: 100px;
+    position: absolute;
+}
 #stripe {
-    height: 2px;
+    height: 1px;
     width: 90%;
-    top: 40%;
+    top: 70px;
     border: none;
     position: absolute;
     background: rgba(255, 255, 255, 0.587);
@@ -182,9 +269,10 @@ a {
      
         <p class="language-name">Frans</p>
         <span class="language-description">6 leerjaren</span>
+ 
   
     </summary>
-
+        
       <div class="grades" data-grades>
         <span class="grade active" data-grade="1">1e</span>
         <span class="grade" data-grade="2">2e</span>
@@ -215,55 +303,7 @@ a {
  
 
   <!-- ENGELS -->
-  <div class="language">
-    <details>
-      <summary>
-        <span>Engels</span>
-        <span>2 woordenlijsten</span>
-      </summary>
-      <div class="chapters">
-        <div class="chapter">
-          <span class="num">1</span><span class="title">Engels → Nederlands</span><span class="count">1.250 woorden</span>
-        </div>
-        <div class="chapter">
-          <span class="num">2</span><span class="title">Nederlands → Engels</span><span class="count">1.102 woorden</span>
-        </div>
-      </div>
-    </details>
-  </div>
-
-  <!-- DUITS -->
-  <div class="language">
-    <details>
-      <summary>
-        <span>Duits</span>
-        <span>4 leerjaren</span>
-      </summary>
-
-      <div class="grades" data-grades>
-        <span class="grade active" data-grade="1">1e</span>
-        <span class="grade" data-grade="2">2e</span>
-        <span class="grade" data-grade="3">3e</span>
-        <span class="grade" data-grade="4">4e</span>
-      </div>
-
-      <div class="chapters" data-chapters>
-        <div class="chapter" data-grade="1">
-          <span class="num">1</span><span class="title">Begrüßung</span><span class="count">22 woorden</span>
-        </div>
-        <div class="chapter" data-grade="2">
-          <span class="num">1</span><span class="title">Die Schule</span><span class="count">40 woorden</span>
-        </div>
-        <div class="chapter" data-grade="3">
-          <span class="num">1</span><span class="title">Einkaufen</span><span class="count">33 woorden</span>
-        </div>
-        <div class="chapter" data-grade="4">
-          <span class="num">1</span><span class="title">Reisen</span><span class="count">37 woorden</span>
-        </div>
-      </div>
-    </details>
-  </div>
-</div>
+  
 <script>
   // grade tab switching: click a grade -> show only chapters with matching data-grade
   document.querySelectorAll('[data-grades]').forEach(function (gradeBar) {
