@@ -905,7 +905,11 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
     
     animation-fill-mode: both;
 }
-
+@media only screen and (max-width: 1600px) {
+  .features {
+    margin-top: 50%;
+  }
+}
 .feature{
     background:var(--glass);
     backdrop-filter:blur(10px);
