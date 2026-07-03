@@ -895,7 +895,8 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
 .features{
     width:min(1200px,90%);
     left: 50%;
-    top: 90vh;
+   
+    margin-top: 35%;
     transform: translateX(-50%);
     position: absolute;
     display:grid;
@@ -911,7 +912,7 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
     border:1px solid var(--border);
     border-radius:28px;
     padding:30px;
-    transition: 0.2s;
+    transition: 0.3s;
     
     animation: fadein_down 1s ease backwards;
 }
