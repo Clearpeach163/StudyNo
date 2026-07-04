@@ -15,6 +15,11 @@
     color: white;
     user-select: none;
   }
+  html, body {
+  overscroll-behavior: none;
+  
+  scroll-behavior: smooth;  
+}
 
 button {
   -webkit-appearance: none;
@@ -107,7 +112,7 @@ button:active {
 
 
       animation: fadeIn_home 0.5s ease forwards;
-      transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .grades:hover {
     translate: 0px -3px;
@@ -255,15 +260,19 @@ padding: 2%;
     border-radius: 19px;
     padding: 2%;
     animation: fadeIn_home 0.5s ease forwards;
-    transition: all 0.3s ease;
-
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .count {
-    opacity: 0.6;
-    font-size:clamp(0.6rem,3vw,0.8rem);
-    position: absolute;
-    right: 40px;
-  }
+    margin-left: auto;
+    opacity: .6;
+    font-size: clamp(.6rem,3vw,.8rem);
+    flex-shrink: 0;
+
+    transition: transform .35s cubic-bezier(.22,1,.36,1);
+}
+.chapter:hover .count {
+    transform: translateX(-30px);
+}
   .mainmenu:hover {
     
   box-shadow:
@@ -302,6 +311,7 @@ padding: 2%;
 a {
     color: white;
 }
+
 </style>
 </head>
 <body>
@@ -329,21 +339,84 @@ a {
         <span class="grade" data-grade="6">6e</span>
       </div>
       <div class="chapters" data-chapters>
+              <div class="chapter" data-grade="1">
+        <span class="num">1</span><a class="title" onclick="setlist('fr_marche1');">Marche 1 woordgroep</a><span class="count">0 woorden</span>
+      </div>
+      <div class="chapter" data-grade="1">
+        <span class="num">2</span><a class="title" onclick="setlist('fr_marche1_fix');">Marche 1 fix</a><span class="count">0 woorden</span>
+      </div>
+      <div class="chapter" data-grade="1">
+        <span class="num">3</span><a class="title" onclick="setlist('fr_marche2');">Marche 2 woordgroep</a><span class="count">0 woorden</span>
+      </div>
+      <div class="chapter" data-grade="1">
+        <span class="num">4</span><a class="title" onclick="setlist('fr_marche2_fix');">Marche 2 fix</a><span class="count">0 woorden</span>
+      </div>
+      <div class="chapter" data-grade="1">
+        <span class="num">5</span><a class="title" onclick="setlist('fr_marche3');">Marche 3 woordgroep</a><span class="count">0 woorden</span>
+      </div>
+      <div class="chapter" data-grade="1">
+        <span class="num">6</span><a class="title" onclick="setlist('fr_marche3_fix');">Marche 3 fix</a><span class="count">0 woorden</span>
+      </div>
+      <div class="chapter" data-grade="1">
+        <span class="num">7</span><a class="title" onclick="setlist('fr_marche4');">Marche 4 woordgroep</a><span class="count">0 woorden</span>
+      </div>
+      <div class="chapter" data-grade="1">
+        <span class="num">8</span><a class="title" onclick="setlist('fr_marche4_fix');">Marche 4 fix</a><span class="count">0 woorden</span>
+      </div>
         <div class="chapter" data-grade="1">
-          <span class="num">1</span><a onclick="setlist('fr_marche7');" class="title">Marche 7 woordgroep</a><span class="count">38 woorden</span>
+          <span class="num">9</span><a onclick="setlist('fr_marche7');" class="title">Marche 7 woordgroep</a><span class="count">38 woorden</span>
         </div>
         <div class="chapter" data-grade="1">
-          <span class="num">2</span><a onclick="setlist('fr_marche7_fix');" class="title">marche 7 fix</a><span class="count">45 woorden</span>
+          <span class="num">10</span><a onclick="setlist('fr_marche7_fix');" class="title">marche 7 fix</a><span class="count">45 woorden</span>
         </div>
         <div class="chapter" data-grade="1">
-          <span class="num">3</span><a onclick="setlist('fr_marche8');" class="title">Marche 8 woordgroep</a><span class="count">52 woorden</span>
+          <span class="num">11</span><a onclick="setlist('fr_marche8');" class="title">Marche 8 woordgroep</a><span class="count">52 woorden</span>
         </div>
         <div class="chapter" data-grade="1">
-          <span class="num">4</span><a class="title" onclick="setlist('fr_marche8_fix');">Marche 8 fix</a><span class="count">41 woorden</span>
+          <span class="num">12</span><a class="title" onclick="setlist('fr_marche8_fix');">Marche 8 fix</a><span class="count">41 woorden</span>
         </div>
           <div class="chapter" data-grade="1">
-          <span class="num">5</span><a class="title" onclick="setlist('fr_marche8_fix');">Marche 9 woordgroep</a><span class="count">41 woorden</span>
+          <span class="num">13</span><a class="title" onclick="setlist('fr_marche9');">Marche 9 woordgroep</a><span class="count">41 woorden</span>
         </div>
+       
+          <div class="chapter" data-grade="1">
+          <span class="num">14</span><a class="title" onclick="setlist('fr_marche9_fix');">Marche 9 fix</a><span class="count">41 woorden</span>
+        </div>
+            <div class="chapter" data-grade="1">
+          <span class="num">15</span><a class="title" onclick="setlist('fr_marche10');">Marche 10 woordgroep</a><span class="count">41 woorden</span>
+        </div>
+        
+
+        <div class="chapter" data-grade="1">
+          <span class="num">16</span>
+          <a class="title" onclick="setlist('fr_avoir');">Avoir</a>
+          <span class="count">30 woorden</span>
+        </div>
+
+        <div class="chapter" data-grade="1">
+          <span class="num">17</span>
+          <a class="title" onclick="setlist('fr_etre');">Être</a>
+          <span class="count">25 woorden</span>
+        </div>
+        <div class="chapter" data-grade="1">
+          <span class="num">18</span>
+          <a class="title" onclick="setlist('fr_er');">Regelmatige ww op -er</a>
+          <span class="count">25 woorden</span>
+        </div>
+         <div class="chapter" data-grade="1">
+          <span class="num">19</span>
+          <a class="title" onclick="setlist('fr_aller');">Aller</a>
+          <span class="count">25 woorden</span>
+        </div>
+         <div class="chapter" data-grade="1">
+          <span class="num">20</span>
+          <a class="title" onclick="setlist('fr_faire');">Faire</a>
+          <span class="count">25 woorden</span>
+        </div>
+    
+      <!--Werkwoorden eindigen-->
+        </div><!--chapters div dus hierbinnen blijven-->
+        
         
       </div>
 

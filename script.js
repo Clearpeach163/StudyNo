@@ -127,7 +127,7 @@ input.addEventListener("keyup", (e) => {
     // for checking learning style
 
     // NORMALE CHECK
-    if (answer === currentWord.taal.toLowerCase()) {
+    if (isCorrectAnswer(answer, currentWord.taal)) {
       goed++;
 
       streak++;
@@ -142,7 +142,7 @@ input.addEventListener("keyup", (e) => {
   } else if (fnnf === 1) {
     // this is for nl typing
 
-    if (answer === currentWord.nl.toLowerCase()) {
+    if (isCorrectAnswer(answer, currentWord.nl)) {
       goed++;
       streak++;
       gehad_goed.push(currentWord);
@@ -154,7 +154,7 @@ input.addEventListener("keyup", (e) => {
     }
    } else if (fnnf === 2) {
   if (shuffleran === 0) {
-    if (answer === currentWord.taal.toLowerCase()) {
+    if (isCorrectAnswer(answer, currentWord.taal)) {
       goed++;
       streak++;
       gehad_goed.push(currentWord);
@@ -165,7 +165,7 @@ input.addEventListener("keyup", (e) => {
           prep();
     }
   } else if (shuffleran === 1) {
-    if (answer === currentWord.nl.toLowerCase()) {
+    if (isCorrectAnswer(answer, currentWord.nl)) {
       goed++;
       streak++;
       gehad_goed.push(currentWord);
@@ -475,4 +475,22 @@ if (!localStorage.getItem("seen")) {
  showPopup("Hey there, Did you know you can add accents like: ë by holding the letter!");
 
   localStorage.setItem("seen", "true");
+}
+function normalize(str) {
+  return str
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function isCorrectAnswer(userInput, correctAnswer) {
+  const input = normalize(userInput);
+
+  const answers = Array.isArray(correctAnswer)
+    ? correctAnswer
+    : correctAnswer.split(/\s*\/\s*/);
+
+  const normalizedAnswers = answers.map(normalize);
+
+  return normalizedAnswers.includes(input);
 }

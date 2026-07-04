@@ -382,21 +382,12 @@ fr_etre: {
 fr_er: {
   title: "Frans - Regelmatige -ER Werkwoorden",
   words: [
-    { taal: "je parle", nl: "ik praat / spreek" },
-    { taal: "tu parles", nl: "jij praat / spreekt" },
-    { taal: "il parle", nl: "hij praat / spreekt" },
-    { taal: "elle parle", nl: "zij praat / spreekt" },
-    { taal: "nous parlons", nl: "wij praten / spreken" },
-    { taal: "vous parlez", nl: "jullie praten / spreken" },
-    { taal: "ils parlent", nl: "zij praten / spreken" },
-    { taal: "elles parlent", nl: "zij praten / spreken" },
-
     { taal: "-e", nl: "je" },
     { taal: "-es", nl: "tu" },
     { taal: "-e", nl: "il / elle" },
     { taal: "-ons", nl: "nous" },
     { taal: "-ez", nl: "vous" },
-    { taal: "-ent", nl: "ils / elles (niet uitspreken)" },
+    { taal: "-ent", nl: "ils / elles" },
   ]
 },
 fr_aller: {
