@@ -85,7 +85,7 @@ il va = hij gaat"></textarea>
 
 <button onclick="generate()">EXECUTE</button>
 <button onclick="copyOutput()">COPY</button>
-
+<button onclick="generateHTML()">GENERATE HTML</button>
 <textarea id="output" readonly></textarea>
 
 <script>
@@ -119,6 +119,31 @@ function generate() {
     result += `},`;
 
     document.getElementById("output").value = result;
+}
+function generateHTML() {
+    const key = document.getElementById("key").value.trim();
+    const lines = document.getElementById("input").value
+        .split("\n")
+        .map(x => x.trim())
+        .filter(Boolean);
+
+    const count = lines.length;
+
+    // titel maken
+    const titlePart = key.split("_")[1] || key;
+    const title = titlePart.charAt(0).toUpperCase() + titlePart.slice(1);
+
+    // chapter nummer (optioneel: je kan dit ook input maken)
+    const chapterNumber = prompt("Chapter number? (bijv. 16)") || "0";
+
+    const html = `
+<div class="chapter" data-grade="1">
+  <span class="num">${chapterNumber}</span>
+  <a class="title" onclick="setlist('${key}');">${title}</a>
+  <span class="count">${count} woorden</span>
+</div>`.trim();
+
+    document.getElementById("output").value = html;
 }
 </script>
 
