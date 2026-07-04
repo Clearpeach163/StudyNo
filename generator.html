@@ -89,8 +89,7 @@ il va = hij gaat"></textarea>
 <textarea id="output" readonly></textarea>
 
 <script>
-function generate(){
-
+function generate() {
     const key = document.getElementById("key").value.trim();
 
     const lines = document.getElementById("input").value
@@ -98,15 +97,20 @@ function generate(){
         .map(x => x.trim())
         .filter(Boolean);
 
+    // title maken: fr_aller -> Frans - Aller
+    const titlePart = key.split("_")[1] || key;
+    const title = "Frans - " + titlePart.charAt(0).toUpperCase() + titlePart.slice(1);
+
     let result = `${key}: {\n`;
+    result += `  title: "${title}",\n`;
     result += `  words: [\n`;
 
-    for(const line of lines){
+    for (const line of lines) {
         const parts = line.split("=");
-        if(parts.length < 2) continue;
+        if (parts.length < 2) continue;
 
-        const taal = parts[0].trim().replaceAll('"','\\"');
-        const nl = parts.slice(1).join("=").trim().replaceAll('"','\\"');
+        const taal = parts[0].trim().replaceAll('"', '\\"');
+        const nl = parts.slice(1).join("=").trim().replaceAll('"', '\\"');
 
         result += `    { taal: "${taal}", nl: "${nl}" },\n`;
     }
