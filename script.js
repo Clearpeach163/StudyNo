@@ -4,11 +4,14 @@ let random = 0;
 let feedbackOpen = false;
 let currentWord;
 let streak = 0;
-let fnnf = 1;
+let fnnf = Number(localStorage.getItem("fnnf") ?? 1);
 let words = [];
 let gehad_goed = [];
 let shuffleran = 0;
 let list;
+let toetsModus = localStorage.getItem("toetsModus") === "true";
+document.getElementById("update").innerText = update;
+
 const popup = document.getElementById("popup");
 const clickSound = new Audio("Streak.mp3");
 const fnnfSound = new Audio("fnnfselect.mp3");
@@ -74,10 +77,6 @@ function levenshtein(a, b) {
 const activeList = localStorage.getItem("activeList");
 words = lists[activeList]?.words || [];
 
-
-
-document.getElementById("update").innerText = update;
-document.getElementById("feedback").style.display = "none";
 
 const h1 = document.getElementById("h1");
 const input = document.getElementById("Main_input");
@@ -165,7 +164,7 @@ input.addEventListener("keyup", (e) => {
           prep();
     }
   } else if (shuffleran === 1) {
-    if (isCorrectAnswer(answer, currentWord.nl)) {
+    if (isCorrectAnswer(answer, currentWord.taal)) {
       goed++;
       streak++;
       gehad_goed.push(currentWord);
@@ -201,9 +200,7 @@ function setCookie(accepted) {
 function checkCookie() {
   const accepted = getCookie("cookiesAccepted");
 
-  if (!accepted) {
-    document.getElementById("cookieBox").style.display = "flex";
-  }
+
 }
 
 window.onload = checkCookie;
@@ -212,6 +209,11 @@ function foutreken() {
   feedbackOpen = false;
   fout++;
   streak = 0;
+
+  if (toetsModus) {
+    gehad_goed.push(currentWord); // woord is "gehad", ook al was het fout
+  }
+
   document.getElementById("feedback").style.display = "none";
   document.getElementById("Opgave_count").innerText =
     "Correct: " + goed + " | " + "Fout: " + fout;
@@ -235,14 +237,14 @@ function goedreken() {
 
 function version() {
   location.href = "update.html";
-  document.getElementById("update-info").innerText = "HELLO WOR";
+  document.getElementById("update-info").innerText = whatsnew;
 }
 
-function setlist(listName) {
-  localStorage.setItem("activeList", listName);
-  location.href = "ingame.html";
-  
-}
+  function setlist(listName) {
+    localStorage.setItem("activeList", listName);
+    location.href = "prepare.html";
+    
+  }
 
 function letsdo() {
   location.href = "homescreen.html";
@@ -277,6 +279,20 @@ function prep() {
 };
 
 const buttons = document.querySelectorAll(".toggle button");
+window.addEventListener("DOMContentLoaded", () => {
+  goedreken();
+  resetgoed();
+  if (fnnf == 2) {
+    document.querySelector('[data-mode="Shuffle"]').classList.add("active");
+  }
+  if (fnnf == 1) {
+    document.querySelector('[data-mode="FN"]').classList.add("active");
+  }
+  if (fnnf == 0) {
+    document.querySelector('[data-mode="NF"]').classList.add("active");
+  }
+  
+});
 
 buttons.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -298,6 +314,12 @@ buttons.forEach((btn) => {
     }
   });
 });
+function resetgoed() {
+  goed = 0;
+  fout = 0;
+  document.getElementById("Opgave_count").innerText =
+    "Correct: " + goed + " | " + "Fout: " + fout;
+}
 function streakcheck() {
 if (streak === 5 || streak === 10 || streak === 15 || streak === 20 || streak === 25 || streak === 30 || streak === 35 || streak === 40 || streak === 45 || streak === 50) { 
   fireConfetti();

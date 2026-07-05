@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     },
 
+
     quit: () => {
       terminal.classList.add("hidden");
       return "terminal closed";

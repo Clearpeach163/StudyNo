@@ -4,13 +4,13 @@
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/x-icon" href="studynologo.png">
         <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="words.js" defer></script>
-<script src="script.js" defer></script>
-<script src="new.js" defer></script>
+          <script src="words.js" defer></script>
+          <script src="script.js" defer></script>
+          <script src="new.js" defer></script>
+          <script src="Update.js" defer></script>
     <div class="terminal hidden" id="terminal">
     <div class="terminal-header" id="terminal-header">
         <div class="dots">
-
         </div>
         <div class="title">terminal</div>
     </div>
@@ -26,7 +26,6 @@
     <div class="resizer" id="resizer"></div>
     </div>
         <script src="terminal.js" defer></script>
-  
       </head>
     <html>
 
@@ -80,7 +79,20 @@
       <button data-mode="Shuffle">Shuffle</button>
     </div>
   </div>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const fnnf = localStorage.getItem("fnnf") || "NF";
 
+    document.querySelectorAll("#toggle button").forEach(btn => {
+        btn.classList.remove("active");
+
+        if (btn.dataset.mode === fnnf) {
+            btn.classList.add("active");
+        }
+    });
+
+});
+  </script>
                 
 </body>
 </html>
