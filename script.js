@@ -3,6 +3,7 @@ let fout = 0;
 let random = 0;
 let feedbackOpen = false;
 let currentWord;
+let diffmax = 2;
 let streak = 0;
 let fnnf = Number(localStorage.getItem("fnnf") ?? 1);
 let words = [];
@@ -134,7 +135,16 @@ input.addEventListener("keyup", (e) => {
       newWord();
       
     } else {
+      if (answer === "") {
+       
+       foutreken();
+      } else {
+        if (levenshtein(answer, currentWord.taal) <= diffmax) {
         prep();
+        } else {
+          foutreken();
+        }
+      }
      
       
     }
@@ -148,7 +158,15 @@ input.addEventListener("keyup", (e) => {
       newWord();
       streakcheck();
     } else {
-      prep();
+         if (answer === "") {
+       foutreken();
+      } else {
+        if (levenshtein(answer, currentWord.nl) <= diffmax) {
+        prep();
+        } else {
+          foutreken();
+        }
+      }
       
     }
    } else if (fnnf === 2) {
@@ -160,8 +178,15 @@ input.addEventListener("keyup", (e) => {
       newWord();
       streakcheck();
     } else {
-        console.log("so the shuffle ran 0 and the answer was wrong but now i gotta display the french word");
-          prep();
+          if (answer === "") {
+       foutreken();
+      } else {
+        if (levenshtein(answer, currentWord.taal) <= diffmax) {
+        prep();
+        } else {
+          foutreken();
+        }
+      }
     }
   } else if (shuffleran === 1) {
     if (isCorrectAnswer(answer, currentWord.taal)) {
@@ -171,7 +196,16 @@ input.addEventListener("keyup", (e) => {
       newWord();
       streakcheck();
     } else {
-          prep();
+             if (answer === "") {
+       foutreken();
+      } else {
+        if (levenshtein(answer, currentWord.taal) <= diffmax) {
+        prep();
+        } else {
+          foutreken();
+        }
+        
+      }
     }
   }
 }
@@ -493,11 +527,16 @@ function closeMenu() {
   holdTimer = null;
   activeKey = null;
 }
-if (!localStorage.getItem("seen")) {
- showPopup("Hey there, Did you know you can add accents like: ë by holding the letter!");
 
-  localStorage.setItem("seen", "true");
+if (window.location.pathname.endsWith("ingame.html")) {
+  if (!localStorage.getItem("seen")) {
+  showPopup("Hey there, Did you know you can add accents like: ë by holding the letter!");
+
+    localStorage.setItem("seen", "true");
+  }
 }
+
+
 function normalize(str) {
   return str
     .toLowerCase()
