@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="style.css">
 <script src="script.js"></script>
 <script src="Update.js" defer></script>
+
 <style>
   body {
     max-width: 580px;
@@ -316,7 +317,7 @@ a {
 </style>
 </head>
 <body>
-
+<a href="ideas.html" id="submithref">Feedback or ideas?</a>
   <h1><span>Study</span>No.</h1>
   <p id="chooselang">Select a subject you wanna study,</p>
 <div class="mainmenu">
@@ -441,6 +442,7 @@ a {
       });
 
       var grade = target.dataset.grade;
+    
       chaptersBox.querySelectorAll('.chapter').forEach(function (ch) {
         ch.classList.toggle('hidden', ch.dataset.grade !== grade);
       });

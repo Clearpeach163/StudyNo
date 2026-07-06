@@ -252,7 +252,7 @@ function letsdo() {
 
 function home() {
   location.href = "homescreen.html";
-}
+} 
 function prep() {
   feedbackOpen = true;
      document.getElementById("feedback").style.display = "block";
