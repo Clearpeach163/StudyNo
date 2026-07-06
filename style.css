@@ -112,7 +112,8 @@ body::-webkit-scrollbar{
     color: white;
     position: fixed;
     top: 1vh;
-    padding: 0.4%;
+    
+    padding: 0.4% !important;
     left: 1vh;
     border-radius: 99999px;
     text-decoration: none;
@@ -795,6 +796,7 @@ nav{
     color:white;
     font-weight:800;
     font-size:1.3rem;
+    animation: pop 0.2s ease backwards;
 }
 
 .signin{
@@ -824,6 +826,7 @@ nav{
     flex-direction:column;
     text-align:center;
     padding:20px;
+   
 }
 
 .badge{
@@ -834,6 +837,7 @@ nav{
     background:var(--glass);
     border:1px solid var(--border);
     backdrop-filter:blur(20px);
+    animation: pop 1s ease backwards;
 }
 
 .hero h1{
@@ -841,6 +845,7 @@ nav{
     color:white;
     line-height:.95;
     margin-bottom:20px;
+    animation: fadein_down 1s ease backwards;
   
     
 }
@@ -860,6 +865,7 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
     font-size:1.15rem;
     line-height:1.7;
     margin-bottom:35px;
+    animation: fadein_down 1s ease backwards;
 }
 
 .cta{
@@ -879,6 +885,7 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 16000px;
     padding: 18px 20px;
+
 }
 
 .cta:hover{
@@ -1212,3 +1219,88 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
   from { transform: scale(0.95); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 } 
+
+
+#flashcard {
+  background-color: #00ffff;
+  height: 35%;
+  width: 35%;
+  display: none;
+  left: 50%;
+  position: absolute;
+  translate: -50% -50%;
+  top: 50%;
+  z-index: 999;
+  border-radius: 20px;
+  padding: -1%;
+
+  background: rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.254),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 20px 10px rgba(255, 255, 255, 0.125);
+
+}
+#flashcard button {
+  background: rgba(124, 9, 255, 0.389);
+  backdrop-filter: blur(0px);
+  display: none;
+  -webkit-backdrop-filter: blur(0px);
+  border: 1px solid rgba(123, 0, 255, 0.5);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(150, 97, 215, 0.254),
+    inset 0 -1px 0 rgba(241, 126, 253, 0.1),
+    inset 0 0 20px 10px rgba(255, 255, 255, 0.125);
+    color: rgb(218, 200, 236);
+    left: 50%;
+    position: inherit;
+    bottom: 4%;
+    height: 10%;
+    width: 50%;
+    translate: -50%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 700;
+    transition: all 0.4s ease;
+}
+#flashcard button:hover {
+  height: 11%;
+  width: 60%;
+  background: rgba(104, 10, 211, 0.328);
+}
+#flashcard h1 {
+  
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  text-align: center;
+  color: white;
+
+}
+.h1flash {
+  justify-content: center;
+}
+#flashhr {
+  color: white;
+  width: 80%;
+  top: 40%;
+  position: absolute;
+  left: 50%;
+  translate: -50%;
+}
+#flash_nl {
+  left: 50%;
+  font-size: 3rem;
+  translate: -50%;
+  top: 15%;
+  position: absolute;
+}
+#flash_taal {
+  top: 40%;
+  font-size: 3rem;
+  left: 50%;
+  translate: -50%;
+  position: absolute;
+}

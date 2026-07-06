@@ -83,7 +83,47 @@ const h1 = document.getElementById("h1");
 const input = document.getElementById("Main_input");
 
 function newWord() {
-    const remaining = words.filter(word => !gehad_goed.includes(word));
+
+  if (toetsModus == true) {
+ actuallynewWord();
+  } else {
+    console.log("oefen mode");
+    if (Math.random() < 0.7) {
+        actuallynewWord();
+        console.log("normaal");
+    } else {
+        newflashcard();
+        console.log("flashcard");
+    }
+  }
+}
+function newflashcard() {
+       const remaining = words.filter(word => !gehad_goed.includes(word));
+  console.log(remaining);
+    if (remaining.length === 0) {
+        sessionStorage.setItem("goed", goed);
+        sessionStorage.setItem("fout", fout);
+   
+        window.location.href = "end_course.html"
+        
+    } else {
+        currentWord = remaining[Math.floor(Math.random() * remaining.length)];
+    }
+    document.getElementById("flash_taal").textContent = currentWord.taal;
+    document.getElementById("flash_nl").textContent = currentWord.nl;
+    document.getElementById("flashcard").style.display = "block";
+    document.getElementById("okflash").style.display = "block";
+    
+    
+}
+function okflash() {
+  newWord();
+}
+
+function actuallynewWord() {
+   document.getElementById("flashcard").style.display = "none";
+   document.getElementById("okflash").style.display = "none";
+     const remaining = words.filter(word => !gehad_goed.includes(word));
   console.log(remaining);
     if (remaining.length === 0) {
         sessionStorage.setItem("goed", goed);

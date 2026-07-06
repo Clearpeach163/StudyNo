@@ -19,7 +19,6 @@
   }
   html, body {
   overscroll-behavior: none;
-  
   scroll-behavior: smooth;  
 }
 
@@ -38,9 +37,21 @@ button:active {
         color: rgb(255, 255, 255);
         text-align: center;
             font-size:clamp(1.8rem,7vw,4.5rem);
+            animation: fadein_down 1s ease backwards;
+            transition: all 0.2s ease;
+            
     }
+
     h1 span {
+
         color: #8665c4;
+        animation: fadein_down 1s ease backwards;
+
+    }
+    h1:hover {
+      font-size:clamp(1.9rem,8vw,4.6rem);
+      z-index: 999;
+      position: static;
     }
 
   .language {
@@ -246,6 +257,10 @@ button:active {
         text-align: center;
         padding: 5px;
         font-size:clamp(1rem,0vw,1rem);
+ 
+  
+          animation: fadein_down 1s ease backwards;
+                 animation-delay: 3s;
   }
   .mainmenu {
        margin-bottom: 8px;
@@ -313,12 +328,23 @@ padding: 2%;
 a {
     color: white;
 }
+.chapter.extra {
+  display: none;
+}
+.chapters.show-all .chapter.extra {
+  display: flex;
+}
+#submithref {
+  animation: fadein_down 1s ease backwards;
+  animation-delay: 1s;
 
+}
 </style>
 </head>
 <body>
+
 <a href="ideas.html" id="submithref">Feedback or ideas?</a>
-  <h1><span>Study</span>No.</h1>
+  <h1 class="noh1"><span id="studyh1">Study</span>No.</h1>
   <p id="chooselang">Select a subject you wanna study,</p>
 <div class="mainmenu">
   <!-- FRANS -->
@@ -420,19 +446,81 @@ a {
         </div><!--chapters div dus hierbinnen blijven-->
         
         
-      </div>
+  
+      <button data-show-all>Toon alle hoofdstukken</button>
+    </details>
+    </div>
+   
+    
+    <!-- ENGELS -->
+  <div class="language">
+    <details>
+      <summary>
+        <p class="language-name">Engels</p>
+        <span class="language-description">6 leerjaren</span>
+      </summary>
 
+      <div class="grades" data-grades>
+        <span class="grade active" data-grade="1">1e</span>
+        <span class="grade" data-grade="2">2e</span>
+        <span class="grade" data-grade="3">3e</span>
+        <span class="grade" data-grade="4">4e</span>
+        <span class="grade" data-grade="5">5e</span>
+        <span class="grade" data-grade="6">6e</span>
+      </div>
+      <div class="chapters" data-chapters>
+        <div class="chapter" data-grade="1">
+          <span class="num">1</span>
+          <a class="title" onclick="setlist('en_unit1');">Unit 1 woordgroep</a>
+          <span class="count">0 woorden</span>
+        </div>
+        <div class="chapter" data-grade="1">
+          <span class="num">2</span>
+          <a class="title" onclick="setlist('en_unit1_fix');">Unit 1 fix</a>
+          <span class="count">0 woorden</span>
+        </div>
+        <!-- meer hoofdstukken hier, zelfde patroon -->
+      </div>
       <button data-show-all>Toon alle hoofdstukken</button>
     </details>
   </div>
+  <!-- Voeg hier meer talen toe als nodig -->
+  </div>
+
+
+
+
+
    <p onclick="version();" id="update">error loading version....</p>
 
-  <!-- ENGELS -->
+
   
 <script>
-  // grade tab switching: click a grade -> show only chapters with matching data-grade
+  function updateChapters(chaptersBox) {
+    var grade = chaptersBox.dataset.currentGrade || '1';
+    var btn = chaptersBox.nextElementSibling;
+    var visible = [];
+
+    chaptersBox.querySelectorAll('.chapter').forEach(function (ch) {
+      var matches = ch.dataset.grade === grade;
+      ch.classList.toggle('hidden', !matches);
+      ch.classList.remove('extra');
+      if (matches) visible.push(ch);
+    });
+
+    visible.forEach(function (ch, i) {
+      if (i >= 4) ch.classList.add('extra');
+    });
+
+    chaptersBox.classList.remove('show-all');
+    if (btn) btn.style.display = visible.length > 4 ? '' : 'none';
+  }
+
+  // grade tab switching
   document.querySelectorAll('[data-grades]').forEach(function (gradeBar) {
     var chaptersBox = gradeBar.parentElement.querySelector('[data-chapters]');
+    chaptersBox.dataset.currentGrade = '1';
+
     gradeBar.addEventListener('click', function (e) {
       var target = e.target.closest('.grade');
       if (!target) return;
@@ -441,30 +529,23 @@ a {
         g.classList.toggle('active', g === target);
       });
 
-      var grade = target.dataset.grade;
-    
-      chaptersBox.querySelectorAll('.chapter').forEach(function (ch) {
-        ch.classList.toggle('hidden', ch.dataset.grade !== grade);
-      });
+      chaptersBox.dataset.currentGrade = target.dataset.grade;
+      updateChapters(chaptersBox);
     });
   });
 
-  // show-all button: reveals chapters past the first 4 in that language
+  // show-all button
   document.querySelectorAll('[data-show-all]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var box = btn.previousElementSibling;
-      box.querySelectorAll('.chapter:not(.hidden)').forEach(function (ch, i) {
-        if (i >= 4) ch.style.display = 'flex';
-      });
+      box.classList.add('show-all');
       btn.style.display = 'none';
     });
   });
 
-  // initial state: hide chapters beyond the 4th in the visible grade
+  // initial state
   document.querySelectorAll('[data-chapters]').forEach(function (box) {
-    box.querySelectorAll('.chapter:not(.hidden)').forEach(function (ch, i) {
-      if (i >= 4) ch.style.display = 'none';
-    });
+    updateChapters(box);
   });
 </script>
 
