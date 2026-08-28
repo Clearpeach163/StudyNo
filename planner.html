@@ -3,515 +3,555 @@
        <title>Dashboard</title>
          <link rel="stylesheet" href="style.css">
        <style>
-           body {
-               font-family: Arial, sans-serif;
-               margin: 10px;
-               padding: 0;
-              
-           }
-           .new-event {
-            display: flex;
-            width: 75%;
-            align-items: center;
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translateX(-50%);
-            gap: 20px;
-            padding: 10px;
-              padding-bottom: 10px;   
-            border-radius: 3400px;
-             background: rgba(255,255,255,0.167);
-            backdrop-filter: blur(3px) saturate(200%);
-            -webkit-backdrop-filter: blur(3px) saturate(200%);
+        
+/* =========================================================
+   STUDYNO — LIQUID GLASS
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    color: #fff;
 
-            color: rgb(221, 197, 208);
-            font-size: 200%;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.18);
-            }
-           .checkbox-wrapper-24 .checkbox {
-               display: table-cell;
-               width: 100%;
-               height: 100%;
-               vertical-align: middle;
-               text-align: center;
-           }
-
-
-           .checkbox-wrapper-24 label {
-               display: inline-block;
-               color: #333;
-               cursor: pointer;
-               position: relative;
-           }
-           .checkbox-wrapper-24 label span {
-               display: inline-block;
-               position: relative;
-               background-color: transparent;
-               width: 25px;
-               height: 25px;
-               transform-origin: center;
-               border: 2px solid #333;
-               border-radius: 50%;
-               vertical-align: middle;
-               margin-right: 10px;
-               transition: background-color 150ms 200ms, transform 350ms cubic-bezier(0.78, -1.22, 0.17, 1.89);
-           }
-           .checkbox-wrapper-24 label span:before {
-               content: "";
-               width: 0px;
-               height: 2px;
-               border-radius: 2px;
-               background: #333;
-               position: absolute;
-               transform: rotate(45deg);
-               top: 13px;
-               left: 9px;
-               transition: width 50ms ease 50ms;
-               transform-origin: 0% 0%;
-           }
-           .checkbox-wrapper-24 label span:after {
-               content: "";
-               width: 0;
-               height: 2px;
-               border-radius: 2px;
-               background: #333;
-               position: absolute;
-               transform: rotate(305deg);
-               top: 16px;
-               left: 10px;
-               transition: width 50ms ease;
-               transform-origin: 0% 0%;
-           }
-           .checkbox-wrapper-24 label:hover span:before {
-               width: 5px;
-               transition: width 100ms ease;
-           }
-           .checkbox-wrapper-24 label:hover span:after {
-               width: 10px;
-               transition: width 150ms ease 100ms;
-           }
-
-
-           .checkbox-wrapper-24 input[type=checkbox] {
-               display: none;
-           }
-           .checkbox-wrapper-24 input[type=checkbox]:checked + label span {
-               background-color: #333;
-               transform: scale(1.25);
-           }
-           .checkbox-wrapper-24 input[type=checkbox]:checked + label span:after {
-               width: 10px;
-               background: #fff;
-               transition: width 150ms ease 100ms;
-           }
-           .checkbox-wrapper-24 input[type=checkbox]:checked + label span:before {
-               width: 5px;
-               background: #fff;
-               transition: width 150ms ease 100ms;
-           }
-           .checkbox-wrapper-24 input[type=checkbox]:checked + label:hover span {
-               background-color: #333;
-               transform: scale(1.25);
-           }
-           .checkbox-wrapper-24 input[type=checkbox]:checked + label:hover span:after {
-               width: 10px;
-               background: #fff;
-               transition: width 150ms ease 100ms;
-           }
-           .checkbox-wrapper-24 input[type=checkbox]:checked + label:hover span:before {
-               width: 5px;
-               background: #fff;
-               transition: width 150ms ease 100ms;
-           }
-
-
-           /* ================================
-           MODERN APPLE LIQUID GLASS SLIDER
-           ================================ */
-
-
-           input[type="range"] {
-           -webkit-appearance: none;
-           appearance: none;
-
-
-           width: 25%;
-           height: 32px;
-
-
-           background: transparent;
-           cursor: pointer;
-           outline: none;
-           }
-
-
-
-
-           /* ================================
-           TRACK — WEBKIT
-           ================================ */
-
-
-           input[type="range"]::-webkit-slider-runnable-track {
-           height: 12px;
-           border-radius: 999px;
-
-
-           background: rgba(255, 255, 255, 0.12);
-
-
-           border: 1px solid rgba(255, 255, 255, 0.16);
-
-
-           box-shadow:
-               inset 0 1px 1px rgba(255, 255, 255, 0.08),
-               inset 0 -1px 2px rgba(0, 0, 0, 0.45);
-
-
-           backdrop-filter: blur(20px);
-           -webkit-backdrop-filter: blur(20px);
-           }
-
-
-
-
-           /* ================================
-           THUMB — WEBKIT
-           ================================ */
-
-
-           input[type="range"]::-webkit-slider-thumb {
-           -webkit-appearance: none;
-           appearance: none;
-
-
-           width: 32px;
-           height: 32px;
-
-
-           /* IMPORTANT:
-               centers thumb exactly on track */
-           margin-top: -11px;
-
-
-           border-radius: 50%;
-
-
-           background: rgba(255, 255, 255, 0.88);
-
-
-           border: 1px solid rgba(255, 255, 255, 0.95);
-
-
-           box-shadow:
-               0 2px 8px rgba(0, 0, 0, 0.45),
-               inset 0 0 0 1px rgba(255, 255, 255, 0.4);
-
-
-           transition:
-               transform 0.18s cubic-bezier(.2,.8,.2,1),
-               background 0.18s ease,
-               box-shadow 0.18s ease;
-           }
-
-
-
-
-           /* hover */
-
-
-           input[type="range"]:hover::-webkit-slider-thumb {
-           background: rgba(255, 255, 255, 0.96);
-
-
-           transform: scale(1.06);
-
-
-           box-shadow:
-               0 3px 12px rgba(0, 0, 0, 0.5);
-           }
-
-
-
-
-           /* press */
-
-
-           input[type="range"]::-webkit-slider-thumb:active {
-           transform: scale(1.12);
-
-
-           background: #ffffff;
-
-
-           box-shadow:
-               0 4px 16px rgba(0, 0, 0, 0.55);
-           }
-
-
-
-
-           /* focus */
-
-
-           input[type="range"]:focus::-webkit-slider-thumb {
-           outline: none;
-           }
-
-
-
-
-           /* ================================
-           FIREFOX
-           ================================ */
-
-
-           input[type="range"]::-moz-range-track {
-           height: 12px;
-           border-radius: 999px;
-
-
-           background: rgba(255, 255, 255, 0.12);
-
-
-           border: 1px solid rgba(255, 255, 255, 0.16);
-
-
-           box-shadow:
-               inset 0 1px 1px rgba(255, 255, 255, 0.08),
-               inset 0 -1px 2px rgba(0, 0, 0, 0.45);
-           }
-
-
-
-
-           input[type="range"]::-moz-range-thumb {
-           width: 32px;
-           height: 32px;
-
-
-           border-radius: 50%;
-
-
-           background: rgba(255, 255, 255, 0.88);
-
-
-           border: 1px solid rgba(255, 255, 255, 0.95);
-
-
-           box-shadow:
-               0 2px 8px rgba(0, 0, 0, 0.45);
-
-
-           transition:
-               transform 0.18s cubic-bezier(.2,.8,.2,1),
-               background 0.18s ease;
-           }
-
-
-
-
-           input[type="range"]:hover::-moz-range-thumb {
-           transform: scale(1.06);
-           }
-
-
-
-
-           input[type="range"]::-moz-range-thumb:active {
-           transform: scale(1.12);
-           }
-
-
-           #inputField, #dateField {
-               height: 48px;
-               box-sizing: border-box;
-              
-               border-radius: 24px;
-               
-               padding: 0 20px;
-               font-size: 17px;
-               color: #222;
-               outline: none;
-               transition: 0.15s ease;
-                   outline: none;
-
-                background: rgba(255, 255, 255, 0.146);
-
-                backdrop-filter: blur(0px) saturate(130%);
-                -webkit-backdrop-filter: blur(0px) saturate(130%);
-
-                border-color: rgba(255,255,255,0.3);
-                color: #c9c9c9;
-                box-shadow:
-                inset 0 2px 2px rgba(150, 126, 163, 0.25),
-                0 8px 40px rgba(0,0,0,0.4);
-           }
-           #inputField::placeholder {
-               color: #dabbedab;
-           }
-           *:focus {
-               outline: none;
-           }
-          
-           .split-btn {
-               position: relative;
-               overflow: hidden;
-              
-               padding: 11px 20px;
-               border: 1px solid #000;
-               border-radius: 1000px;
-              
-               background: #fff;
-               color: #000;
-              
-               font-size: 14px;
-               font-weight: 600;
-               cursor: pointer;
-              
-               isolation: isolate;
-           }
-
-
-           .split-btn::before {
-               content: "";
-               position: absolute;
-               inset: 0;
-               background: #454545;
-               transform: translateX(-101%);
-               transition: transform 0.3s cubic-bezier(.76, 0, .24, 1);
-               z-index: -1;
-           }
-
-
-           .split-btn:hover::before {
-               transform: translateX(0);
-           }
-
-
-           .split-btn span {
-               position: relative;
-               z-index: 1;
-               transition: color 0.25s ease;
-           }
-
-
-           .split-btn:hover span {
-               color: #fff;
-           }
-           #hero {
-               color: #fff;
-               position: relative;
-               text-align: center;
-               font-size: 4.5rem;
-               margin-top: 5%;
-               font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
-             
-           }
-       .task-container {
-   position: absolute;
-
-
-   width: 70%;
-
-
-   top: calc(30% + 90px);
-
-
-   left: 50%;
-
-
-   transform: translateX(-50%);
-
-
-   display: flex;
-
-
-   flex-direction: column;
-
-
-   gap: 12px;
 }
 
 
+/* =========================================================
+   TOP LINKS
+   ========================================================= */
 
+
+
+
+
+
+/* =========================================================
+   VERSION
+   ========================================================= */
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+
+#back:hover {
+    background: rgba(255,255,255,0.14);
+    transform: scale(1.05);
+}
+
+#back:active {
+    transform: scale(0.95);
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+#hero {
+    position: relative;
+
+    margin: 110px 0 45px;
+
+    text-align: center;
+
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 650;
+    letter-spacing: -3px;
+
+    color: white;
+
+    text-shadow:
+        0 10px 40px rgba(0,0,0,0.35);
+}
+
+
+/* =========================================================
+   NEW TASK PANEL
+   ========================================================= */
+
+.new-event {
+    position: relative;
+
+    width: min(900px, 75%);
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 12px;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.14),
+            rgba(255,255,255,0.055)
+        );
+
+    border: 1px solid rgba(255,255,255,0.16);
+
+    backdrop-filter:
+        blur(30px)
+        saturate(180%);
+
+    -webkit-backdrop-filter:
+        blur(30px)
+        saturate(180%);
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,0.35),
+        inset 0 1px rgba(255,255,255,0.18),
+        inset 0 -1px rgba(0,0,0,0.15);
+}
+
+
+/* =========================================================
+   TEXT / DATE INPUT
+   ========================================================= */
+
+#inputField,
+#dateField {
+
+    height: 48px;
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    border-radius: 999px;
+
+    padding: 0 18px;
+
+    background: rgba(255,255,255,0.075);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    color: rgba(255,255,255,0.9);
+
+    outline: none;
+
+    font-size: 15px;
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,0.08);
+
+    transition:
+        background 0.2s ease,
+        border 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+#inputField {
+    flex: 1;
+    min-width: 0;
+}
+
+#dateField {
+    width: 160px;
+}
+
+
+/* Placeholder */
+
+#inputField::placeholder {
+    color: rgba(255,255,255,0.45);
+}
+
+
+/* Focus */
+
+#inputField:focus,
+#dateField:focus {
+    background: rgba(255,255,255,0.11);
+
+    border-color: rgba(255,255,255,0.25);
+
+    box-shadow:
+        0 0 0 3px rgba(170,130,255,0.10),
+        inset 0 1px rgba(255,255,255,0.12);
+}
+
+
+/* =========================================================
+   RANGE SLIDER
+   ========================================================= */
+
+input[type="range"] {
+    width: 120px;
+
+    height: 32px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background: transparent;
+
+    cursor: pointer;
+}
+
+
+/* Track */
+
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 7px;
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,0.12);
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,0.08),
+        inset 0 -1px rgba(0,0,0,0.25);
+}
+
+
+/* Thumb */
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 25px;
+    height: 25px;
+
+    margin-top: -10px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,0.8);
+
+    background: rgba(255,255,255,0.9);
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.35),
+        inset 0 1px rgba(255,255,255,1);
+
+    transition: transform 0.15s ease;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+    transform: scale(1.08);
+}
+
+
+/* Firefox */
+
+input[type="range"]::-moz-range-track {
+    height: 7px;
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,0.12);
+
+    border: 1px solid rgba(255,255,255,0.12);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,0.8);
+
+    background: rgba(255,255,255,0.9);
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.35);
+}
+
+
+/* =========================================================
+   TOETS CHECKBOX
+   ========================================================= */
+
+.checkbox-wrapper-24 {
+    display: flex;
+    align-items: center;
+
+    white-space: nowrap;
+}
+
+.checkbox-wrapper-24 input {
+    display: none;
+}
+
+.checkbox-wrapper-24 label {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color: rgba(255,255,255,0.75);
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.checkbox-wrapper-24 label span {
+
+    width: 22px;
+    height: 22px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,0.3);
+
+    background: rgba(255,255,255,0.06);
+
+    transition:
+        0.2s ease;
+}
+
+
+/* Checked */
+
+.checkbox-wrapper-24 input[type="checkbox"]:checked + label span {
+
+    background: rgba(255,255,255,0.9);
+
+    border-color: white;
+
+    box-shadow:
+        0 0 15px rgba(255,255,255,0.2);
+
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   ADD BUTTON
+   ========================================================= */
+
+.split-btn {
+
+    position: relative;
+
+    height: 48px;
+
+    padding: 0 22px;
+
+    border: 1px solid rgba(255,255,255,0.8);
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,0.92);
+
+    color: #111;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.split-btn:hover {
+    background: white;
+
+    transform: scale(1.03);
+}
+
+.split-btn:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================================================
+   TASK CONTAINER
+   ========================================================= */
+
+.task-container {
+
+    width: min(850px, 70%);
+
+    margin: 25px auto 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   TASK
+   ========================================================= */
 
 .task-list {
-   width: 100%;
-   min-height: 55px;
-   box-sizing: border-box;
 
+    min-height: 58px;
 
-   display: flex;
-   flex-direction: row;
-   align-items: center;
+    display: flex;
+    align-items: center;
 
+    gap: 14px;
 
-   gap: 12px;
-   padding: 10px 18px;
+    padding: 10px 18px;
 
+    border-radius: 20px;
 
-   border-radius: 20px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.105),
+            rgba(255,255,255,0.045)
+        );
 
+    border: 1px solid rgba(255,255,255,0.12);
 
-   background: rgba(255, 255, 255, 0.92);
-   border: 1px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter:
+        blur(25px)
+        saturate(160%);
 
+    -webkit-backdrop-filter:
+        blur(25px)
+        saturate(160%);
 
-   box-shadow:
-       0 8px 30px rgba(0, 0, 0, 0.15),
-       inset 0 1px rgba(255, 255, 255, 0.8);
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.20),
+        inset 0 1px rgba(255,255,255,0.10);
 
+    color: rgba(255,255,255,0.9);
 
-   color: #222;
-
-
-  
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
 }
 
 
+.task-list:hover {
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.14),
+            rgba(255,255,255,0.06)
+        );
+
+}
 
 
-/* Checkbox waarmee je task AFVINKT */
-
+/* =========================================================
+   TASK CHECKBOX
+   ========================================================= */
 
 .task-list input[type="checkbox"] {
-   width: 18px;
-   height: 18px;
 
+    width: 19px;
+    height: 19px;
 
-   margin: 0;
+    margin: 0;
 
+    flex-shrink: 0;
 
-   flex-shrink: 0;
+    accent-color: white;
+
+    cursor: pointer;
 }
 
 
-
-
-/* Tekst */
-
+/* =========================================================
+   TASK TEXT
+   ========================================================= */
 
 .task-list span {
-   font-size: 16px;
+
+    font-size: 16px;
+
+    color: rgba(255,255,255,0.88);
 }
 
 
-
-
-/* TOETS */
-
+/* =========================================================
+   TOETS TASK
+   ========================================================= */
 
 .task-list.test-task {
-   border: 2px solid #000;
+
+    border: 2px solid rgba(194, 145, 221, 0.42);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.225),
+            rgba(255,255,255,0.055)
+        );
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.35),
+        inset 0 1px rgba(255,255,255,0.16);
 }
 
 
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
+@media (max-width: 750px) {
 
-       </style>
+    #hero {
+        margin-top: 100px;
+        font-size: 45px;
+    }
+
+    .new-event {
+
+        width: calc(100% - 30px);
+
+        border-radius: 25px;
+
+        flex-wrap: wrap;
+    }
+
+    #inputField {
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    #dateField {
+        flex: 1;
+        width: auto;
+    }
+
+    input[type="range"] {
+        flex: 1;
+    }
+
+   
+  
+}
+</style>
+       
    </head>
   <body>
       <a href="ideas.html" id="submithref">Feedback or ideas?</a>
@@ -524,7 +564,7 @@
 
    <h1 id="hero">Hey, Error loading name</h1>
 
-
+<div class="planner"></div>
    <div class="new-event">
 
 
@@ -576,7 +616,7 @@ const main_text = document.getElementById("hero");
 let name = localStorage.getItem("name");
 
 if (name) {
-    main_text.textContent = `Hey, ${name}`;
+    main_text.textContent = `Hey,  ${name}`;
 } else {
     no_name();
 }
@@ -586,9 +626,9 @@ function no_name() {
 
     if (name) {
         localStorage.setItem("name", name);
-        main_text.textContent = `Hey, ${name}`;
+        main_text.textContent = `Hey,  ${name}`;
     } else {
-        main_text.textContent = "Hey, Guest";
+        main_text.textContent = "Hey,  Guest";
     }
 }
 
