@@ -13,11 +13,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 <script src="Update.js" defer></script>
-<script src="script.js" defer></script>
-
+<script src="script.js"></script>
+<script>
+    ShowPopup("New planner is here! Check it out in the planner tab.", 10000);
+</script>
 
 </head>
 <body>
+      <div id="popup" class="popup">
+    Error loading popup, please report this to the developer.<br>
+  </div>
      <div id="popup" class="popup">
     Error loading popup, please report this to the developer.<br>
   </div>
@@ -25,7 +30,7 @@
   <p onclick="version();" id="update">error loading version....</p>
 <nav>
     <div class="logo">StudyNo.</div>
-    <a href="planner.html">Planner</a>
+    <a href="planner.html" id="planner-href">Planner</a>
    
 </nav>
 
