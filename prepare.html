@@ -270,7 +270,10 @@
       shadow.innerHTML = TEMPLATE;
 
       shadow.getElementById('sno-subject').textContent = "";
-      shadow.getElementById('sno-chapter').textContent = "Not found 404";
+
+(localStorage.getItem("activeList") || "404 please report")
+  .replaceAll("_", " ");
+
       shadow.getElementById('sno-wc').textContent = "";
 
       // --- Richting: FN / NF / Shuffle ---
