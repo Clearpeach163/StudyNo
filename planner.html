@@ -1,0 +1,879 @@
+<html>
+   <head>
+       <title>Dashboard</title>
+       <style>
+           body {
+               font-family: Arial, sans-serif;
+               margin: 10px;
+               padding: 0;
+               background: #171717;
+           background: linear-gradient(180deg, rgba(23, 23, 23, 1) 0%, rgba(191, 191, 191, 1) 100%);
+           }
+           .new-event {
+   display: flex;
+   width: 70%;
+   align-items: center;
+   position: absolute;
+   top: 30%;
+   left: 50%;
+   transform: translateX(-50%);
+   gap: 20px;
+
+
+   padding: 10px;
+   padding-bottom: 10px;
+  
+   border-radius: 34px;
+
+
+   background: rgba(255, 255, 255, 0.92);
+   border: 1px solid rgba(255, 255, 255, 0.8);
+
+
+   box-shadow:
+       0 8px 30px rgba(0, 0, 0, 0.15),
+       inset 0 1px rgba(255, 255, 255, 0.8);
+}
+           .checkbox-wrapper-24 .checkbox {
+               display: table-cell;
+               width: 100%;
+               height: 100%;
+               vertical-align: middle;
+               text-align: center;
+           }
+
+
+           .checkbox-wrapper-24 label {
+               display: inline-block;
+               color: #333;
+               cursor: pointer;
+               position: relative;
+           }
+           .checkbox-wrapper-24 label span {
+               display: inline-block;
+               position: relative;
+               background-color: transparent;
+               width: 25px;
+               height: 25px;
+               transform-origin: center;
+               border: 2px solid #333;
+               border-radius: 50%;
+               vertical-align: middle;
+               margin-right: 10px;
+               transition: background-color 150ms 200ms, transform 350ms cubic-bezier(0.78, -1.22, 0.17, 1.89);
+           }
+           .checkbox-wrapper-24 label span:before {
+               content: "";
+               width: 0px;
+               height: 2px;
+               border-radius: 2px;
+               background: #333;
+               position: absolute;
+               transform: rotate(45deg);
+               top: 13px;
+               left: 9px;
+               transition: width 50ms ease 50ms;
+               transform-origin: 0% 0%;
+           }
+           .checkbox-wrapper-24 label span:after {
+               content: "";
+               width: 0;
+               height: 2px;
+               border-radius: 2px;
+               background: #333;
+               position: absolute;
+               transform: rotate(305deg);
+               top: 16px;
+               left: 10px;
+               transition: width 50ms ease;
+               transform-origin: 0% 0%;
+           }
+           .checkbox-wrapper-24 label:hover span:before {
+               width: 5px;
+               transition: width 100ms ease;
+           }
+           .checkbox-wrapper-24 label:hover span:after {
+               width: 10px;
+               transition: width 150ms ease 100ms;
+           }
+
+
+           .checkbox-wrapper-24 input[type=checkbox] {
+               display: none;
+           }
+           .checkbox-wrapper-24 input[type=checkbox]:checked + label span {
+               background-color: #333;
+               transform: scale(1.25);
+           }
+           .checkbox-wrapper-24 input[type=checkbox]:checked + label span:after {
+               width: 10px;
+               background: #fff;
+               transition: width 150ms ease 100ms;
+           }
+           .checkbox-wrapper-24 input[type=checkbox]:checked + label span:before {
+               width: 5px;
+               background: #fff;
+               transition: width 150ms ease 100ms;
+           }
+           .checkbox-wrapper-24 input[type=checkbox]:checked + label:hover span {
+               background-color: #333;
+               transform: scale(1.25);
+           }
+           .checkbox-wrapper-24 input[type=checkbox]:checked + label:hover span:after {
+               width: 10px;
+               background: #fff;
+               transition: width 150ms ease 100ms;
+           }
+           .checkbox-wrapper-24 input[type=checkbox]:checked + label:hover span:before {
+               width: 5px;
+               background: #fff;
+               transition: width 150ms ease 100ms;
+           }
+
+
+           /* ================================
+           MODERN APPLE LIQUID GLASS SLIDER
+           ================================ */
+
+
+           input[type="range"] {
+           -webkit-appearance: none;
+           appearance: none;
+
+
+           width: 25%;
+           height: 32px;
+
+
+           background: transparent;
+           cursor: pointer;
+           outline: none;
+           }
+
+
+
+
+           /* ================================
+           TRACK — WEBKIT
+           ================================ */
+
+
+           input[type="range"]::-webkit-slider-runnable-track {
+           height: 12px;
+           border-radius: 999px;
+
+
+           background: rgba(255, 255, 255, 0.12);
+
+
+           border: 1px solid rgba(255, 255, 255, 0.16);
+
+
+           box-shadow:
+               inset 0 1px 1px rgba(255, 255, 255, 0.08),
+               inset 0 -1px 2px rgba(0, 0, 0, 0.45);
+
+
+           backdrop-filter: blur(20px);
+           -webkit-backdrop-filter: blur(20px);
+           }
+
+
+
+
+           /* ================================
+           THUMB — WEBKIT
+           ================================ */
+
+
+           input[type="range"]::-webkit-slider-thumb {
+           -webkit-appearance: none;
+           appearance: none;
+
+
+           width: 32px;
+           height: 32px;
+
+
+           /* IMPORTANT:
+               centers thumb exactly on track */
+           margin-top: -11px;
+
+
+           border-radius: 50%;
+
+
+           background: rgba(255, 255, 255, 0.88);
+
+
+           border: 1px solid rgba(255, 255, 255, 0.95);
+
+
+           box-shadow:
+               0 2px 8px rgba(0, 0, 0, 0.45),
+               inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+
+
+           transition:
+               transform 0.18s cubic-bezier(.2,.8,.2,1),
+               background 0.18s ease,
+               box-shadow 0.18s ease;
+           }
+
+
+
+
+           /* hover */
+
+
+           input[type="range"]:hover::-webkit-slider-thumb {
+           background: rgba(255, 255, 255, 0.96);
+
+
+           transform: scale(1.06);
+
+
+           box-shadow:
+               0 3px 12px rgba(0, 0, 0, 0.5);
+           }
+
+
+
+
+           /* press */
+
+
+           input[type="range"]::-webkit-slider-thumb:active {
+           transform: scale(1.12);
+
+
+           background: #ffffff;
+
+
+           box-shadow:
+               0 4px 16px rgba(0, 0, 0, 0.55);
+           }
+
+
+
+
+           /* focus */
+
+
+           input[type="range"]:focus::-webkit-slider-thumb {
+           outline: none;
+           }
+
+
+
+
+           /* ================================
+           FIREFOX
+           ================================ */
+
+
+           input[type="range"]::-moz-range-track {
+           height: 12px;
+           border-radius: 999px;
+
+
+           background: rgba(255, 255, 255, 0.12);
+
+
+           border: 1px solid rgba(255, 255, 255, 0.16);
+
+
+           box-shadow:
+               inset 0 1px 1px rgba(255, 255, 255, 0.08),
+               inset 0 -1px 2px rgba(0, 0, 0, 0.45);
+           }
+
+
+
+
+           input[type="range"]::-moz-range-thumb {
+           width: 32px;
+           height: 32px;
+
+
+           border-radius: 50%;
+
+
+           background: rgba(255, 255, 255, 0.88);
+
+
+           border: 1px solid rgba(255, 255, 255, 0.95);
+
+
+           box-shadow:
+               0 2px 8px rgba(0, 0, 0, 0.45);
+
+
+           transition:
+               transform 0.18s cubic-bezier(.2,.8,.2,1),
+               background 0.18s ease;
+           }
+
+
+
+
+           input[type="range"]:hover::-moz-range-thumb {
+           transform: scale(1.06);
+           }
+
+
+
+
+           input[type="range"]::-moz-range-thumb:active {
+           transform: scale(1.12);
+           }
+
+
+           #inputField, #dateField {
+               height: 48px;
+               box-sizing: border-box;
+               border: 2px solid #373737bd;
+               border-radius: 24px;
+               background: #fff;
+               padding: 0 20px;
+               font-size: 17px;
+               color: #222;
+               outline: none;
+               transition: 0.15s ease;
+           }
+           *:focus {
+               outline: none;
+           }
+          
+           .split-btn {
+               position: relative;
+               overflow: hidden;
+              
+               padding: 11px 20px;
+               border: 1px solid #000;
+               border-radius: 1000px;
+              
+               background: #fff;
+               color: #000;
+              
+               font-size: 14px;
+               font-weight: 600;
+               cursor: pointer;
+              
+               isolation: isolate;
+           }
+
+
+           .split-btn::before {
+               content: "";
+               position: absolute;
+               inset: 0;
+               background: #454545;
+               transform: translateX(-101%);
+               transition: transform 0.3s cubic-bezier(.76, 0, .24, 1);
+               z-index: -1;
+           }
+
+
+           .split-btn:hover::before {
+               transform: translateX(0);
+           }
+
+
+           .split-btn span {
+               position: relative;
+               z-index: 1;
+               transition: color 0.25s ease;
+           }
+
+
+           .split-btn:hover span {
+               color: #fff;
+           }
+           #hero {
+               color: #fff;
+               position: relative;
+               text-align: center;
+               font-size: 4.5rem;
+               margin-top: 5%;
+               font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+             
+           }
+       .task-container {
+   position: absolute;
+
+
+   width: 70%;
+
+
+   top: calc(30% + 90px);
+
+
+   left: 50%;
+
+
+   transform: translateX(-50%);
+
+
+   display: flex;
+
+
+   flex-direction: column;
+
+
+   gap: 12px;
+}
+
+
+
+
+.task-list {
+   width: 100%;
+   min-height: 55px;
+   box-sizing: border-box;
+
+
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+
+
+   gap: 12px;
+   padding: 10px 18px;
+
+
+   border-radius: 20px;
+
+
+   background: rgba(255, 255, 255, 0.92);
+   border: 1px solid rgba(255, 255, 255, 0.8);
+
+
+   box-shadow:
+       0 8px 30px rgba(0, 0, 0, 0.15),
+       inset 0 1px rgba(255, 255, 255, 0.8);
+
+
+   color: #222;
+
+
+  
+}
+
+
+
+
+/* Checkbox waarmee je task AFVINKT */
+
+
+.task-list input[type="checkbox"] {
+   width: 18px;
+   height: 18px;
+
+
+   margin: 0;
+
+
+   flex-shrink: 0;
+}
+
+
+
+
+/* Tekst */
+
+
+.task-list span {
+   font-size: 16px;
+}
+
+
+
+
+/* TOETS */
+
+
+.task-list.test-task {
+   border: 2px solid #000;
+}
+
+
+
+
+       </style>
+   </head>
+  <body>
+
+
+   <h1 id="hero">Hey, Error loading name</h1>
+
+
+   <div class="new-event">
+
+
+       <input type="text" id="inputField" placeholder="Enter a task">
+
+
+       <input type="date" id="dateField">
+
+
+       <input type="range" min="1" max="50">
+
+
+       <div class="checkbox-wrapper-24">
+           <input type="checkbox" id="check-24" name="Toets" value="">
+           <label for="check-24">
+               <span></span>Toets
+           </label>
+       </div>
+
+
+       <button class="split-btn" id="add">
+           <span>Add +</span>
+       </button>
+
+
+   </div>
+
+
+   <div class="task-container" id="taskContainer">
+
+
+       <div class="task-list">
+           Tlfgjdflgkj
+       </div>
+
+
+       <div class="task-list">
+           asdfst
+       </div>
+
+
+   </div>
+
+
+</body>
+  <script>
+    
+const main_text = document.getElementById("hero");
+let name = localStorage.getItem("name");
+
+if (name) {
+    main_text.textContent = `Hey, ${name}`;
+} else {
+    no_name();
+}
+
+function no_name() {
+    name = prompt("Please enter your name:");
+
+    if (name) {
+        localStorage.setItem("name", name);
+        main_text.textContent = `Hey, ${name}`;
+    } else {
+        main_text.textContent = "Hey, Guest";
+    }
+}
+
+
+
+
+
+
+
+const Tasks = JSON.parse(localStorage.getItem("Tasks")) || [];
+
+const addButton = document.getElementById("add");
+const taskContainer = document.getElementById("taskContainer");
+
+
+// ================================
+// ADD BUTTON
+// ================================
+
+addButton.addEventListener("click", function () {
+    getdata();
+});
+
+
+// ================================
+// GET DATA FROM FORM
+// ================================
+
+function getdata() {
+    const inputField = document.getElementById("inputField");
+    const testCheckbox = document.getElementById("check-24");
+    const dateField = document.getElementById("dateField");
+    const weightSlider = document.querySelector('input[type="range"]');
+
+    const text = inputField.value.trim();
+    const date = dateField.value;
+    const weight = Number(weightSlider.value);
+
+    // Geen lege tasks
+    if (text === "") {
+        alert("Enter a task!");
+        return;
+    }
+
+    // Geen datum
+    if (date === "") {
+        alert("Select a date!");
+        return;
+    }
+
+
+    const mytask = {
+        text: text,
+
+        // TRUE = toets
+        // FALSE = normale task
+        checked: testCheckbox.checked,
+
+        // Datum van de task/toets
+        date: date,
+
+        // Belangrijkheid
+        weight: weight,
+
+        // Of de gebruiker de task heeft afgemaakt
+        completed: false
+    };
+
+
+    Tasks.push(mytask);
+
+    saveTasks();
+
+    renderTasks();
+
+
+    // Form resetten
+    inputField.value = "";
+    dateField.value = "";
+    testCheckbox.checked = false;
+    weightSlider.value = 1;
+}
+
+
+// ================================
+// SAVE
+// ================================
+
+function saveTasks() {
+    localStorage.setItem("Tasks", JSON.stringify(Tasks));
+}
+
+
+// ================================
+// HOW MANY DAYS BEFORE?
+// ================================
+
+function getDaysBefore(weight) {
+
+    if (weight <= 10) return 1;
+
+    if (weight <= 20) return 2;
+
+    if (weight <= 30) return 3;
+
+    if (weight <= 40) return 5;
+
+    return 7;
+}
+
+
+// ================================
+// SHOULD TASK BE VISIBLE?
+// ================================
+
+function shouldShowTask(task) {
+
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+
+    const taskDate = new Date(task.date + "T00:00:00");
+
+
+    const daysBefore = getDaysBefore(task.weight);
+
+
+    const showDate = new Date(taskDate);
+
+    showDate.setDate(
+        showDate.getDate() - daysBefore
+    );
+
+
+    return today >= showDate;
+}
+
+
+// ================================
+// CREATE TASK ELEMENT
+// ================================
+
+function newTaskElement(task) {
+
+    const taskElement = document.createElement("div");
+
+    taskElement.className = "task-list";
+
+
+    // ================================
+    // TEST / TOETS
+    // ================================
+
+    // checked betekent bij jou:
+    // TRUE = dit is een toets
+
+    if (task.checked) {
+        taskElement.classList.add("test-task");
+    }
+
+
+    // ================================
+    // COMPLETED CHECKBOX
+    // ================================
+
+    const completeCheckbox = document.createElement("input");
+
+    completeCheckbox.type = "checkbox";
+
+    // Dit is NIET task.checked.
+    // Dit is of de task daadwerkelijk af is.
+    completeCheckbox.checked = task.completed;
+
+
+    // ================================
+    // TASK TEXT
+    // ================================
+
+    const text = document.createElement("span");
+
+    text.textContent = task.text;
+
+
+    // ================================
+    // WHEN COMPLETED
+    // ================================
+
+completeCheckbox.addEventListener("change", function () {
+
+    if (!completeCheckbox.checked) return;
+
+    // Alle huidige task-posities onthouden
+    const taskElements = [...taskContainer.children];
+
+    const oldPositions = new Map();
+
+    taskElements.forEach(element => {
+        oldPositions.set(element, element.getBoundingClientRect());
+    });
+
+
+    // Fade de aangeklikte task uit
+    taskElement.style.transition = "opacity 0.35s ease, transform 0.35s ease";
+    taskElement.style.opacity = "0";
+    taskElement.style.transform = "translateX(20px)";
+
+
+    setTimeout(() => {
+
+        // Uit Tasks verwijderen
+        const index = Tasks.indexOf(task);
+
+        if (index !== -1) {
+            Tasks.splice(index, 1);
+        }
+
+        saveTasks();
+
+        // Task uit DOM verwijderen
+        taskElement.remove();
+
+
+        // Nieuwe posities bepalen
+        const remainingTasks = [...taskContainer.children];
+
+        remainingTasks.forEach(element => {
+
+            const oldPosition = oldPositions.get(element);
+
+            if (!oldPosition) return;
+
+            const newPosition = element.getBoundingClientRect();
+
+            const difference =
+                oldPosition.top - newPosition.top;
+
+
+            // Task tijdelijk terugzetten naar oude positie
+            element.style.transform =
+                `translateY(${difference}px)`;
+
+            element.style.transition = "none";
+
+
+            // Browser layout laten uitvoeren
+            requestAnimationFrame(() => {
+
+                element.style.transition =
+                    "transform 0.45s cubic-bezier(.2,.8,.2,1)";
+
+                element.style.transform = "translateY(0)";
+
+            });
+
+        });
+
+    }, 350);
+
+});
+
+    // ================================
+    // ADD TO DOM
+    // ================================
+
+    taskElement.appendChild(completeCheckbox);
+
+    taskElement.appendChild(text);
+
+    taskContainer.appendChild(taskElement);
+}
+
+
+// ================================
+// RENDER ALL TASKS
+// ================================
+
+function renderTasks() {
+
+    // Eerst oude tasks verwijderen
+    taskContainer.innerHTML = "";
+
+
+    Tasks.forEach(function (task) {
+
+        // Alleen tonen als de planning zegt
+        // dat hij nu zichtbaar moet zijn
+        if (shouldShowTask(task)) {
+
+            newTaskElement(task);
+
+        }
+
+    });
+}
+
+
+// ================================
+// INITIAL LOAD
+// ================================
+
+renderTasks();
+  </script>
+
+</html>
