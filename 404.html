@@ -1,0 +1,308 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>404 — You tryna hack me?</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #080808;
+            color: #fff;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            overflow: hidden;
+        }
+
+        /* subtle background grid */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background-image:
+                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+
+            background-size: 35px 35px;
+
+            mask-image: linear-gradient(
+                to bottom,
+                transparent,
+                black 30%,
+                black 70%,
+                transparent
+            );
+
+            pointer-events: none;
+        }
+
+        .container {
+            width: min(650px, 90%);
+            text-align: center;
+
+            position: relative;
+            z-index: 1;
+        }
+
+        .error {
+            font-family: monospace;
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 18px;
+        }
+
+        .error span {
+            color: #fff;
+        }
+
+        h1 {
+            font-size: clamp(45px, 9vw, 90px);
+            line-height: 1;
+            margin: 0 0 18px;
+
+            letter-spacing: -5px;
+
+            font-weight: 800;
+        }
+
+        h1::after {
+            content: "_";
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 45% {
+                opacity: 1;
+            }
+
+            46%, 100% {
+                opacity: 0;
+            }
+        }
+
+        h2 {
+            font-size: clamp(22px, 4vw, 32px);
+            margin: 0 0 12px;
+
+            font-weight: 700;
+        }
+
+        p {
+            color: #8d8d8d;
+            font-size: 16px;
+            line-height: 1.6;
+
+            margin: 0 auto 30px;
+            max-width: 480px;
+        }
+
+        .terminal {
+            background: #101010;
+            border: 1px solid #242424;
+
+            border-radius: 12px;
+
+            padding: 16px 18px;
+
+            text-align: left;
+
+            font-family: monospace;
+            font-size: 13px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,.45),
+                inset 0 1px rgba(255,255,255,.03);
+        }
+
+        .terminal-line {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .terminal-line.success {
+            color: #aaa;
+        }
+
+        .terminal-line.warning {
+            color: #fff;
+        }
+
+        .prompt {
+            color: #555;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+
+            flex-wrap: wrap;
+        }
+
+        button,
+        a {
+            border: 1px solid #292929;
+
+            background: #fff;
+            color: #000;
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            transition:
+                transform .2s ease,
+                background .2s ease,
+                color .2s ease,
+                border-color .2s ease;
+        }
+
+        button:hover,
+        a:hover {
+            transform: translateY(-2px);
+
+            background: #171717;
+            color: #fff;
+
+            border-color: #444;
+        }
+
+        .secondary {
+            background: transparent;
+            color: #aaa;
+        }
+
+        .status {
+            margin-top: 28px;
+
+            font-family: monospace;
+            font-size: 11px;
+
+            color: #444;
+        }
+
+        .status::before {
+            content: "●";
+            margin-right: 7px;
+            color: #777;
+        }
+
+        /* little glitch effect */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch:hover {
+            animation: glitch .15s infinite;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+            }
+
+            25% {
+                transform: translate(-2px, 1px);
+            }
+
+            50% {
+                transform: translate(2px, -1px);
+            }
+
+            75% {
+                transform: translate(-1px, -1px);
+            }
+
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .terminal {
+                font-size: 11px;
+            }
+
+            h1 {
+                letter-spacing: -3px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+
+        <div class="error">
+            <span>404</span> / PAGE_NOT_FOUND
+        </div>
+
+        <h1 class="glitch">You tryna hack me?</h1>
+
+        <h2>Nice try.</h2>
+
+        <p>
+            Whatever you were looking for isn't here.
+            Either the page doesn't exist anymore,
+            or you took a very creative route to get here.
+        </p>
+
+        <div class="terminal">
+            <div class="terminal-line">
+                <span class="prompt">$</span> locating_requested_page...
+            </div>
+
+            <div class="terminal-line">
+                → route not found
+            </div>
+
+            <div class="terminal-line success">
+                → security system: totally_not_concerned
+            </div>
+
+            <div class="terminal-line warning">
+                → suspicious_activity.exe has entered the chat
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a href="/">Take me home</a>
+            <button class="secondary" onclick="history.back()">
+                Go back
+            </button>
+        </div>
+
+        <div class="status">
+            system status: confused but operational
+        </div>
+
+    </main>
+
+</body>
+</html>
+```
