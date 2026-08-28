@@ -845,7 +845,7 @@ nav{
     color:white;
     line-height:.95;
     margin-bottom:20px;
-    animation: fadein_down 1s ease backwards;
+    animation: fadein_down 2s ease backwards;
   
     
 }
@@ -865,7 +865,7 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
     font-size:1.15rem;
     line-height:1.7;
     margin-bottom:35px;
-    animation: fadein_down 1s ease backwards;
+    animation: fadein_down 2s ease backwards;
 }
 
 .cta{

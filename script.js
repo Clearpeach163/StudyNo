@@ -85,8 +85,10 @@ const input = document.getElementById("Main_input");
 function newWord() {
 
   if (toetsModus == true) {
+    document.getElementById("togglemain").style.display = "none"; //removes fn nf switch for toets mode
  actuallynewWord();
   } else {
+     document.getElementById("togglemain").style.display = "block"; //adds fn nf switch for oefen mode
     console.log("oefen mode");
     if (Math.random() < 0.7) {
         actuallynewWord();
