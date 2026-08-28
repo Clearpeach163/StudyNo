@@ -14,12 +14,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 <script src="Update.js" defer></script>
 <script src="script.js"></script>
-<script>
-    ShowPopup("New planner is here! Check it out in the planner tab.", 10000);
-</script>
 
+<style>
+   #vid {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    object-position: center;
+    z-index: 999999;
+}
+</style>
 </head>
 <body>
+    <video autoplay playsinline id="vid">
+    <source src="0001-0245.mp4" type="video/mp4">
+</video>
       <div id="popup" class="popup">
     Error loading popup, please report this to the developer.<br>
   </div>
@@ -78,7 +89,22 @@
 </div>
 </section>
 
+<script>
+  
+const video = document.getElementById("vid");
 
+if (localStorage.getItem("seen") === "true") {
+    video.style.display = "none";
+      video.pause();
+    video.currentTime = 0;
+    video.remove();
+}
+video.addEventListener("ended", () => {
+    video.style.display = "none";
+    localStorage.setItem("seen", "true");
+});
+
+</script>
 
 
 </body>
