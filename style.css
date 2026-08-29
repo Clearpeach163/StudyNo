@@ -72,6 +72,7 @@
       0 8px 40px rgba(0,0,0,0.3);
 }
 html {
+  user-select: none;
   overscroll-behavior: none;
 }
 body {
@@ -81,7 +82,7 @@ body {
    /* background: linear-gradient(45deg, rgb(75, 24, 48) 0%, rgb(78, 28, 38) 19%, hsla(302, 47%, 13%, 1) 51%, rgb(19, 5, 56) 74%, rgb(47, 11, 105) 100%);*/
     
    
-    background-image: url("background.webp");
+    background-image: url("background.png");
         background-size: cover;
     background-position: 100% 00%;
     background-repeat: no-repeat;

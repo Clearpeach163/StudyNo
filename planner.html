@@ -64,7 +64,9 @@ body{
   font-weight:650;
   letter-spacing:-2px;
 }
-#hero span{color:var(--purple);}
+#hero span{
+    color: #8751cd;
+}
 
 /* ---------- NEW TASK ---------- */
 .new-event{
@@ -90,7 +92,6 @@ input:focus{
   box-shadow:0 0 0 3px rgba(185,142,224,0.15);
 }
 .weight-wrap{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);}
-input[type=range]{width:100px;accent-color:var(--purple);}
 
 .checkbox-wrap{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.7);white-space:nowrap;cursor:pointer;}
 .checkbox-wrap input{width:18px;height:18px;accent-color:var(--purple);cursor:pointer;}
@@ -203,9 +204,11 @@ input[type=range]{width:100px;accent-color:var(--purple);}
 }
 #agendaOverlay.open{display:flex;}
 #agendaPanel{
+    backdrop-filter:blur(7px) saturate(150%);
+  -webkit-backdrop-filter:blur(7px) saturate(150%);
   width:min(880px,100%);
   border-radius:24px;padding:22px;
-  background:linear-gradient(135deg,rgba(30,22,50,0.96),rgba(20,15,35,0.98));
+  background:linear-gradient(135deg,rgba(30, 22, 50, 0.515),rgba(20,15,35,0.98));
   border:1px solid var(--border);
   box-shadow:0 30px 90px rgba(0,0,0,0.5);
 }
@@ -253,6 +256,95 @@ input[type=range]{width:100px;accent-color:var(--purple);}
   .cal-chip{display:none;}
   .cal-cell.has-items::after{content:"•";color:var(--purple);font-size:16px;}
 }
+
+input[type="range"] {
+    width: 120px;
+
+    height: 32px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background: transparent;
+
+    cursor: pointer;
+}
+
+
+/* Track */
+
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 7px;
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,0.12);
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,0.08),
+        inset 0 -1px rgba(0,0,0,0.25);
+}
+
+
+/* Thumb */
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 25px;
+    height: 25px;
+
+    margin-top: -10px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(118, 68, 161, 0.925);
+
+    background: rgba(106, 72, 117, 0.9);
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.35),
+        inset 0 1px rgba(255,255,255,1);
+
+    transition: transform 0.15s ease;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+    transform: scale(1.08);
+}
+
+
+/* Firefox */
+
+input[type="range"]::-moz-range-track {
+    height: 7px;
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,0.12);
+
+    border: 1px solid rgba(255,255,255,0.12);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,0.8);
+
+    background: rgba(255,255,255,0.9);
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.35);
+}
+
+
+
 </style>
 </head>
 <body>
@@ -324,7 +416,11 @@ const userNameEl = document.getElementById("userName");
 if (name) { userNameEl.textContent = name; }
 else {
   const n = prompt("What's your name?");
-  if (n) { localStorage.setItem("name", n); userNameEl.textContent = n; name = n; }
+  if (n) { 
+   name = n.charAt(0).toUpperCase() + n.slice(1);
+    localStorage.setItem("name", name);
+    userNameEl.textContent = name;
+}
 }
 
 function saveTasks(){ localStorage.setItem("Tasks_v2", JSON.stringify(Tasks)); }
@@ -484,7 +580,7 @@ function renderWindows(){
   });
   todayCount.textContent = todayTasks.length + todaySessions.length;
   if(todayTasks.length===0 && todaySessions.length===0){
-    todayContainer.innerHTML = '<div class="empty">Nothing planned for today 🎉</div>';
+    todayContainer.innerHTML = '<div class="empty">All caught up!</div>';
   } else {
     todayTasks.forEach(t=>todayContainer.appendChild(buildTaskEl(t)));
     todaySessions.forEach(s=>todayContainer.appendChild(buildSessionEl(s.task,s.step)));
