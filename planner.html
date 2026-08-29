@@ -1,936 +1,767 @@
-<html>
-   <head>
-       <title>Dashboard</title>
-         <link rel="stylesheet" href="style.css">
-       <style>
-        
-/* =========================================================
-   STUDYNO — LIQUID GLASS
-   ========================================================= */
 
-* {
-    box-sizing: border-box;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyNo</title>
+<link rel="stylesheet" href="style.css">
+<style>
+:root{
+  --purple:#b98ee0;
+  --purple-soft:rgba(185,142,224,0.45);
+  --border:rgba(255,255,255,0.14);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:#fff;
+ 
+  padding-bottom:60px;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+/* ---------- BACK BUTTON ---------- */
+#back{
+  position:fixed;
+  top:24px; left:24px;
+  width:42px; height:42px;
+  border-radius:50%;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  backdrop-filter:blur(px);
+  transition:.15s ease;
+}
+#back:hover{background:rgba(255,255,255,0.14); transform:scale(1.05);}
+#back:active{transform:scale(0.95);}
 
-    color: #fff;
+/* ---------- AGENDA TOGGLE ---------- */
+#agendaBtn{
+  position:fixed;
+  top:24px; right:24px;
+  height:42px; padding:0 18px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+  display:flex;align-items:center;gap:8px;
+  cursor:pointer;
+  backdrop-filter:blur(5px);
+  font-size:13px; font-weight:600;
+  transition:.15s ease;
+}
+#agendaBtn:hover{background:rgba(255,255,255,0.14);}
 
+/* ---------- HERO ---------- */
+#hero{
+  text-align:center;
+  margin:110px 0 40px;
+  font-size:clamp(40px,7vw,68px);
+  font-weight:650;
+  letter-spacing:-2px;
+}
+#hero span{color:var(--purple);}
+
+/* ---------- NEW TASK ---------- */
+.new-event{
+  width:min(850px,90%);
+  margin:0 auto 30px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  padding:14px;border-radius:22px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.10),rgba(255,255,255,0.03));
+  border:1px solid var(--border);
+  backdrop-filter:blur(5px) saturate(130%);
+  box-shadow:0 10px 35px rgba(0,0,0,0.25), inset 0 1px rgba(255,255,255,0.10);
+}
+.new-event input[type=text]{flex:2;min-width:160px;}
+.new-event input[type=date]{flex:1;min-width:130px;}
+input[type=text],input[type=date],input[type=url]{
+  height:44px;border:1px solid var(--border);border-radius:14px;
+  padding:0 14px;background:rgba(255,255,255,0.07);color:#fff;
+  outline:none;font-size:14px;font-family:inherit;
+}
+input::placeholder{color:rgba(255,255,255,0.4);}
+input:focus{
+  border-color:var(--purple-soft);
+  box-shadow:0 0 0 3px rgba(185,142,224,0.15);
+}
+.weight-wrap{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);}
+input[type=range]{width:100px;accent-color:var(--purple);}
+
+.checkbox-wrap{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.7);white-space:nowrap;cursor:pointer;}
+.checkbox-wrap input{width:18px;height:18px;accent-color:var(--purple);cursor:pointer;}
+
+.btn{
+  height:44px;padding:0 20px;border:none;border-radius:14px;
+  background:#fff;color:#111;font-weight:600;font-size:14px;cursor:pointer;
+  transition:.15s ease;
+}
+.btn:hover{transform:scale(1.03);}
+.btn:active{transform:scale(0.96);}
+.btn-purple{background:var(--purple);color:#fff;}
+.btn-ghost{background:rgba(255,255,255,0.08);color:#fff;border:1px solid var(--border);}
+.btn-small{height:34px;padding:0 14px;font-size:13px;}
+
+/* ---------- LIQUID GLASS EXPANDING WINDOWS ---------- */
+.glass-window{
+  width:min(850px,90%);
+  margin:0 auto 20px;
+  border-radius:22px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.10),rgba(255,255,255,0.03));
+  border:1px solid var(--border);
+  backdrop-filter:blur(5px) saturate(130%);
+  -webkit-backdrop-filter:blur(5px) saturate(130%);
+  box-shadow:0 10px 35px rgba(0,0,0,0.25), inset 0 1px rgba(255,255,255,0.10);
+  overflow:hidden;
+  transition:box-shadow .2s ease, background .2s ease;
+}
+.glass-window[open]{
+  background:linear-gradient(135deg,rgba(255,255,255,0.13),rgba(255,255,255,0.04));
+}
+.glass-window > summary{
+  list-style:none;cursor:pointer;user-select:none;
+  display:flex;align-items:center;gap:10px;
+  padding:18px 22px;
+  font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1px;
+  color:rgba(255,255,255,0.85);
+}
+.glass-window > summary::-webkit-details-marker{display:none;}
+.glass-window > summary::marker{content:"";}
+.win-count{
+  font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;
+  background:rgba(185,142,224,0.25);color:#e6d4fa;text-transform:none;letter-spacing:0;
+}
+.chev{margin-left:auto;transition:transform .25s ease;flex-shrink:0;opacity:0.6;}
+.glass-window[open] .chev{transform:rotate(180deg);}
+.window-body{
+  padding:0 20px 20px;
+  display:flex;flex-direction:column;gap:10px;
 }
 
-
-/* =========================================================
-   TOP LINKS
-   ========================================================= */
-
-
-
-
-
-
-/* =========================================================
-   VERSION
-   ========================================================= */
-
-
-/* =========================================================
-   BACK BUTTON
-   ========================================================= */
-
-
-#back:hover {
-    background: rgba(255,255,255,0.14);
-    transform: scale(1.05);
+/* ---------- TASK LIST ---------- */
+.task-container{
+  display:flex;flex-direction:column;gap:10px;
 }
-
-#back:active {
-    transform: scale(0.95);
+.task{
+  padding:14px 18px;border-radius:20px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.09),rgba(255,255,255,0.03));
+  border:1px solid var(--border);
+  transition:.2s ease;
 }
-
-
-/* =========================================================
-   HERO
-   ========================================================= */
-
-#hero {
-    position: relative;
-
-    margin: 110px 0 45px;
-
-    text-align: center;
-
-    font-size: clamp(42px, 6vw, 72px);
-    font-weight: 650;
-    letter-spacing: -3px;
-
-    color: white;
-
-    text-shadow:
-        0 10px 40px rgba(0,0,0,0.35);
+.task:hover{background:linear-gradient(135deg,rgba(255,255,255,0.13),rgba(255,255,255,0.05));}
+.task.toets{border:2px solid var(--purple-soft);}
+.task-row{display:flex;align-items:center;gap:14px;}
+.task input[type=checkbox]{width:19px;height:19px;accent-color:var(--purple);cursor:pointer;flex-shrink:0;}
+.task-main{flex:1;min-width:0;}
+.task-text{font-size:16px;}
+.task-meta{font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.badge{padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;}
+.badge-toets{background:rgba(185,142,224,0.25);color:#e6d4fa;}
+.badge-due{background:rgba(255,120,120,0.22);color:#ffb3b3;}
+.task-actions{display:flex;gap:6px;}
+.icon-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:rgba(255,255,255,0.06);color:#fff;cursor:pointer;display:flex;
+  align-items:center;justify-content:center;font-size:14px;flex-shrink:0;
 }
+.icon-btn:hover{background:rgba(255,255,255,0.14);}
+.empty{color:rgba(255,255,255,0.4);text-align:center;padding:30px 0;font-size:14px;}
 
-
-/* =========================================================
-   NEW TASK PANEL
-   ========================================================= */
-
-.new-event {
-    position: relative;
-
-    width: min(900px, 75%);
-
-    margin: 0 auto;
-
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 12px;
-
-    border-radius: 999px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.14),
-            rgba(255,255,255,0.055)
-        );
-
-    border: 1px solid rgba(255,255,255,0.16);
-
-    backdrop-filter:
-        blur(30px)
-        saturate(180%);
-
-    -webkit-backdrop-filter:
-        blur(30px)
-        saturate(180%);
-
-    box-shadow:
-        0 20px 70px rgba(0,0,0,0.35),
-        inset 0 1px rgba(255,255,255,0.18),
-        inset 0 -1px rgba(0,0,0,0.15);
+/* ---------- STUDY PLAN PANEL (inline in task, tests only) ---------- */
+.plan-panel{margin-top:14px;padding-top:14px;border-top:1px solid var(--border);display:none;}
+.plan-panel.open{display:block;}
+.plan-hint{font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:10px;}
+.plan-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.plan-step{
+  display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;
+  background:rgba(255,255,255,0.05);font-size:13px;
 }
+.plan-step .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.25);flex-shrink:0;}
+.plan-step.now .dot{background:var(--purple);box-shadow:0 0 8px var(--purple);}
+.plan-step.done{opacity:0.4;}
+.plan-step .when{margin-left:auto;font-size:11px;color:rgba(255,255,255,0.45);white-space:nowrap;}
 
-
-/* =========================================================
-   TEXT / DATE INPUT
-   ========================================================= */
-
-#inputField,
-#dateField {
-
-    height: 48px;
-
-    border: 1px solid rgba(255,255,255,0.12);
-
-    border-radius: 999px;
-
-    padding: 0 18px;
-
-    background: rgba(255,255,255,0.075);
-
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-
-    color: rgba(255,255,255,0.9);
-
-    outline: none;
-
-    font-size: 15px;
-
-    box-shadow:
-        inset 0 1px rgba(255,255,255,0.08);
-
-    transition:
-        background 0.2s ease,
-        border 0.2s ease,
-        box-shadow 0.2s ease;
+.material-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.material-row input{flex:1;min-width:160px;}
+.material-link{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 16px;border-radius:14px;
+  background:rgba(185,142,224,0.18);border:1px solid var(--purple-soft);
+  color:#e6d4fa;text-decoration:none;font-size:13px;font-weight:600;
 }
+.material-link:hover{background:rgba(185,142,224,0.28);}
 
-
-#inputField {
-    flex: 1;
-    min-width: 0;
+/* ---------- AGENDA OVERLAY (calendar grid) ---------- */
+#agendaOverlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.55);
+  display:none;align-items:flex-start;justify-content:center;
+  z-index:50;padding:70px 16px 40px;overflow-y:auto;
 }
-
-#dateField {
-    width: 160px;
+#agendaOverlay.open{display:flex;}
+#agendaPanel{
+  width:min(880px,100%);
+  border-radius:24px;padding:22px;
+  background:linear-gradient(135deg,rgba(30,22,50,0.96),rgba(20,15,35,0.98));
+  border:1px solid var(--border);
+  box-shadow:0 30px 90px rgba(0,0,0,0.5);
 }
-
-
-/* Placeholder */
-
-#inputField::placeholder {
-    color: rgba(255,255,255,0.45);
+.agenda-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.agenda-header h2{margin:0;font-size:19px;}
+.month-nav{display:flex;align-items:center;gap:10px;}
+.month-nav button{
+  width:32px;height:32px;border-radius:50%;border:1px solid var(--border);
+  background:rgba(255,255,255,0.06);color:#fff;cursor:pointer;
 }
+.month-nav button:hover{background:rgba(255,255,255,0.14);}
 
-
-/* Focus */
-
-#inputField:focus,
-#dateField:focus {
-    background: rgba(255,255,255,0.11);
-
-    border-color: rgba(255,255,255,0.25);
-
-    box-shadow:
-        0 0 0 3px rgba(170,130,255,0.10),
-        inset 0 1px rgba(255,255,255,0.12);
+.cal-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);gap:6px;
 }
-
-
-/* =========================================================
-   RANGE SLIDER
-   ========================================================= */
-
-input[type="range"] {
-    width: 120px;
-
-    height: 32px;
-
-    appearance: none;
-    -webkit-appearance: none;
-
-    background: transparent;
-
-    cursor: pointer;
+.cal-dow{
+  text-align:center;font-size:11px;color:rgba(255,255,255,0.4);
+  text-transform:uppercase;letter-spacing:0.5px;padding-bottom:4px;
 }
-
-
-/* Track */
-
-input[type="range"]::-webkit-slider-runnable-track {
-    height: 7px;
-
-    border-radius: 999px;
-
-    background: rgba(255,255,255,0.12);
-
-    border: 1px solid rgba(255,255,255,0.12);
-
-    box-shadow:
-        inset 0 1px rgba(255,255,255,0.08),
-        inset 0 -1px rgba(0,0,0,0.25);
+.cal-cell{
+  min-height:78px;border-radius:12px;padding:6px;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);
+  display:flex;flex-direction:column;gap:4px;
 }
-
-
-/* Thumb */
-
-input[type="range"]::-webkit-slider-thumb {
-    appearance: none;
-    -webkit-appearance: none;
-
-    width: 25px;
-    height: 25px;
-
-    margin-top: -10px;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(255,255,255,0.8);
-
-    background: rgba(255,255,255,0.9);
-
-    box-shadow:
-        0 4px 15px rgba(0,0,0,0.35),
-        inset 0 1px rgba(255,255,255,1);
-
-    transition: transform 0.15s ease;
+.cal-cell.empty{background:transparent;border-color:transparent;}
+.cal-cell.today{border-color:var(--purple-soft);background:rgba(185,142,224,0.08);}
+.cal-daynum{font-size:11px;color:rgba(255,255,255,0.55);}
+.cal-cell.today .cal-daynum{color:var(--purple);font-weight:700;}
+.cal-chip{
+  font-size:10px;padding:2px 6px;border-radius:6px;line-height:1.3;
+  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
-
-input[type="range"]:hover::-webkit-slider-thumb {
-    transform: scale(1.08);
-}
-
-
-/* Firefox */
-
-input[type="range"]::-moz-range-track {
-    height: 7px;
-
-    border-radius: 999px;
-
-    background: rgba(255,255,255,0.12);
-
-    border: 1px solid rgba(255,255,255,0.12);
-}
-
-input[type="range"]::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(255,255,255,0.8);
-
-    background: rgba(255,255,255,0.9);
-
-    box-shadow:
-        0 4px 15px rgba(0,0,0,0.35);
-}
-
-
-/* =========================================================
-   TOETS CHECKBOX
-   ========================================================= */
-
-.checkbox-wrapper-24 {
-    display: flex;
-    align-items: center;
-
-    white-space: nowrap;
-}
-
-.checkbox-wrapper-24 input {
-    display: none;
-}
-
-.checkbox-wrapper-24 label {
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-
-    color: rgba(255,255,255,0.75);
-
-    font-size: 14px;
-
-    cursor: pointer;
-}
-
-.checkbox-wrapper-24 label span {
-
-    width: 22px;
-    height: 22px;
-
-    display: inline-block;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(255,255,255,0.3);
-
-    background: rgba(255,255,255,0.06);
-
-    transition:
-        0.2s ease;
-}
-
-
-/* Checked */
-
-.checkbox-wrapper-24 input[type="checkbox"]:checked + label span {
-
-    background: rgba(255,255,255,0.9);
-
-    border-color: white;
-
-    box-shadow:
-        0 0 15px rgba(255,255,255,0.2);
-
-    transform: scale(1.05);
-}
-
-
-/* =========================================================
-   ADD BUTTON
-   ========================================================= */
-
-.split-btn {
-
-    position: relative;
-
-    height: 48px;
-
-    padding: 0 22px;
-
-    border: 1px solid rgba(255,255,255,0.8);
-
-    border-radius: 999px;
-
-    background: rgba(255,255,255,0.92);
-
-    color: #111;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    overflow: hidden;
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease;
-}
-
-.split-btn:hover {
-    background: white;
-
-    transform: scale(1.03);
-}
-
-.split-btn:active {
-    transform: scale(0.97);
-}
-
-
-/* =========================================================
-   TASK CONTAINER
-   ========================================================= */
-
-.task-container {
-
-    width: min(850px, 70%);
-
-    margin: 25px auto 0;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-}
-
-
-/* =========================================================
-   TASK
-   ========================================================= */
-
-.task-list {
-
-    min-height: 58px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 14px;
-
-    padding: 10px 18px;
-
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.105),
-            rgba(255,255,255,0.045)
-        );
-
-    border: 1px solid rgba(255,255,255,0.12);
-
-    backdrop-filter:
-        blur(25px)
-        saturate(160%);
-
-    -webkit-backdrop-filter:
-        blur(25px)
-        saturate(160%);
-
-    box-shadow:
-        0 10px 35px rgba(0,0,0,0.20),
-        inset 0 1px rgba(255,255,255,0.10);
-
-    color: rgba(255,255,255,0.9);
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
-}
-
-
-.task-list:hover {
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.14),
-            rgba(255,255,255,0.06)
-        );
-
-}
-
-
-/* =========================================================
-   TASK CHECKBOX
-   ========================================================= */
-
-.task-list input[type="checkbox"] {
-
-    width: 19px;
-    height: 19px;
-
-    margin: 0;
-
-    flex-shrink: 0;
-
-    accent-color: white;
-
-    cursor: pointer;
-}
-
-
-/* =========================================================
-   TASK TEXT
-   ========================================================= */
-
-.task-list span {
-
-    font-size: 16px;
-
-    color: rgba(255,255,255,0.88);
-}
-
-
-/* =========================================================
-   TOETS TASK
-   ========================================================= */
-
-.task-list.test-task {
-
-    border: 2px solid rgba(194, 145, 221, 0.42);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.225),
-            rgba(255,255,255,0.055)
-        );
-
-    box-shadow:
-        0 10px 35px rgba(0,0,0,0.35),
-        inset 0 1px rgba(255,255,255,0.16);
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 750px) {
-
-    #hero {
-        margin-top: 100px;
-        font-size: 45px;
-    }
-
-    .new-event {
-
-        width: calc(100% - 30px);
-
-        border-radius: 25px;
-
-        flex-wrap: wrap;
-    }
-
-    #inputField {
-        width: 100%;
-        flex-basis: 100%;
-    }
-
-    #dateField {
-        flex: 1;
-        width: auto;
-    }
-
-    input[type="range"] {
-        flex: 1;
-    }
-
-   
-  
+.cal-chip.test{background:rgba(185,142,224,0.3);color:#f0e2fb;}
+.cal-chip.study{background:rgba(120,200,255,0.18);color:#c9ecff;font-style:italic;}
+
+#closeAgenda{display:block;margin:18px auto 0;}
+
+@media (max-width:750px){
+  #hero{margin-top:100px;font-size:36px;}
+  .new-event{flex-wrap:wrap;}
+  .new-event input{width:100%;flex-basis:100%;}
+  #agendaBtn span.label{display:none;}
+  .cal-cell{min-height:56px;}
+  .cal-chip{display:none;}
+  .cal-cell.has-items::after{content:"•";color:var(--purple);font-size:16px;}
 }
 </style>
-       
-   </head>
-  <body>
-      <a href="ideas.html" id="submithref">Feedback or ideas?</a>
-  <p onclick="version();" id="update">error loading version....</p>
-    <script src="Update.js" defer></script>
-    <script src="script.js" defer></script>
-    <button id="back" onclick="location.href='index.html';">  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+</head>
+<body>
+
+<button id="back" onclick="location.href='index.html';">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="15 19 5 12 15 5"></polyline>
-  </svg></button>
+  </svg>
+</button>
 
-   <h1 id="hero">Hey, Error loading name</h1>
+<button id="agendaBtn">
+   <span class="label">Calender</span>
+</button>
 
-<div class="planner"></div>
-   <div class="new-event">
+<h1 id="hero">Hey, <span id="userName">Guest</span></h1>
 
+<div class="new-event">
+  <input type="text" id="inputField" placeholder="Enter a task">
+  <input type="date" id="dateField">
+  <div class="weight-wrap">
+    <span>Weight</span>
+    <input type="range" id="weightField" min="1" max="50" value="10">
+  </div>
+  <label class="checkbox-wrap">
+    <input type="checkbox" id="testCheckbox">
+    Test
+  </label>
+  <button class="btn btn-purple" id="add">Add +</button>
+</div>
 
-       <input type="text" id="inputField" placeholder="Enter a task">
+<details class="glass-window" open>
+  <summary>Today <span class="win-count" id="todayCount">0</span>
+    <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </summary>
+  <div class="window-body task-container" id="todayContainer"></div>
+</details>
 
+<details class="glass-window" open>
+  <summary>Coming up <span class="win-count" id="upcomingCount">0</span>
+    <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </summary>
+  <div class="window-body task-container" id="upcomingContainer"></div>
+</details>
 
-       <input type="date" id="dateField">
+<!-- ================= AGENDA OVERLAY (calendar grid) ================= -->
+<div id="agendaOverlay">
+  <div id="agendaPanel">
+    <div class="agenda-header">
+      <h2 id="monthLabel">Month</h2>
+      <div class="month-nav">
+        <button id="prevMonth">‹</button>
+        <button id="todayBtn" style="width:auto;padding:0 10px;border-radius:999px;font-size:11px;">Today</button>
+        <button id="nextMonth">›</button>
+      </div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <button class="btn btn-ghost" id="closeAgenda">Close</button>
+  </div>
+</div>
 
-
-       <input type="range" min="1" max="50">
-
-
-       <div class="checkbox-wrapper-24">
-           <input type="checkbox" id="check-24" name="Toets" value="">
-           <label for="check-24">
-               <span></span>Toets
-           </label>
-       </div>
-
-
-       <button class="split-btn" id="add">
-           <span>Add +</span>
-       </button>
-
-
-   </div>
-
-
-   <div class="task-container" id="taskContainer">
-
-
-       <div class="task-list">
-           Tlfgjdflgkj
-       </div>
-
-
-       <div class="task-list">
-           asdfst
-       </div>
-
-
-   </div>
-
-
-</body>
-  <script>
-    
-const main_text = document.getElementById("hero");
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+let Tasks = JSON.parse(localStorage.getItem("Tasks_v2")) || [];
 let name = localStorage.getItem("name");
 
-if (name) {
-    main_text.textContent = `Hey,  ${name}`;
-} else {
-    no_name();
+const userNameEl = document.getElementById("userName");
+if (name) { userNameEl.textContent = name; }
+else {
+  const n = prompt("What's your name?");
+  if (n) { localStorage.setItem("name", n); userNameEl.textContent = n; name = n; }
 }
 
-function no_name() {
-    name = prompt("Please enter your name:");
+function saveTasks(){ localStorage.setItem("Tasks_v2", JSON.stringify(Tasks)); }
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
-    if (name) {
-        localStorage.setItem("name", name);
-        main_text.textContent = `Hey, ${name}`;
-    } else {
-        main_text.textContent = "Hey, Guest";
-    }
-}
+/* =========================================================
+   TASK ADD
+   ========================================================= */
+document.getElementById("add").addEventListener("click", ()=>{
+  const inputField = document.getElementById("inputField");
+  const dateField = document.getElementById("dateField");
+  const weightField = document.getElementById("weightField");
+  const testCheckbox = document.getElementById("testCheckbox");
 
+  const text = inputField.value.trim();
+  const date = dateField.value;
+  if(!text){ alert("Enter a task!"); return; }
+  if(!date){ alert("Select a date!"); return; }
 
-
-
-
-
-
-const Tasks = JSON.parse(localStorage.getItem("Tasks")) || [];
-
-const addButton = document.getElementById("add");
-const taskContainer = document.getElementById("taskContainer");
-
-
-// ================================
-// ADD BUTTON
-// ================================
-
-addButton.addEventListener("click", function () {
-    getdata();
+  const task = {
+    id: uid(),
+    text,
+    date,
+    weight: Number(weightField.value),
+    isToets: testCheckbox.checked,
+    completed: false,
+    materialLink: ""
+  };
+  Tasks.push(task);
+  saveTasks();
+  inputField.value=""; dateField.value=""; weightField.value=10; testCheckbox.checked=false;
+  renderWindows();
+  renderCalendar();
 });
 
+/* =========================================================
+   VISIBILITY / DATE HELPERS
+   ========================================================= */
+function getDaysBefore(weight){
+  if (weight <= 10) return 1;
+  if (weight <= 20) return 2;
+  if (weight <= 30) return 3;
+  if (weight <= 40) return 5;
+  return 7;
+}
+function daysUntil(dateStr){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const d = new Date(dateStr+"T00:00:00");
+  return Math.round((d-today)/86400000);
+}
+function shouldShowNow(task){
+  return daysUntil(task.date) <= getDaysBefore(task.weight);
+}
+function isoDate(d){ return d.toISOString().slice(0,10); }
 
-// ================================
-// GET DATA FROM FORM
-// ================================
+/* =========================================================
+   STUDY PLAN — number of extra study stops scales with weight.
+   Higher weight = more study sessions spread across the window.
+   Sundays are kept free, Saturdays are avoided when there's enough
+   room — but the day before the test ("Herhalen") is always kept,
+   weekend or not, since it's fine if the deadline is close.
+   ========================================================= */
+function weekdayOffset(task, at){
+  const dt = new Date(task.date+"T00:00:00");
+  dt.setDate(dt.getDate()-at);
+  return dt.getDay(); // 0 = Sun, 6 = Sat
+}
 
-function getdata() {
-    const inputField = document.getElementById("inputField");
-    const testCheckbox = document.getElementById("check-24");
-    const dateField = document.getElementById("dateField");
-    const weightSlider = document.querySelector('input[type="range"]');
-
-    const text = inputField.value.trim();
-    const date = dateField.value;
-    const weight = Number(weightSlider.value);
-
-    // Geen lege tasks
-    if (text === "") {
-        alert("Enter a task!");
-        return;
-    }
-
-    // Geen datum
-    if (date === "") {
-        alert("Select a date!");
-        return;
-    }
-
-
-    const mytask = {
-        text: text,
-
-        // TRUE = toets
-        // FALSE = normale task
-        checked: testCheckbox.checked,
-
-        // Datum van de task/toets
-        date: date,
-
-        // Belangrijkheid
-        weight: weight,
-
-        // Of de gebruiker de task heeft afgemaakt
-        completed: false
+function finalizeSteps(stops, task){
+  const d = daysUntil(task.date);
+  return stops.sort((a,b)=>b.at-a.at).map(s=>{
+    const stepDaysUntil = d - s.at;
+    let when;
+    if(stepDaysUntil < 0) when = "passed";
+    else if(stepDaysUntil === 0) when = "today";
+    else if(stepDaysUntil === 1) when = "tomorrow";
+    else when = `in ${stepDaysUntil}d`;
+    return {
+      label: s.label,
+      date: (()=>{ const dd=new Date(); dd.setHours(0,0,0,0); dd.setDate(dd.getDate()+stepDaysUntil); return isoDate(dd); })(),
+      when,
+      isNow: stepDaysUntil === 0,
+      isDone: stepDaysUntil < 0
     };
-
-
-    Tasks.push(mytask);
-
-    saveTasks();
-
-    renderTasks();
-
-
-    // Form resetten
-    inputField.value = "";
-    dateField.value = "";
-    testCheckbox.checked = false;
-    weightSlider.value = 1;
+  });
 }
 
+function buildPlan(task){
+  const daysBefore = getDaysBefore(task.weight);
+  const extraStops = Math.max(1, Math.round(task.weight / 10)); // 1–5 study sessions
 
-// ================================
-// SAVE
-// ================================
+  // window too tight for anything but the day before
+  if(daysBefore <= 1){
+    return finalizeSteps([{ label: "Herhalen", at: 1 }], task);
+  }
 
-function saveTasks() {
-    localStorage.setItem("Tasks", JSON.stringify(Tasks));
-}
+  const offsets = [];
+  for(let o=daysBefore; o>=2; o--) offsets.push(o); // "at 1" is reserved for Herhalen
 
+  const noSun = offsets.filter(o => weekdayOffset(task,o) !== 0);
+  const noWeekend = noSun.filter(o => weekdayOffset(task,o) !== 6);
 
-// ================================
-// HOW MANY DAYS BEFORE?
-// ================================
+  const needed = 1 + extraStops; // Read + study sessions
+  let pool = noWeekend.length >= needed ? noWeekend
+           : noSun.length >= needed ? noSun
+           : offsets;
+  pool.sort((a,b)=>b-a);
 
-function getDaysBefore(weight) {
+  if(pool.length === 0){
+    return finalizeSteps([{ label: "Herhalen", at: 1 }], task);
+  }
 
-    if (weight <= 10) return 1;
+  const readAt = pool[0];
+  const studyPool = pool.slice(1);
 
-    if (weight <= 20) return 2;
-
-    if (weight <= 30) return 3;
-
-    if (weight <= 40) return 5;
-
-    return 7;
-}
-
-
-// ================================
-// SHOULD TASK BE VISIBLE?
-// ================================
-
-function shouldShowTask(task) {
-
-    const today = new Date();
-
-    today.setHours(0, 0, 0, 0);
-
-
-    const taskDate = new Date(task.date + "T00:00:00");
-
-
-    const daysBefore = getDaysBefore(task.weight);
-
-
-    const showDate = new Date(taskDate);
-
-    showDate.setDate(
-        showDate.getDate() - daysBefore
-    );
-
-
-    return today >= showDate;
-}
-
-
-// ================================
-// CREATE TASK ELEMENT
-// ================================
-
-function newTaskElement(task) {
-
-    const taskElement = document.createElement("div");
-
-    taskElement.className = "task-list";
-
-
-    // ================================
-    // TEST / TOETS
-    // ================================
-
-    // checked betekent bij jou:
-    // TRUE = dit is een toets
-
-    if (task.checked) {
-        taskElement.classList.add("test-task");
+  let studyOffsets = [];
+  if(studyPool.length === 1){
+    studyOffsets = [studyPool[0]];
+  } else if(studyPool.length > 1){
+    for(let i=0;i<extraStops;i++){
+      const idx = Math.round(i*(studyPool.length-1)/Math.max(1,extraStops-1));
+      studyOffsets.push(studyPool[idx]);
     }
+    studyOffsets = [...new Set(studyOffsets)];
+  }
+  studyOffsets.sort((a,b)=>b-a);
 
+  const stops = [{ label: "Read", at: readAt }];
+  studyOffsets.forEach((o,i)=> stops.push({ label: `Study ${i+1}/${studyOffsets.length}`, at: o }));
+  stops.push({ label: "Herhalen", at: 1 });
 
-    // ================================
-    // COMPLETED CHECKBOX
-    // ================================
+  return finalizeSteps(stops, task);
+}
 
-    const completeCheckbox = document.createElement("input");
+/* =========================================================
+   RENDER — three windows: Today / Study sessions / Coming up
+   ========================================================= */
+const todayContainer = document.getElementById("todayContainer");
+const upcomingContainer = document.getElementById("upcomingContainer");
+const todayCount = document.getElementById("todayCount");
+const upcomingCount = document.getElementById("upcomingCount");
 
-    completeCheckbox.type = "checkbox";
+function activeTests(){ return Tasks.filter(t=>!t.completed && t.isToets); }
 
-    // Dit is NIET task.checked.
-    // Dit is of de task daadwerkelijk af is.
-    completeCheckbox.checked = task.completed;
+function renderWindows(){
+  const todayIso = isoDate(new Date(new Date().setHours(0,0,0,0)));
+  const in7 = new Date(); in7.setHours(0,0,0,0); in7.setDate(in7.getDate()+7);
 
-
-    // ================================
-    // TASK TEXT
-    // ================================
-
-    const text = document.createElement("span");
-
-    text.textContent = task.text;
-
-
-    // ================================
-    // WHEN COMPLETED
-    // ================================
-
-completeCheckbox.addEventListener("change", function () {
-
-    if (!completeCheckbox.checked) return;
-
-    // Alle huidige task-posities onthouden
-    const taskElements = [...taskContainer.children];
-
-    const oldPositions = new Map();
-
-    taskElements.forEach(element => {
-        oldPositions.set(element, element.getBoundingClientRect());
+  /* ---- Today: tasks due today + study sessions scheduled today ---- */
+  todayContainer.innerHTML = "";
+  const todayTasks = Tasks.filter(t=>!t.completed && t.date===todayIso);
+  const todaySessions = [];
+  activeTests().forEach(t=>{
+    buildPlan(t).forEach(step=>{
+      if(step.date===todayIso && step.date!==t.date) todaySessions.push({task:t, step});
     });
+  });
+  todayCount.textContent = todayTasks.length + todaySessions.length;
+  if(todayTasks.length===0 && todaySessions.length===0){
+    todayContainer.innerHTML = '<div class="empty">Nothing planned for today 🎉</div>';
+  } else {
+    todayTasks.forEach(t=>todayContainer.appendChild(buildTaskEl(t)));
+    todaySessions.forEach(s=>todayContainer.appendChild(buildSessionEl(s.task,s.step)));
+  }
 
+  /* ---- Coming up: deadlines in the next 7 days ---- */
+  upcomingContainer.innerHTML = "";
+  const deadlines = Tasks.filter(t=>!t.completed).filter(t=>{
+    const dt = new Date(t.date+"T00:00:00");
+    return dt > new Date(new Date().setHours(0,0,0,0)) && dt <= in7;
+  }).sort((a,b)=>new Date(a.date)-new Date(b.date));
+  upcomingCount.textContent = deadlines.length;
+  if(deadlines.length===0){
+    upcomingContainer.innerHTML = '<div class="empty">No deadlines in the next 7 days</div>';
+  } else {
+    deadlines.forEach(t=>upcomingContainer.appendChild(buildTaskEl(t)));
+  }
+}
 
-    // Fade de aangeklikte task uit
-    taskElement.style.transition = "opacity 0.35s ease, transform 0.35s ease";
-    taskElement.style.opacity = "0";
-    taskElement.style.transform = "translateX(20px)";
+/* Lightweight row for a planned study session (not a real task, no checkbox) */
+function buildSessionEl(task, step){
+  const wrap = document.createElement("div");
+  wrap.className = "task toets";
 
+  const row = document.createElement("div");
+  row.className = "task-row";
 
-    setTimeout(() => {
+  const main = document.createElement("div");
+  main.className = "task-main";
+  main.innerHTML = `
+    <div class="task-text">${step.label} — ${task.text}</div>
+    <div class="task-meta">
+      <span>${new Date(step.date+"T00:00:00").toLocaleDateString('en-GB',{day:'numeric',month:'short'})} · ${step.when}</span>
+      <span class="badge badge-toets">Study</span>
+    </div>
+  `;
+  row.appendChild(main);
+  wrap.appendChild(row);
+  return wrap;
+}
 
-        // Uit Tasks verwijderen
-        const index = Tasks.indexOf(task);
+function buildTaskEl(task){
+  const wrap = document.createElement("div");
+  wrap.className = "task" + (task.isToets ? " toets" : "");
 
-        if (index !== -1) {
-            Tasks.splice(index, 1);
-        }
+  const row = document.createElement("div");
+  row.className = "task-row";
 
-        saveTasks();
+  const cb = document.createElement("input");
+  cb.type="checkbox"; cb.checked=task.completed;
+  cb.addEventListener("change", ()=>completeTask(task, wrap));
 
-        // Task uit DOM verwijderen
-        taskElement.remove();
+  const main = document.createElement("div");
+  main.className="task-main";
 
+  const txt = document.createElement("div");
+  txt.className="task-text"; txt.textContent=task.text;
 
-        // Nieuwe posities bepalen
-        const remainingTasks = [...taskContainer.children];
+  const meta = document.createElement("div");
+  meta.className="task-meta";
+  const d = daysUntil(task.date);
+  const dateLabel = d===0 ? "Today" : d===1 ? "Tomorrow" : d<0 ? `${Math.abs(d)}d ago` : `In ${d}d`;
+  meta.innerHTML = `<span>${new Date(task.date+"T00:00:00").toLocaleDateString('en-GB',{day:'numeric',month:'short'})} · ${dateLabel}</span>`;
+  if(task.isToets) meta.innerHTML += `<span class="badge badge-toets">Test</span>`;
+  if(d<=1) meta.innerHTML += `<span class="badge badge-due">Coming up</span>`;
+  if(task.isToets) meta.innerHTML += `<span class="badge badge-toets">${Math.max(1, Math.round(task.weight/10))} study sessions</span>`;
 
-        remainingTasks.forEach(element => {
+  main.appendChild(txt); main.appendChild(meta);
 
-            const oldPosition = oldPositions.get(element);
+  const actions = document.createElement("div");
+  actions.className="task-actions";
 
-            if (!oldPosition) return;
+  if(task.isToets){
+    const planBtn = document.createElement("button");
+    planBtn.className="icon-btn"; planBtn.title="Study plan"; planBtn.textContent="📖";
+    planBtn.addEventListener("click", ()=>{
+      wrap.querySelector(".plan-panel").classList.toggle("open");
+    });
+    actions.appendChild(planBtn);
+  }
 
-            const newPosition = element.getBoundingClientRect();
+  const delBtn = document.createElement("button");
+  delBtn.className="icon-btn"; delBtn.title="Delete"; delBtn.textContent="✕";
+  delBtn.addEventListener("click", ()=>{
+    Tasks = Tasks.filter(t=>t.id!==task.id);
+    saveTasks(); renderWindows(); renderCalendar();
+  });
+  actions.appendChild(delBtn);
 
-            const difference =
-                oldPosition.top - newPosition.top;
+  row.appendChild(cb); row.appendChild(main); row.appendChild(actions);
+  wrap.appendChild(row);
 
+  if(task.isToets){
+    wrap.appendChild(buildPlanPanel(task));
+  }
 
-            // Task tijdelijk terugzetten naar oude positie
-            element.style.transform =
-                `translateY(${difference}px)`;
+  return wrap;
+}
 
-            element.style.transition = "none";
+function buildPlanPanel(task){
+  const panel = document.createElement("div");
+  panel.className="plan-panel";
 
+  const steps = buildPlan(task);
+  const stepsHtml = steps.map(s=>`
+    <div class="plan-step ${s.isNow?'now':''} ${s.isDone?'done':''}">
+      <div class="dot"></div>
+      <span>${s.label}</span>
+      <span class="when">${s.when}</span>
+    </div>
+  `).join("");
 
-            // Browser layout laten uitvoeren
-            requestAnimationFrame(() => {
+  panel.innerHTML = `
+    <div class="plan-hint">Higher weight = more sessions. Sundays stay free.</div>
+    <div class="plan-steps">${stepsHtml}</div>
+    <div class="material-row" id="materialRow-${task.id}"></div>
+  `;
 
-                element.style.transition =
-                    "transform 0.45s cubic-bezier(.2,.8,.2,1)";
+  renderMaterialRow(task, panel.querySelector(`#materialRow-${task.id}`));
+  return panel;
+}
 
-                element.style.transform = "translateY(0)";
+/* Study material detection: if a link is stored, show a button that
+   opens the existing "leren" (learn) page. Otherwise, offer to add one. */
+function renderMaterialRow(task, container){
+  container.innerHTML = "";
+  if(task.materialLink){
+    const a = document.createElement("a");
+    a.className = "material-link";
+    a.href = task.materialLink;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.innerHTML = `📚 Open study material`;
+    const edit = document.createElement("button");
+    edit.className="icon-btn"; edit.style.width="30px"; edit.style.height="30px"; edit.style.fontSize="11px";
+    edit.textContent="✎"; edit.title="Change link";
+    edit.addEventListener("click", ()=>{
+      task.materialLink="";
+      saveTasks();
+      renderMaterialRow(task, container);
+    });
+    container.appendChild(a);
+    container.appendChild(edit);
+  } else {
+    const input = document.createElement("input");
+    input.type="url";
+    input.placeholder="Link to study material on leren.html";
+    const btn = document.createElement("button");
+    btn.className="btn btn-ghost btn-small";
+    btn.textContent="Link";
+    btn.addEventListener("click", ()=>{
+      if(!input.value.trim()) return;
+      task.materialLink = input.value.trim();
+      saveTasks();
+      renderMaterialRow(task, container);
+    });
+    container.appendChild(input);
+    container.appendChild(btn);
+  }
+}
 
-            });
+function completeTask(task, wrap){
+  wrap.style.transition="opacity .3s ease, transform .3s ease";
+  wrap.style.opacity="0"; wrap.style.transform="translateX(20px)";
+  setTimeout(()=>{
+    task.completed = true;
+    saveTasks();
+    renderWindows();
+    renderCalendar();
+  },300);
+}
 
-        });
+/* =========================================================
+   AGENDA — real calendar grid, month view
+   ========================================================= */
+const agendaBtn = document.getElementById("agendaBtn");
+const agendaOverlay = document.getElementById("agendaOverlay");
+const calGrid = document.getElementById("calGrid");
+const monthLabel = document.getElementById("monthLabel");
 
-    }, 350);
+let viewMonth = new Date(); viewMonth.setDate(1); viewMonth.setHours(0,0,0,0);
 
+agendaBtn.addEventListener("click", ()=>{
+  viewMonth = new Date(); viewMonth.setDate(1); viewMonth.setHours(0,0,0,0);
+  renderCalendar();
+  agendaOverlay.classList.add("open");
+});
+document.getElementById("closeAgenda").addEventListener("click", ()=>agendaOverlay.classList.remove("open"));
+agendaOverlay.addEventListener("click", (e)=>{ if(e.target===agendaOverlay) agendaOverlay.classList.remove("open"); });
+
+document.getElementById("prevMonth").addEventListener("click", ()=>{
+  viewMonth.setMonth(viewMonth.getMonth()-1); renderCalendar();
+});
+document.getElementById("nextMonth").addEventListener("click", ()=>{
+  viewMonth.setMonth(viewMonth.getMonth()+1); renderCalendar();
+});
+document.getElementById("todayBtn").addEventListener("click", ()=>{
+  viewMonth = new Date(); viewMonth.setDate(1); viewMonth.setHours(0,0,0,0); renderCalendar();
 });
 
-    // ================================
-    // ADD TO DOM
-    // ================================
+function eventsByDate(){
+  // returns { "YYYY-MM-DD": [{label, type}] }
+  const map = {};
+  const add = (date, label, type)=>{
+    if(!map[date]) map[date]=[];
+    map[date].push({label, type});
+  };
 
-    taskElement.appendChild(completeCheckbox);
-
-    taskElement.appendChild(text);
-
-    taskContainer.appendChild(taskElement);
+  Tasks.filter(t=>!t.completed).forEach(t=>{
+    add(t.date, t.text, t.isToets ? "test" : "task");
+    if(t.isToets){
+      buildPlan(t).forEach(step=>{
+        if(step.label==="Read" || step.date===t.date) return;
+        add(step.date, `${step.label} — ${t.text}`, "study");
+      });
+    }
+  });
+  return map;
 }
 
+function renderCalendar(){
+  const map = eventsByDate();
+  const y = viewMonth.getFullYear(), m = viewMonth.getMonth();
+  monthLabel.textContent = viewMonth.toLocaleDateString('en-GB',{month:'long', year:'numeric'});
 
-// ================================
-// RENDER ALL TASKS
-// ================================
+  calGrid.innerHTML = "";
+  ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].forEach(dow=>{
+    const el = document.createElement("div");
+    el.className="cal-dow"; el.textContent=dow;
+    calGrid.appendChild(el);
+  });
 
-function renderTasks() {
+  const firstDay = new Date(y,m,1);
+  let startOffset = firstDay.getDay()-1; // Monday=0
+  if(startOffset<0) startOffset=6;
 
-    // Eerst oude tasks verwijderen
-    taskContainer.innerHTML = "";
+  const daysInMonth = new Date(y,m+1,0).getDate();
+  const todayIso = isoDate(new Date(new Date().setHours(0,0,0,0)));
 
+  for(let i=0;i<startOffset;i++){
+    const el = document.createElement("div");
+    el.className="cal-cell empty";
+    calGrid.appendChild(el);
+  }
 
-    Tasks.forEach(function (task) {
+  for(let day=1; day<=daysInMonth; day++){
+    const dateObj = new Date(y,m,day);
+    const iso = isoDate(dateObj);
+    const cell = document.createElement("div");
+    cell.className = "cal-cell" + (iso===todayIso ? " today" : "") + (map[iso] ? " has-items" : "");
 
-        // Alleen tonen als de planning zegt
-        // dat hij nu zichtbaar moet zijn
-        if (shouldShowTask(task)) {
+    const num = document.createElement("div");
+    num.className="cal-daynum"; num.textContent=day;
+    cell.appendChild(num);
 
-            newTaskElement(task);
-
-        }
-
+    (map[iso]||[]).slice(0,3).forEach(ev=>{
+      const chip = document.createElement("div");
+      chip.className = "cal-chip" + (ev.type==="test" ? " test" : ev.type==="study" ? " study" : "");
+      chip.textContent = ev.label;
+      chip.title = ev.label;
+      cell.appendChild(chip);
     });
+    if((map[iso]||[]).length>3){
+      const more = document.createElement("div");
+      more.className="cal-chip"; more.textContent=`+${map[iso].length-3} more`;
+      cell.appendChild(more);
+    }
+
+    calGrid.appendChild(cell);
+  }
 }
 
-
-// ================================
-// INITIAL LOAD
-// ================================
-
-renderTasks();
-  </script>
-
+/* =========================================================
+   INIT
+   ========================================================= */
+renderWindows();
+renderCalendar();
+</script>
+</body>
 </html>
