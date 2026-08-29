@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StudyNo</title>
 <link rel="stylesheet" href="style.css">
+<script src="database.js"></script>
 <style>
 :root{
   --purple:#b98ee0;
@@ -409,19 +410,10 @@ input[type="range"]::-moz-range-thumb {
 /* =========================================================
    DATA
    ========================================================= */
-let Tasks = JSON.parse(localStorage.getItem("Tasks_v2")) || [];
-let name = localStorage.getItem("name");
-
+  let Tasks = JSON.parse(localStorage.getItem("Tasks_v2")) || [];
 const userNameEl = document.getElementById("userName");
-if (name) { userNameEl.textContent = name; }
-else {
-  const n = prompt("What's your name?");
-  if (n) { 
-   name = n.charAt(0).toUpperCase() + n.slice(1);
-    localStorage.setItem("name", name);
-    userNameEl.textContent = name;
-}
-}
+
+userNameEl.innerText = localStorage.getItem("name_database");
 
 function saveTasks(){ localStorage.setItem("Tasks_v2", JSON.stringify(Tasks)); }
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }

@@ -1148,7 +1148,6 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
   backdrop-filter: blur(5px);
 
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.249);
-
   user-select: none;
   z-index: 9999;
 
@@ -1306,20 +1305,24 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
   position: absolute;
 }
 
-#planner-href {
+#planner-href,
+#login-href {
   color: white;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 700;
   transition: all 0.3s ease;
   position: relative;
-
+ 
   text-decoration: none;
 }
-#planner-href:hover {
+
+#planner-href:hover,
+#login-href:hover {
   color: rgb(143, 91, 202);
   
 }
-#planner-href:hover::before {
+#planner-href:hover::before,
+#login-href:hover::before {
   transform: scaleX(1);
 }
 #planner-href::before {
@@ -1334,3 +1337,24 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
   transform: scaleX(0);
   transition: transform 0.31s ease;
 }
+nav {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center;
+    gap: 15px !important;
+    right: 0px; 
+}
+#login-href::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(143, 91, 202);
+  transform: scaleX(0);
+  transition: transform 0.31s ease;
+}
+

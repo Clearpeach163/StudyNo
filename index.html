@@ -7,13 +7,13 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="manifest" href="webmanifest.json">
 <link rel="stylesheet" href="style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-<script src="Update.js" defer></script>
-<script src="script.js"></script>
+<script src="Update.js"></script>
+<script src="script.js" defer></script>
 
 <style>
    #vid {
@@ -37,8 +37,10 @@
   <p onclick="version();" id="update">error loading version....</p>
 <nav>
     <div class="logo">StudyNo.</div>
+
     <a href="planner.html" id="planner-href">Planner</a>
-   
+    <a href="Signup.html" id="planner-href">Signup</a>
+   <a href="login.html" id="login-href">Login</a>
 </nav>
 
 <!-- HERO -->
@@ -86,21 +88,8 @@
 
 </div>
 </section>
-
+<script src="database.js"></script>
 <script>
-  
-const video = document.getElementById("vid");
-
-if (localStorage.getItem("seen") === "true") {
-    video.style.display = "none";
-      video.pause();
-    video.currentTime = 0;
-    video.remove();
-}
-video.addEventListener("ended", () => {
-    video.style.display = "none";
-    localStorage.setItem("seen", "true");
-});
 
 </script>
 

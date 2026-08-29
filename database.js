@@ -2,6 +2,7 @@ const API_URL =
     "https://script.google.com/macros/s/AKfycbxk__CWehe1Try9sKmbf8Yr6C4K0AY0NapEBaQSA-bVgnEiAiVPeliaHTZcfpZLA4V1RA/exec ";
 
 
+
 // =================================
 // REQUEST
 // =================================
@@ -44,13 +45,15 @@ const DB = {
 
 
     async login(username, password) {
-
+        DB.logout();
+        
         const result = await request(
             "login",
             {
                 username,
                 password
             }
+            
         );
 
         if (result.success) {
@@ -67,6 +70,7 @@ const DB = {
         }
 
         return result;
+        whosthere();
     },
 
 
@@ -91,7 +95,8 @@ const DB = {
 
         return {
             id: localStorage.getItem("user_id"),
-            username: localStorage.getItem("username")
+            username: localStorage.getItem("username"),
+           
         };
 
     },

@@ -11,7 +11,7 @@ let gehad_goed = [];
 let shuffleran = 0;
 let list;
 let toetsModus = localStorage.getItem("toetsModus") === "true";
-document.getElementById("update").innerText = update;
+
 
 const popup = document.getElementById("popup");
 const clickSound = new Audio("Streak.mp3");
