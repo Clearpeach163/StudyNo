@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+    <title>Study Points — StudyNo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", Roboto, sans-serif;
+
+            color: white;
+
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            top: 0  ;
+            width: 100%;
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            background: rgba(10, 8, 15, 0.55);
+            backdrop-filter: blur(18px);
+        }
+
+
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* HERO */
+
+        .hero {
+            max-width: 950px;
+            margin: 0 auto;
+
+            padding: 100px 25px 70px;
+
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 8px 15px;
+            margin-bottom: 25px;
+
+            border: 1px solid rgba(155, 93, 229, 0.35);
+            border-radius: 999px;
+
+            background: rgba(155, 93, 229, 0.12);
+
+            color: #c99cff;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: clamp(45px, 7vw, 78px);
+            line-height: 0.95;
+            letter-spacing: -4px;
+
+            margin-bottom: 25px;
+        }
+
+        h1 span {
+            background: linear-gradient(90deg, #b56cff, #5f9cff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+
+            color: rgba(255,255,255,0.62);
+
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        /* PROGRESS CARD */
+
+        .progress-card {
+            max-width: 650px;
+            margin: 20px auto 100px;
+
+            padding: 30px;
+
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+
+            background: rgba(255,255,255,0.045);
+            backdrop-filter: blur(20px);
+
+            box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+        .progress-title {
+            font-weight: 700;
+        }
+
+        .progress-number {
+            color: #b879ff;
+            font-weight: 800;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background: rgba(255,255,255,0.08);
+        }
+
+        .progress-fill {
+            width: 65%;
+            height: 100%;
+
+            border-radius: inherit;
+
+            background: linear-gradient(90deg, #9b5de5, #4285f4);
+        }
+
+        .progress-info {
+            margin-top: 13px;
+
+            color: rgba(255,255,255,0.45);
+
+            font-size: 13px;
+        }
+
+        /* CONTENT */
+
+        .content {
+            max-width: 1000px;
+            margin: auto;
+
+            padding: 0 25px 100px;
+        }
+
+        .section {
+            margin-bottom: 100px;
+        }
+
+        .section h2 {
+            font-size: 38px;
+            letter-spacing: -1.5px;
+            margin-bottom: 15px;
+        }
+
+        .section > p {
+            max-width: 700px;
+
+            color: rgba(255,255,255,0.6);
+
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* STEPS */
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-top: 35px;
+        }
+
+        .step {
+            padding: 28px;
+
+            min-height: 210px;
+
+            border-radius: 20px;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            background: rgba(255,255,255,0.035);
+
+            transition: transform 0.25s ease,
+                        border-color 0.25s ease,
+                        background 0.25s ease;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+
+            border-color: rgba(155, 93, 229, 0.35);
+
+            background: rgba(155, 93, 229, 0.07);
+        }
+
+        .step-number {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 25px;
+
+            border-radius: 12px;
+
+            background: rgba(155, 93, 229, 0.15);
+
+            color: #c99cff;
+
+            font-weight: 800;
+        }
+
+        .step h3 {
+            font-size: 19px;
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: rgba(255,255,255,0.52);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* PREMIUM */
+
+        .premium {
+            position: relative;
+
+            padding: 55px;
+
+            border-radius: 30px;
+
+            overflow: hidden;
+
+            border: 1px solid rgba(155, 93, 229, 0.25);
+
+            background:
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(66,133,244,0.2),
+                    transparent 35%
+                ),
+                rgba(155, 93, 229, 0.06);
+        }
+
+        .premium h2 {
+            max-width: 600px;
+        }
+
+        .premium p {
+            max-width: 650px;
+
+            margin-top: 15px;
+
+            color: rgba(255,255,255,0.6);
+
+            line-height: 1.7;
+        }
+
+        .premium-highlight {
+            display: inline-block;
+
+            margin-top: 30px;
+            padding: 12px 18px;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,0.07);
+
+            font-weight: 700;
+        }
+
+        .premium-highlight span {
+            color: #c18aff;
+        }
+
+        /* FINAL CTA */
+
+        .cta {
+            text-align: center;
+
+            padding: 60px 20px;
+        }
+
+        .cta h2 {
+            font-size: 42px;
+            letter-spacing: -2px;
+
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: rgba(255,255,255,0.55);
+
+            margin-bottom: 30px;
+        }
+
+        .button_start {
+            display: inline-block;
+
+            padding: 13px 24px;
+
+            border-radius: 12px;
+
+            background: white;
+
+            color: #100b18;
+
+            text-decoration: none;
+
+            font-weight: 800;
+
+            transition: 0.2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.15);
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 70px;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .premium {
+                padding: 35px 25px;
+            }
+
+            .section h2 {
+                font-size: 30px;
+            }
+
+            .cta h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">
+            Study<span>No</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="planner.html">Planner</a>
+            <a href="account.html">Account</a>
+        </div>
+    </nav>
+
+
+    <section class="hero">
+
+        <div class="badge">
+            NEW • STUDY POINTS
+        </div>
+
+        <h1>
+            Study.<br>
+            <span>Earn. Unlock.</span>
+        </h1>
+
+        <p>
+            The more you study, the more you earn.
+            Collect Study Points and reach 1,000 points
+            to unlock StudyNo Premium completely free.
+        </p>
+
+    </section>
+
+
+    <div class="progress-card">
+
+        <div class="progress-top">
+
+            <div class="progress-title">
+                Your Study Points
+            </div>
+
+            <div class="progress-number">
+                650 / 1,000
+            </div>
+
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <div class="progress-info">
+            350 more points until Premium
+        </div>
+
+    </div>
+
+
+    <main class="content">
+
+        <section class="section">
+
+            <h2>
+                How does it work?
+            </h2>
+
+            <p>
+                StudyNo turns your studying into progress.
+                Complete study activities, earn points, and
+                work towards unlocking Premium.
+            </p>
+
+
+            <div class="steps">
+
+                <div class="step">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Study
+                    </h3>
+
+                    <p>
+                        Use StudyNo to learn, practise,
+                        and test your knowledge.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Earn Points
+                    </h3>
+
+                    <p>
+                        Your studying earns you Study Points.
+                        Keep learning to build your progress.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Unlock Premium
+                    </h3>
+
+                    <p>
+                        Reach 1,000 points and Premium becomes
+                        yours — completely free.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="premium">
+
+                <h2>
+                    Premium isn't something
+                    you have to buy.
+                </h2>
+
+                <p>
+                    StudyNo is built around learning first.
+                    You can use StudyNo for free, and if you
+                    keep studying, you can earn enough points
+                    to unlock Premium without paying.
+                </p>
+
+                <div class="premium-highlight">
+                    <span>1,000 Study Points</span>
+                    → Premium unlocked
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <h2>
+                Your studying becomes your reward.
+            </h2>
+
+            <p>
+                Every quiz you complete and every study session
+                you put in moves you closer to your goal.
+                Premium isn't the reason to study — it's the
+                reward for doing it.
+            </p>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

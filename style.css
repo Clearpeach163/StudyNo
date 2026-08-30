@@ -793,12 +793,18 @@ nav{
     z-index:10;
 }
 
-.logo{
-    color:white;
-    font-weight:800;
-    font-size:1.3rem;
-    animation: pop 0.2s ease backwards;
-}
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #9b5de5;
+        }
 
 .signin{
     padding:12px 20px;
@@ -1430,4 +1436,15 @@ nav {
 #logout {
   font-weight: 800;
   color: rgb(212, 11, 68);
+}
+p a {
+  color: rgb(128, 71, 154);
+  transition: 0.2s ease;
+  display: inline-block;
+}
+
+p a:hover {
+  color: white;
+
+  transform: translate(0px, -2px);
 }
