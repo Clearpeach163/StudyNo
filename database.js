@@ -76,7 +76,7 @@ const DB = {
         localStorage.removeItem("user_id");
         localStorage.removeItem("username");
         localStorage.removeItem("name_database");
-        location.href = "logged out.html";
+   
     },
 
 

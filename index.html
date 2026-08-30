@@ -56,7 +56,7 @@
         <a href="planner.html">Planner</a>
    
         <a href="account.html">Account</a>
-        <a onclick="DB.logout();" id="logout">Logout</a>
+        <a onclick="menulogout();" id="logout">Logout</a>
     </div>
 </div>
 <!--Hero-->
@@ -114,8 +114,10 @@ if (localStorage.getItem("name_database") == null) {
       accountStatus.innerHTML = "Hey, " + 
         localStorage.getItem("name_database") || "Log in";
 }
-
-
+function menulogout() {
+     location.href = "logged out.html";
+     DB.logout();
+}
 </script>
 
 </body>
