@@ -1,5 +1,5 @@
 const API_URL =
-    "https://script.google.com/macros/s/AKfycbxk__CWehe1Try9sKmbf8Yr6C4K0AY0NapEBaQSA-bVgnEiAiVPeliaHTZcfpZLA4V1RA/exec ";
+    "https://script.google.com/macros/s/AKfycbyf2LxZ1N2UZC6uTqZLYaabsCX2e5R7X3lO5fWe8zBS-g1n-D-K5cOWRIvFy8crjsJoqg/exec";
 
 
 
@@ -24,6 +24,7 @@ async function request(action, data = {}) {
 }
 
 
+
 // =================================
 // AUTH
 // =================================
@@ -45,32 +46,28 @@ const DB = {
 
 
     async login(username, password) {
+
         DB.logout();
-        
-        const result = await request(
-            "login",
-            {
-                username,
-                password
-            }
-            
-        );
+
+        const result = await request("login", {
+            username,
+            password
+        });
 
         if (result.success) {
 
-            localStorage.setItem(
-                "user_id",
-                result.id
-            );
+            localStorage.setItem("user_id", result.id);
+            localStorage.setItem("username", result.username);
 
-            localStorage.setItem(
-                "username",
-                result.username
-            );
+            whosthere();
+
+            // Login counter
+            await DB.updateLoginCounter().catch(error => {
+                console.error("Login counter error:", error);
+            });
         }
 
         return result;
-        whosthere();
     },
 
 
@@ -78,15 +75,14 @@ const DB = {
 
         localStorage.removeItem("user_id");
         localStorage.removeItem("username");
+        localStorage.removeItem("name_database");
 
     },
 
 
     isLoggedIn() {
 
-        return !!localStorage.getItem(
-            "user_id"
-        );
+        return !!localStorage.getItem("user_id");
 
     },
 
@@ -95,8 +91,7 @@ const DB = {
 
         return {
             id: localStorage.getItem("user_id"),
-            username: localStorage.getItem("username"),
-           
+            username: localStorage.getItem("username")
         };
 
     },
@@ -145,6 +140,29 @@ const DB = {
     },
 
 
+    async set(data, column) {
+
+        const id =
+            localStorage.getItem("user_id");
+
+        if (!id) {
+            return {
+                success: false,
+                error: "Not logged in."
+            };
+        }
+
+        return await request(
+            "set",
+            {
+                id,
+                data,
+                column
+            }
+        );
+    },
+
+
     async remove(column) {
 
         const id =
@@ -161,6 +179,42 @@ const DB = {
                 column
             }
         );
+    },
+
+
+    // =================================
+    // LOGIN COUNTER
+    // =================================
+
+    async updateLoginCounter() {
+
+        try {
+
+            const loginsResult =
+                await DB.get("E");
+
+            const logins =
+                Number(loginsResult.data) || 0;
+
+            const newLogins =
+                await DB.set(
+                    logins + 1,
+                    "E"
+                );
+
+            console.log(
+                "Login counter:",
+                newLogins
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Login counter error:",
+                error
+            );
+
+        }
     }
 
 };

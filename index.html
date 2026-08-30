@@ -14,6 +14,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 <script src="Update.js"></script>
 <script src="script.js" defer></script>
+<script src="database.js"></script>
+
+
 
 <style>
    #vid {
@@ -41,10 +44,20 @@
     <a href="planner.html" id="planner-href">Planner</a>
     <a href="Signup.html" id="planner-href">Signup</a>
    <a href="login.html" id="login-href">Login</a>
+   
+   
 </nav>
+<div class="account">
+    <button id="account_status">Login for more.</button>
 
-<!-- HERO -->
-
+    <div class="account-menu">
+        <a href="planner.html">Planner</a>
+   
+        <a href="account.html">Account</a>
+        <a onclick="DB.logout();" id="logout">Logout</a>
+    </div>
+</div>
+<!--Hero-->
 <section class="hero">
 
     <div class="badge">
@@ -88,11 +101,14 @@
 
 </div>
 </section>
-<script src="database.js"></script>
-<script>
+
+<script defer>
+const accountStatus = document.getElementById("account_status");
+    accountStatus.innerHTML = "Hey, " + 
+        localStorage.getItem("name_database") || "Log in";
+
 
 </script>
-
 
 </body>
 </html>
