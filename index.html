@@ -71,8 +71,9 @@
     </h1>
 
     <p>
-         The simplest way to learn vocabulary, revise faster,
-        and stay focused without annoying subscriptions.
+        
+        <!-- The simplest way to learn vocabulary, revise faster,
+        and stay focused without annoying subscriptions.-->
     </p>
 
     <button class="cta" onclick="window.location.href='homescreen.html'">
@@ -104,8 +105,13 @@
 
 <script defer>
 const accountStatus = document.getElementById("account_status");
-    accountStatus.innerHTML = "Hey, " + 
+if (localStorage.getItem("name_database") == null) {
+        accountStatus.innerHTML = "Log in";
+} else {
+
+      accountStatus.innerHTML = "Hey, " + 
         localStorage.getItem("name_database") || "Log in";
+}
 
 
 </script>
