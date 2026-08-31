@@ -398,7 +398,7 @@ async function signup() {
 async function whosthere() {
 if (DB.isLoggedIn()) {
 const name = await DB.get("D");
-console.log("Hey, I think i got the name: " + name.data);
+console.log("Hey, i think i got the name: " + name.data);
 localStorage.setItem("name_database", name.data);
 }
 
