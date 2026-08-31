@@ -45,31 +45,24 @@ const DB = {
     },
 
 
-    async login(username, password) {
+async login(username, password) {
+    DB.logout();
 
-        DB.logout();
+    const result = await request("login", { username, password });
 
-        const result = await request("login", {
-            username,
-            password
-        });
+    if (result.success) {
+        localStorage.setItem("user_id", result.id);
+        localStorage.setItem("username", result.username);
+        whosthere();
 
-        if (result.success) {
+        // Don't block on this — let it happen in the background
+       // DB.updateLoginCounter().catch(error => {
+       //     console.error("Login counter error:", error);
+       //    });
+    }
 
-            localStorage.setItem("user_id", result.id);
-            localStorage.setItem("username", result.username);
-
-            whosthere();
-
-            // Login counter
-            await DB.updateLoginCounter().catch(error => {
-                console.error("Login counter error:", error);
-            });
-        }
-
-        return result;
-    },
-
+    return result;
+},
 
     logout() {
 
@@ -139,7 +132,14 @@ const DB = {
         );
     },
 
-
+    async credits(credits_) {
+        const F_data = await DB.get("F");
+        const F = F_data.data;
+        const F_make_it = F + credits_;
+        await DB.set(F_make_it, "F");
+        console.log("Well you better go check now");
+        
+    },
     async set(data, column) {
 
         const id =
@@ -186,35 +186,6 @@ const DB = {
     // LOGIN COUNTER
     // =================================
 
-    async updateLoginCounter() {
 
-        try {
-
-            const loginsResult =
-                await DB.get("E");
-
-            const logins =
-                Number(loginsResult.data) || 0;
-
-            const newLogins =
-                await DB.set(
-                    logins + 1,
-                    "E"
-                );
-
-            console.log(
-                "Login counter:",
-                newLogins
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Login counter error:",
-                error
-            );
-
-        }
-    }
 
 };

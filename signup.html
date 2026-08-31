@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,23 +30,7 @@
                 Arial,
                 sans-serif;
 
-            background:
-                radial-gradient(
-                    circle at 20% 20%,
-                    rgba(120, 90, 255, 0.35),
-                    transparent 35%
-                ),
-                radial-gradient(
-                    circle at 80% 75%,
-                    rgba(0, 180, 255, 0.25),
-                    transparent 35%
-                ),
-                linear-gradient(
-                    135deg,
-                    #08090d,
-                    #11131c 50%,
-                    #08090d
-                );
+      
 
             display: flex;
             align-items: center;
@@ -55,7 +40,6 @@
             color: rgb(216, 203, 223);
         }
 
-        /* Soft background glow */
         body::before {
             content: "";
             position: fixed;
@@ -186,6 +170,13 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
+        .signup input.error {
+            border-color: rgba(255, 90, 90, 0.6);
+            box-shadow:
+                0 0 0 4px rgba(255, 90, 90, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
         .signup button {
             position: relative;
             z-index: 2;
@@ -215,7 +206,8 @@
             transition:
                 transform 0.18s ease,
                 background 0.18s ease,
-                box-shadow 0.18s ease;
+                box-shadow 0.18s ease,
+                opacity 0.18s ease;
         }
 
         .signup button:hover {
@@ -230,6 +222,12 @@
 
         .signup button:active {
             transform: scale(0.98);
+        }
+
+        .signup button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
         }
 
         #link {
@@ -252,6 +250,17 @@
             color: white;
         }
 
+        #error-msg {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            min-height: 18px;
+            margin-top: 10px;
+            font-size: 13px;
+            color: rgb(255, 130, 130);
+            text-align: center;
+        }
+
         @media (max-width: 500px) {
             .signup {
                 padding: 32px 24px 28px;
@@ -262,6 +271,7 @@
                 border-radius: 25px;
             }
         }
+
         .logo a {
             color: white;
         }
@@ -272,16 +282,19 @@
 
 <body>
     <nav>
-    <div class="logo"><a href="index.html">StudyNo.</a></div>
+        <div class="logo"><a href="index.html">StudyNo.</a></div>
     </nav>
+
     <div class="signup">
         <h1>Getting started!</h1>
-        <input type="text" placeholder="Username" id="username">
-        <input type="password" id="password" placeholder="Password">
-        <input type="password" id="password-confirm" placeholder="Confirm your password">
-        <input type="name" id="name" placeholder="What should we call you? (First name)">
+        <input type="text" placeholder="Username" id="username" autocomplete="username">
+        <input type="password" id="password" placeholder="Password" autocomplete="new-password">
+        <input type="password" id="password-confirm" placeholder="Confirm your password" autocomplete="new-password">
+        <input type="text" id="name" placeholder="What should we call you? (First name)">
 
-        <button onclick="signup();">Signup!</button>
+        <div id="error-msg"></div>
+
+        <button id="signup-btn" onclick="signup();">Signup!</button>
 
         <a href="login.html" id="link">Already have an account?</a>
     </div>
@@ -291,42 +304,104 @@
 <script src="database.js"></script>
 
 <script>
+function showError(msg) {
+    document.getElementById("error-msg").textContent = msg;
+}
+
+function clearFieldErrors() {
+    ["username", "password", "password-confirm", "name"].forEach(id => {
+        document.getElementById(id).classList.remove("error");
+    });
+}
+
+function markFieldError(id) {
+    document.getElementById(id).classList.add("error");
+}
+
 async function signup() {
-    const confirm = document.getElementById("password-confirm").value;
+    const btn = document.getElementById("signup-btn");
+
+    showError("");
+    clearFieldErrors();
+
+    const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
-    const username = document.getElementById("username").value;
-    const name = document.getElementById("name").value;
+    const confirm = document.getElementById("password-confirm").value;
+    const name = document.getElementById("name").value.trim();
 
+    // Validate before hitting the network at all
+    if (!username) {
+        markFieldError("username");
+        showError("Please enter a username.");
+        return;
+    }
+    if (!password) {
+        markFieldError("password");
+        showError("Please enter a password.");
+        return;
+    }
+    if (password.length < 6) {
+        markFieldError("password");
+        showError("Password must be at least 6 characters.");
+        return;
+    }
     if (password !== confirm) {
-        alert("password does not match.");
+        markFieldError("password-confirm");
+        showError("Passwords do not match.");
+        return;
+    }
+    if (!name) {
+        markFieldError("name");
+        showError("Please tell us what to call you.");
         return;
     }
 
-    // Account maken
-    const registered = await DB.register(username, password);
+    btn.disabled = true;
+    btn.textContent = "Creating account...";
 
-    if (!registered.success) {
-        alert(registered.error);
-        return;
+    try {
+        // 1. Register the account
+        const registered = await DB.register(username, password);
+
+        if (!registered.success) {
+            showError(registered.error || "Could not create account.");
+            return;
+        }
+
+        // 2. Log in immediately
+        const loggedIn = await DB.login(username, password);
+
+        if (!loggedIn.success) {
+            showError(loggedIn.error || "Account created, but login failed. Try logging in manually.");
+            return;
+        }
+
+        // 3. Save the display name against this user's row
+        const saved = await DB.add(name, "D");
+
+        if (!saved.success) {
+            showError(saved.error || "Account created, but saving your name failed.");
+            return;
+        }
+
+        location.href = "index.html";
+
+    } catch (err) {
+        console.error("Signup error:", err);
+        showError("Something went wrong. Check your connection and try again.");
+
+    } finally {
+        btn.disabled = false;
+        btn.textContent = "Signup!";
     }
+}
+async function whosthere() {
+if (DB.isLoggedIn()) {
+const name = await DB.get("D");
+console.log("Hey, I think i got the name: " + name.data);
+localStorage.setItem("name_database", name.data);
+}
 
-    // Meteen inloggen
-    const loggedIn = await DB.login(username, password);
-
-    if (!loggedIn.success) {
-        alert(loggedIn.error);
-        return;
-    }
-
-    // Naam opslaan in de rij van deze gebruiker
-    const saved = await DB.add(name, "D");
-
-    if (!saved.success) {
-        alert(saved.error);
-        return;
-    }
-
-    location.href = "index.html";
 }
 </script>
 

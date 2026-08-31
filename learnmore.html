@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
+<script src="database.js"></script>
     <title>Study Points — StudyNo</title>
 
     <style>
@@ -145,7 +146,7 @@
             font-weight: 700;
         }
 
-        .progress-number {
+        #progress-number {
             color: #b879ff;
             font-weight: 800;
         }
@@ -161,7 +162,7 @@
             background: rgba(255,255,255,0.08);
         }
 
-        .progress-fill {
+        #progress-fill {
             width: 65%;
             height: 100%;
 
@@ -170,7 +171,7 @@
             background: linear-gradient(90deg, #9b5de5, #4285f4);
         }
 
-        .progress-info {
+        #progress-info {
             margin-top: 13px;
 
             color: rgba(255,255,255,0.45);
@@ -450,18 +451,18 @@
                 Your Study Points
             </div>
 
-            <div class="progress-number">
-                650 / 1,000
+            <div id="progress-number">
+                0 / 1,000
             </div>
 
         </div>
 
         <div class="progress-bar">
-            <div class="progress-fill"></div>
+            <div id="progress-fill"></div>
         </div>
 
-        <div class="progress-info">
-            350 more points until Premium
+        <div id="progress-info">
+            0 more points until Premium
         </div>
 
     </div>
@@ -584,6 +585,27 @@
         </section>
 
     </main>
+<script>
+console.log("script up and running!");
+update_credits();
 
+async function update_credits() {
+    console.log("function up and running!");
+
+    const credits = localStorage.getItem("F");
+
+    console.log("Hey, I got the credits! " + credits);
+
+    document.getElementById("progress-number").innerText =
+        credits + " / 1,000";
+
+    document.getElementById("progress-info").innerText =
+        (1000 - credits) + " more points until Premium";
+
+    document.getElementById("progress-fill").style.width =
+        Math.min(credits / 10, 100) + "%";
+}
+
+</script>
 </body>
 </html>
