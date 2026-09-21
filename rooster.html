@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooster</title>
+</head>
+
+<body>
+
+    <h1>Mijn rooster</h1>
+
+    <button onclick="vorigeWeek()">← Vorige week</button>
+    <button onclick="dezeWeek()">Deze week</button>
+    <button onclick="volgendeWeek()">Volgende week →</button>
+
+    <h2 id="weekTitel"></h2>
+
+    <div id="rooster">Rooster laden...</div>
+
+<script>
+
+const STUDENT_ID = "144427";  // Vervang dit door het juiste student-ID
+
+let huidigeDatum = new Date();
+
+const dagen = [
+    "Zondag",
+    "Maandag",
+    "Dinsdag",
+    "Woensdag",
+    "Donderdag",
+    "Vrijdag",
+    "Zaterdag"
+];
+
+function getWeekNumber(date) {
+    const d = new Date(Date.UTC(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+    ));
+
+    const dayNum = d.getUTCDay() || 7;
+
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+
+    const yearStart = new Date(Date.UTC(
+        d.getUTCFullYear(),
+        0,
+        1
+    ));
+
+    return Math.ceil(
+        (((d - yearStart) / 86400000) + 1) / 7
+    );
+}
+
+
+function getISOWeekYear(date) {
+    const d = new Date(date);
+
+    const day = d.getDay() || 7;
+
+    d.setDate(d.getDate() + 4 - day);
+
+    return d.getFullYear();
+}
+
+
+function getWeekCode(date) {
+    const year = getISOWeekYear(date);
+    const week = String(getWeekNumber(date)).padStart(2, "0");
+
+    return `${year}${week}`;
+}
+
+
+function unixNaarTijd(timestamp) {
+    const date = new Date(timestamp * 1000);
+
+    return date.toLocaleTimeString("nl-NL", {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
+
+function unixNaarDatum(timestamp) {
+    return new Date(timestamp * 1000);
+}
+
+
+async function laadRooster() {
+
+    const week = getWeekCode(huidigeDatum);
+
+    document.getElementById("weekTitel").textContent =
+        `Week ${week.slice(4)}`;
+
+    document.getElementById("rooster").textContent =
+        "Rooster laden...";
+
+    const url =
+        `https://ichthus.zportal.nl/api/v3/liveschedule` +
+        `?student=${STUDENT_ID}` +
+        `&week=${week}` +
+        `&fields=week,user,appointments,replacements,status`;
+
+    try {
+
+       const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const json = await response.json();
+
+        if (!json.data || !json.data[0]) {
+            throw new Error("Geen rooster gevonden.");
+        }
+
+        const appointments = json.data[0].appointments || [];
+
+        toonRooster(appointments);
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById("rooster").innerHTML =
+            `<p>Rooster kon niet worden geladen.</p>
+             <p>${error.message}</p>`;
+
+    }
+}
+
+
+function toonRooster(appointments) {
+
+    const rooster = document.getElementById("rooster");
+
+    rooster.innerHTML = "";
+
+    if (appointments.length === 0) {
+        rooster.textContent = "Geen lessen gevonden.";
+        return;
+    }
+
+    // Sorteer op begintijd
+    appointments.sort((a, b) => a.start - b.start);
+
+    const perDag = {};
+
+    for (const appointment of appointments) {
+
+        const datum = unixNaarDatum(appointment.start);
+
+        const dagKey =
+            datum.getFullYear() +
+            "-" +
+            String(datum.getMonth() + 1).padStart(2, "0") +
+            "-" +
+            String(datum.getDate()).padStart(2, "0");
+
+        if (!perDag[dagKey]) {
+            perDag[dagKey] = [];
+        }
+
+        perDag[dagKey].push(appointment);
+    }
+
+
+    for (const dagKey of Object.keys(perDag).sort()) {
+
+        const afspraken = perDag[dagKey];
+
+        const datum = unixNaarDatum(afspraken[0].start);
+
+        const dagNaam = dagen[datum.getDay()];
+
+        const dag = document.createElement("div");
+
+        const titel = document.createElement("h2");
+
+        titel.textContent =
+            `${dagNaam} ${datum.getDate()}/${datum.getMonth() + 1}`;
+
+        dag.appendChild(titel);
+
+
+        for (const appointment of afspraken) {
+
+            const les = document.createElement("div");
+
+            const tijd =
+                `${unixNaarTijd(appointment.start)} - ` +
+                `${unixNaarTijd(appointment.end)}`;
+
+            const vak =
+                appointment.subjects?.join(", ") || "Geen vak";
+
+            const lokaal =
+                appointment.locations?.join(", ") || "Geen lokaal";
+
+            const docent =
+                appointment.teachers?.join(", ") || "Geen docent";
+
+
+            if (appointment.cancelled) {
+
+                les.innerHTML = `
+                    <strong>${tijd}</strong>
+                    — <del>${vak}</del>
+                    — VERVALLEN
+                `;
+
+            } else {
+
+                les.innerHTML = `
+                    <strong>${tijd}</strong>
+                    — ${vak}
+                    — ${lokaal}
+                    — ${docent}
+                `;
+
+            }
+
+            dag.appendChild(les);
+        }
+
+        rooster.appendChild(dag);
+    }
+}
+
+
+function vorigeWeek() {
+
+    huidigeDatum.setDate(
+        huidigeDatum.getDate() - 7
+    );
+
+    laadRooster();
+}
+
+
+function volgendeWeek() {
+
+    huidigeDatum.setDate(
+        huidigeDatum.getDate() + 7
+    );
+
+    laadRooster();
+}
+
+
+function dezeWeek() {
+
+    huidigeDatum = new Date();
+
+    laadRooster();
+}
+
+
+laadRooster();
+
+</script>
+
+</body>
+</html>
