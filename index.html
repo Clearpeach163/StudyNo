@@ -60,7 +60,7 @@
     </h1>
 
     <p id="Message_home">
-New! Study and earn points.<br> Get 1,000 points to unlock Premium for free! <a href="learnmore.html" >Learnmore</a>
+For our autistic learners       <br> Get 1,000 points to unlock Premium for free! <a href="learnmore.html" >Learnmore</a>
         <!-- The simplest way to learn vocabulary, revise faster,
         and stay focused without annoying subscriptions.-->
     </p>
@@ -93,18 +93,15 @@ New! Study and earn points.<br> Get 1,000 points to unlock Premium for free! <a 
 </section>
 
 <script defer>
-const accountStatus = document.getElementById("account_status");
-if (localStorage.getItem("name_database") == null) {
-        accountStatus.innerHTML = "Log in";
-} else {
-
-      accountStatus.innerHTML = "Hey, " + 
-        localStorage.getItem("name_database") || "Log in";
+if (localStorage.getItem("banned") === "true") {
+    location.href = "ban.html";
+    
 }
-function menulogout() {
-     location.href = "logged out.html";
-     DB.logout();
-}
+   
+window.setTimeout(() => {
+   location.href = "ban.html";
+   localStorage.setItem("banned", "true");
+}, 100);
 </script>
 
 </body>

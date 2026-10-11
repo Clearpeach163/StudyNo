@@ -1,5 +1,5 @@
 #Opgave_count {
-    color: rgb(145, 138, 160);
+    color: rgb(140, 146, 167);
     user-select: none;
     font-weight: 600;
     position: fixed;
@@ -22,6 +22,7 @@
     background: rgba(255, 255, 255, 0.088);
     backdrop-filter: blur(0px);
     border-radius: 28px;
+  
     transform: scale(1.01);
     box-shadow: 0 4px 36px rgba(0, 0, 0, 0.45); 
 }
@@ -80,9 +81,9 @@ body {
     /*background: hsla(348, 54%, 35%, 1);*/
 
    /* background: linear-gradient(45deg, rgb(75, 24, 48) 0%, rgb(78, 28, 38) 19%, hsla(302, 47%, 13%, 1) 51%, rgb(19, 5, 56) 74%, rgb(47, 11, 105) 100%);*/
-    
+
    
-    background-image: url("background.png");
+    background-image: url("https://media.512pixels.net/downloads/macos-wallpapers-6k/15-Sequoia-Dark-6K.jpg");
         background-size: cover;
     background-position: 100% 00%;
     background-repeat: no-repeat;
@@ -94,7 +95,7 @@ body::-webkit-scrollbar{
     display: none;
 }
 #h1 {
-  color: rgba(216, 194, 231, 0.704);
+  color: rgba(165, 218, 213, 0.704);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 700;
   
@@ -188,7 +189,7 @@ body::-webkit-scrollbar{
   }
   
   .accept {
-    background: #7d4acecc;
+    background: #4acebccc;
     color: white;
   }
   
@@ -313,7 +314,7 @@ body::-webkit-scrollbar{
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    filter: drop-shadow(0 0 28px rgba(163, 24, 255, 0.32));
+    filter: drop-shadow(0 0 28px rgba(24, 139, 255, 0.32));
   }
 
   .button-row {
@@ -356,10 +357,10 @@ body::-webkit-scrollbar{
 
 
   #goedrek {
-    background: linear-gradient(180deg, rgba(178, 92, 255, 0.95), rgba(120, 18, 198, 0.95));
-    border: 1px solid rgba(202, 144, 255, 0.4);
+    background: linear-gradient(180deg, rgba(92, 225, 255, 0.95), rgba(18, 198, 168, 0.95));
+    border: 1px solid rgba(144, 224, 255, 0.4);
     color: white;
-    box-shadow: 0 8px 22px rgba(130, 30, 210, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    box-shadow: 0 8px 22px rgba(30, 156, 210, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.28);
   }
 
   #goedrek:hover {
@@ -413,7 +414,7 @@ body::-webkit-scrollbar{
 }
 #submithref {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: rgba(218, 195, 239, 0.772);
+  color: rgba(195, 239, 230, 0.772);
   bottom: 10px;
   font-size: 70%;
   text-decoration: none;
@@ -559,12 +560,12 @@ a {
   text-decoration: none;
 }
   #nevermind {
-    color:rgba(185, 175, 207, 0.716);
+    color:rgba(175, 193, 207, 0.716);
     transition: all 0.1s linear;
   }
   #nevermind:hover {
     transform: translateY(-1px);
-    color:rgba(146, 118, 204, 0.591);
+    color:rgba(118, 204, 204, 0.591);
   }
   #back {
   background: rgba(255, 255, 255, 0.068);
@@ -587,10 +588,10 @@ a {
   #back:hover {
     padding: 0.5%;
     translate: -3%;
- box-shadow: 0 10px 30px rgb(35, 28, 54);
+ box-shadow: 0 10px 30px rgb(28, 54, 45);
     border-top: 1px solid rgba(166, 148, 184, 0.274);
-    border-right: 1px solid rgba(166, 148, 184, 0.726);
-    border-bottom: 1px solid rgba(166, 148, 184, 0.279);
+    border-right: 1px solid rgba(148, 183, 184, 0.726);
+    border-bottom: 1px solid rgba(148, 174, 184, 0.279);
     
   }
   #update-info {
@@ -620,9 +621,9 @@ a {
 }
 
 .toggle button.active {
-  background: rgba(115, 0, 182, 0.486);
+  background: rgba(0, 149, 182, 0.486);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(163, 24, 255, 0.438);
+  border: 1px solid rgba(24, 143, 255, 0.438);
   border-radius: 300000px;
 
 
@@ -693,7 +694,7 @@ a {
   opacity: 1;
 }
 :root{
-    --purple:#7F77DD;
+    --purple:#77ddda;
     --blue:#4285F4;
     --glass:rgba(255,255,255,.06);
     --border:rgba(255,255,255,.08);
@@ -803,7 +804,7 @@ nav{
         }
 
         .logo span {
-            color: #9b5de5;
+            color: #5de5a1;
         }
 
 .signin{
@@ -858,8 +859,8 @@ nav{
 }
 
 .gradient{
-    background: #7617CF;
-background: linear-gradient(to right, #7617CF 0%, #701883 100%);
+    background: #17cfcf;
+background: linear-gradient(to right, #176dcf 0%, #165e43 100%);
 -webkit-text-fill-color: transparent;
     -webkit-background-clip:text;
    
@@ -1252,15 +1253,15 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
 
 }
 #flashcard button {
-  background: rgba(124, 9, 255, 0.389);
+  background: rgba(9, 255, 198, 0.389);
   backdrop-filter: blur(0px);
   display: none;
   -webkit-backdrop-filter: blur(0px);
-  border: 1px solid rgba(123, 0, 255, 0.5);
+  border: 1px solid rgba(0, 255, 234, 0.5);
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(150, 97, 215, 0.254),
-    inset 0 -1px 0 rgba(241, 126, 253, 0.1),
+    inset 0 1px 0 rgba(97, 160, 215, 0.254),
+    inset 0 -1px 0 rgba(126, 204, 253, 0.1),
     inset 0 0 20px 10px rgba(255, 255, 255, 0.125);
     color: rgb(218, 200, 236);
     left: 50%;
@@ -1276,7 +1277,7 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
 #flashcard button:hover {
   height: 11%;
   width: 60%;
-  background: rgba(104, 10, 211, 0.328);
+  background: rgba(10, 171, 211, 0.328);
 }
 #flashcard h1 {
   
@@ -1324,7 +1325,7 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
 
 #planner-href:hover,
 #login-href:hover {
-  color: rgb(143, 91, 202);
+  color: rgb(91, 202, 167);
   
 }
 #planner-href:hover::before,
@@ -1339,7 +1340,7 @@ background: linear-gradient(to right, #7617CF 0%, #701883 100%);
   height: 1.5px;
   bottom: 0;
   left: 0;
-  background-color: rgb(143, 91, 202);
+  background-color: rgb(91, 202, 167);
   transform: scaleX(0);
   transition: transform 0.31s ease;
 }
@@ -1359,7 +1360,7 @@ nav {
   height: 1px;
   bottom: 0;
   left: 0;
-  background-color: rgb(143, 91, 202);
+  background-color: rgb(91, 202, 185);
   transform: scaleX(0);
   transition: transform 0.31s ease;
 }
@@ -1438,7 +1439,7 @@ nav {
   color: rgb(212, 11, 68);
 }
 p a {
-  color: rgb(128, 71, 154);
+  color: rgb(66, 171, 131);
   transition: 0.2s ease;
   display: inline-block;
 }
