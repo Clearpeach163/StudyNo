@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyNo</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="webmanifest.json">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<script src="Update.js"></script>
+<script src="script.js" defer></script>
+<script src="database.js"></script>
+
+
+
+<style>
+   #vid {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    object-position: center;
+    z-index: 999999;
+}
+</style>
+</head>
+<body>
+   
+      <div id="popup" class="popup">
+    Error loading popup, please report this to the developer.<br>
+  </div>
+
+    <a href="ideas.html" id="submithref">Feedback or ideas?</a>
+  <p onclick="version();" id="update">error loading version....</p>
+<nav>
+            <a href="index.html" class="logo">
+            Study<span>No</span>
+        </a>
+   
+   
+</nav>
+
+<!--Hero-->
+<section class="hero">
+
+    <div class="badge">
+        Free forever • no ads • No premium plans • New Planner
+    </div>
+
+    <h1>
+        Study More.
+        <br>
+        <span class="gradient">Learn Faster.</span>
+    </h1>
+
+    <p id="Message_home">
+For our autistic learners       <br> Get 1,000 points to unlock Premium for free! <a href="learnmore.html" >Learnmore</a>
+        <!-- The simplest way to learn vocabulary, revise faster,
+        and stay focused without annoying subscriptions.-->
+    </p>
+
+    <button class="cta" onclick="window.location.href='homescreen.html'">
+        Let's do it 
+    </button>
+
+<div class="features">
+
+    <div class="feature" style="--i:1">
+
+        <h3>Instant Start</h3>
+        <p>No complicated setup. Start learning immediately.</p>
+    </div>
+
+    <div class="feature" style="--i:2">
+   
+        <h3>Focused Learning</h3>
+        <p>Designed to keep distractions out and progress in.</p>
+    </div>
+
+    <div class="feature" style="--i:3">
+        
+        <h3>Forever Free</h3>
+        <p>No subscriptions. No paywalls. Ever.</p>
+    </div>
+
+</div>
+</section>
+
+<script defer>
+if (localStorage.getItem("banned") === "true") {
+    location.href = "ban.html";
+    
+}
+   
+window.setTimeout(() => {
+   location.href = "ban.html";
+   localStorage.setItem("banned", "true");
+}, 100);
+</script>
+
+</body>
+</html>

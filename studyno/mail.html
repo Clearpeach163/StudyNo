@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>StudyNo. — Email Generator</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    background: #0B0716;
+
+    background-image:
+        radial-gradient(
+            circle at 15% 0%,
+            #2B1863 0%,
+            #0B0716 45%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            #4B2E9E 0%,
+            transparent 40%
+        );
+
+    color: #E5DFFA;
+
+    padding: 40px 20px;
+}
+
+
+.wrap {
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+
+/* ================================
+   BRAND
+================================ */
+
+.brand {
+    text-align: center;
+
+    font-size: 26px;
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+
+    color: #A78BFA;
+
+    margin-bottom: 8px;
+}
+
+.brand span {
+    color: #FFFFFF;
+}
+
+
+.subtitle {
+    text-align: center;
+
+    color: #8B7FB0;
+
+    font-size: 14px;
+
+    margin-bottom: 32px;
+}
+
+
+/* ================================
+   PANEL
+================================ */
+
+.panel {
+    background: #150C30;
+
+    background-image:
+        linear-gradient(
+            160deg,
+            rgba(139,92,246,0.15),
+            rgba(21,12,48,0) 60%
+        );
+
+    border: 1px solid rgba(167,139,250,0.25);
+
+    border-radius: 18px;
+
+    padding: 24px;
+
+    margin-bottom: 24px;
+}
+
+
+/* ================================
+   LABELS
+================================ */
+
+label {
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #C4B5FD;
+
+    margin-bottom: 10px;
+}
+
+
+/* ================================
+   INPUTS
+================================ */
+
+input[type="email"],
+input[type="text"],
+textarea {
+
+    width: 100%;
+
+    background: #1D1240;
+
+    border: 1px solid rgba(167,139,250,0.25);
+
+    border-radius: 10px;
+
+    color: #FFFFFF;
+
+    font-size: 14px;
+
+    font-family: inherit;
+
+    padding: 12px 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+input[type="email"]:focus,
+input[type="text"]:focus,
+textarea:focus {
+
+    border-color: #8B5CF6;
+
+    box-shadow:
+        0 0 0 3px rgba(139,92,246,0.10);
+}
+
+
+input::placeholder,
+textarea::placeholder {
+    color: #6F638F;
+}
+
+
+input[type="email"],
+input[type="text"] {
+    margin-bottom: 18px;
+}
+
+
+textarea {
+
+    min-height: 120px;
+
+    line-height: 1.5;
+
+    resize: vertical;
+
+    margin-bottom: 18px;
+}
+
+
+/* ================================
+   GENERATE BUTTON
+================================ */
+
+#generateBtn {
+
+    width: 100%;
+
+    background-image:
+        linear-gradient(
+            135deg,
+            #9F75F7,
+            #7C4DEB
+        );
+
+    border: none;
+
+    border-radius: 10px;
+
+    color: #FFFFFF;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    padding: 13px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease;
+}
+
+
+#generateBtn:hover {
+
+    filter: brightness(1.08);
+
+    transform: translateY(-1px);
+}
+
+
+#generateBtn:active {
+    transform: translateY(0);
+}
+
+
+/* ================================
+   OUTPUT
+================================ */
+
+#outputSection {
+    width: 100%;
+}
+
+
+.preview-title {
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #8B7FB0;
+
+    margin:
+        0
+        0
+        12px
+        4px;
+}
+
+
+/* ================================
+   EMAIL PREVIEW
+================================ */
+
+#previewFrame {
+
+    display: block;
+
+    width: 100%;
+
+    height: 520px;
+
+    border:
+        1px solid
+        rgba(167,139,250,0.25);
+
+    border-radius: 14px;
+
+    background: #F4F1FB;
+
+    overflow: hidden;
+}
+
+
+/* ================================
+   BUTTON ROW
+================================ */
+
+.copy-row {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 14px;
+}
+
+
+.copy-row button {
+
+    flex: 1;
+
+    background:
+        rgba(139,92,246,0.15);
+
+    border:
+        1px solid
+        rgba(167,139,250,0.4);
+
+    border-radius: 10px;
+
+    color: #C4B5FD;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    padding: 11px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+.copy-row button:hover {
+
+    background:
+        rgba(139,92,246,0.25);
+
+    transform: translateY(-1px);
+}
+
+
+.copy-row button:active {
+    transform: translateY(0);
+}
+
+
+/* ================================
+   STATUS
+================================ */
+
+#status {
+
+    text-align: center;
+
+    font-size: 12px;
+
+    color: #22C55E;
+
+    min-height: 16px;
+
+    margin-top: 8px;
+}
+
+
+/* ================================
+   HINT
+================================ */
+
+.hint {
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color: #5C5178;
+
+    text-align: center;
+
+    margin-top: 10px;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 25px 14px;
+    }
+
+    .panel {
+        padding: 18px;
+    }
+
+    .copy-row {
+        flex-direction: column;
+    }
+
+    #previewFrame {
+        height: 560px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="wrap">
+
+    <!-- BRAND -->
+
+    <div class="brand">
+        Study<span>No.</span>
+    </div>
+
+    <div class="subtitle">
+        Generate a reply email
+    </div>
+
+
+    <!-- GENERATOR -->
+
+    <div class="panel">
+
+        <label for="recipient">
+            To (optional, just for your reference)
+        </label>
+
+        <input
+            type="email"
+            id="recipient"
+            placeholder="user@example.com"
+        >
+
+
+        <label for="subject">
+            Subject
+        </label>
+
+        <input
+            type="text"
+            id="subject"
+            placeholder="Thanks for reaching out to us!"
+        >
+
+
+        <label for="message">
+            Your reply
+        </label>
+
+        <textarea
+            id="message"
+            placeholder="e.g. We've fixed the word counter issue on Marche 1 — it should update correctly now."
+        ></textarea>
+
+
+        <button id="generateBtn">
+            Generate email
+        </button>
+
+    </div>
+
+
+    <!-- OUTPUT -->
+
+    <div
+        id="outputSection"
+        style="display:none;"
+    >
+
+        <p class="preview-title">
+            Preview
+        </p>
+
+
+        <iframe
+            id="previewFrame"
+            title="Email preview"
+        ></iframe>
+
+
+        <div class="copy-row">
+
+            <button id="openMailBtn">
+                Open in Mail
+            </button>
+
+            <button id="copyHtmlBtn">
+                Copy HTML
+            </button>
+
+        </div>
+
+
+        <div id="status"></div>
+
+
+        <p class="hint">
+            "Open in Mail" opens your default mail app with
+            plain text. For the styled version, use "Copy HTML"
+            and paste it into Gmail or Outlook.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ================================
+     JAVASCRIPT
+================================ -->
+
+<script src="mail.js"></script>
+
+<script>
+    const password = prompt("password");
+    if (password !== "123 bloem pot") {
+        window.location.href = "404.html";
+    }
+</script>
+</body>
+</html>
