@@ -82,8 +82,7 @@ function newWord() {
     toggle.style.display = "none";
     showQuestion();
   } else {
-    toggle.style.display = "block";
-    Math.random() < 0.7 ? showQuestion() : showFlashcard();
+        showQuestion();
   }
 }
 
