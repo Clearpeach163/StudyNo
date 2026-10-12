@@ -1,15 +1,15 @@
 #Opgave_count {
-    color: rgb(140, 146, 167);
+    color: rgb(207, 217, 254);
     user-select: none;
     font-weight: 600;
     position: fixed;
     left: 50%;
     translate: -50% 0%;
     background: rgba(255, 255, 255, 0.068);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px) saturate(130%);
+    border: 1px solid rgba(255, 255, 255, 0.286);
     border-radius: 3000px;
-  
+    box-shadow: 0 4px 36px rgba(0, 0, 0, 0.127); 
     padding-left: 1.2%;
     padding-right: 1.2%;
     padding-top: 0.5%;
@@ -24,7 +24,7 @@
     border-radius: 28px;
   
     transform: scale(1.01);
-    box-shadow: 0 4px 36px rgba(0, 0, 0, 0.45); 
+    box-shadow: 0 4px 36px rgba(0, 0, 0, 0.302); 
 }
 #Main_input {
     border-radius: 999px;
@@ -83,7 +83,7 @@ body {
    /* background: linear-gradient(45deg, rgb(75, 24, 48) 0%, rgb(78, 28, 38) 19%, hsla(302, 47%, 13%, 1) 51%, rgb(19, 5, 56) 74%, rgb(47, 11, 105) 100%);*/
 
    
-   background-image: url("https://media.512pixels.net/downloads/macos-wallpapers-6k/15-Sequoia-Dark-6K.jpg");
+   background-image: url("https://images.squarespace-cdn.com/content/v1/5e949a92e17d55230cd1d44f/33cd4592-3dec-4b52-98b1-2749e24c7666/Seq1x1.png?format=2500w");
         background-size: cover;
     background-position: 100% 00%;
     background-repeat: no-repeat;
@@ -94,8 +94,36 @@ html::-webkit-scrollbar,
 body::-webkit-scrollbar{
     display: none;
 }
+#main_block:hover {
+      backdrop-filter: blur(8px) saturate(80%);
+    -webkit-backdrop-filter: blur(8px) saturate(80%);
+transform: translate(-50%, -50%) scale(1.005);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.343);
+}
+#main_block {
+      backdrop-filter: blur(7px) saturate(90%);
+    -webkit-backdrop-filter: blur(7px) saturate(90%);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 60%;
+  z-index: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);     
+
+  border-radius: 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+   box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+   transition: 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
 #h1 {
-  color: rgba(165, 218, 213, 0.704);
+  color: rgb(214, 234, 250);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 700;
   
@@ -804,7 +832,7 @@ nav{
         }
 
         .logo span {
-            color: #5de5a1;
+            color: #e8ac51;
         }
 
 .signin{
@@ -860,10 +888,17 @@ nav{
 
 .gradient{
     background: #17cfcf;
-background: linear-gradient(to right, #1f3fbf 0%, #4666e8 100%);
+  background: linear-gradient(
+    105deg,
+    #fff1c1 0%,
+        #ffc247 28%,
+    #ffb13b 50%,
+    #ecc960 84%,
+    #ffffff 100%
+  );
 -webkit-text-fill-color: transparent;
     -webkit-background-clip:text;
-   
+     filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.3));
     -webkit-text-fill-color:transparent;
 }
 
