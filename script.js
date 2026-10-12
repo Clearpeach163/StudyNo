@@ -357,3 +357,21 @@ if (window.location.pathname.endsWith("ingame.html") && !localStorage.getItem("s
   showPopup("Hey there, Did you know you can add accents like: ë by holding the letter!");
   localStorage.setItem("seen", "true");
 }
+
+
+
+
+
+if (activeList.includes("du")) {
+  document.getElementById("FN").innerHTML = "DN";
+   document.getElementById("NF").innerHTML = "ND";
+}
+if (activeList.includes("eng")) {
+  document.getElementById("FN").innerHTML = "EN";
+   document.getElementById("NF").innerHTML = "NE";
+}
+if (activeList.includes("fr")) {
+  document.getElementById("FN").innerHTML = "FN";
+   document.getElementById("NF").innerHTML = "NF";
+  }
+
