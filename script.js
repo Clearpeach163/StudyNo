@@ -374,3 +374,6 @@ if (activeList.includes("fr")) {
    document.getElementById("NF").innerHTML = "NF";
   }
 
+
+
+  //prettify
