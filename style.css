@@ -150,6 +150,30 @@ transform: translate(-50%, -50%) scale(1.005);
     text-decoration: none;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+#back2 {
+    user-select: none;
+    color: white;
+    position: fixed;
+    top: 1vh;
+    
+    padding: 0.4% !important;
+    left: 5vh;
+    border-radius: 99999px;
+    text-decoration: none;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+#back3 {
+    user-select: none;
+    color: white;
+    position: fixed;
+    top: 1vh;
+    
+    padding: 0.4% !important;
+    left: 9vh;
+    border-radius: 99999px;
+    text-decoration: none;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
 .cookie-box {
     position: fixed;
     bottom: 20px;
@@ -596,7 +620,7 @@ a {
     transform: translateY(-1px);
     color:rgba(118, 204, 204, 0.591);
   }
-  #back {
+  #back, #back2, #back3 {
   background: rgba(255, 255, 255, 0.068);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255,255,255,0.12);
@@ -614,7 +638,7 @@ a {
   font-family: system-ui, sans-serif;
   transition: all 0.3s ease-in-out;
   }
-  #back:hover {
+  #back:hover, #back2:hover, #back3:hover {
     padding: 0.5%;
     translate: -3%;
  box-shadow: 0 10px 30px rgb(28, 54, 45);
@@ -1484,4 +1508,26 @@ p a:hover {
   color: white;
 
   transform: translate(0px, -2px);
+}
+
+#fullScreen {
+  position: absolute;
+  top: 1%;
+  right: 13%;
+ 
+  padding: 0.4%;
+  position: absolute;
+  background-size: contain;
+  filter: invert(1);
+height: 3%;
+ padding: 15px 15px;
+  display: flex;
+
+ 
+
+  color: white;
+  font-family: system-ui, sans-serif;
+}
+#fullscreen:hover {
+  pointer: pointer;
 }
