@@ -23,9 +23,14 @@ const popup = document.getElementById("popup");
 const charMenu = document.getElementById("charMenu");
 const streakSound = new Audio("Streak.mp3");
 const fnnfSound = new Audio("fnnfselect.mp3");
+const fullScreenSound = new Audio("fullscreen.mp3");
+const nextWordSound = new Audio("skip.mp3");
+const whoosh = new Audio("whoosh.wav");
+const correct = new Audio("correct.mp3");
 
-function playSound(sound) {
+function playSound(sound, volume = 1) {
   sound.currentTime = 0;
+  sound.volume = volume;
   sound.play();
 }
 
@@ -150,11 +155,14 @@ function updateScore() {
     streakcheck();
     newWord();
   } else {
+    
+    playSound(whoosh, 0.1);
     fout++;
     streak = 0;
     if (toetsModus) gehad_goed.push(currentWord);
 
     feedbackOpen = true;
+
     document.getElementById("correctwoord").innerText = expected;
     document.getElementById("jijhad").innerText = answer || "-";
     document.getElementById("feedback").style.display = "block";
@@ -173,6 +181,7 @@ function foutreken() {
 
 // Knop "Goed rekenen": de fout terugdraaien en als goed tellen
 function goedreken() {
+  playSound(correct, 0.3);
   fout--;
   goed++;
   streak++;
@@ -205,7 +214,7 @@ function streakcheck() {
 }
 
 function showPopup(message) {
-  playSound(streakSound);
+  playSound(streakSound, 1);
   popup.textContent = message;
   popup.classList.add("show");
   setTimeout(() => popup.classList.remove("show"), 2500);
@@ -233,7 +242,7 @@ const buttons = document.querySelectorAll(".toggle button");
 
 buttons.forEach((btn) => {
   btn.addEventListener("click", () => {
-    playSound(fnnfSound);
+    playSound(fnnfSound, 0.2);
     buttons.forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
     fnnf = modes[btn.dataset.mode];
@@ -381,6 +390,7 @@ if (activeList.includes("fr")) {
 
 
   function fullScreen() {
+    playSound(fullScreenSound, 1);
     var el = document.documentElement
     , rfs = // for newer Webkit and Firefox
        el.requestFullScreen
