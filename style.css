@@ -343,16 +343,16 @@ transform: translate(-50%, -50%) scale(1.005);
     font-size: 1rem;
 
     
-    color: rgba(255, 255, 255, 0.5);
+    color: #FFF7ED;
   }
 
   #jijhad {
     text-align: center;
     user-select: none;
     margin: 0 0 22px 0;
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     font-weight: 400;
-    color: rgba(255, 150, 160, 0.85);
+    color: #FED7AA
   }
 
   #correctwoord {
@@ -363,7 +363,8 @@ transform: translate(-50%, -50%) scale(1.005);
     line-height: 1.05;
     font-weight: 700;
     letter-spacing: -0.025em;
-    background: linear-gradient(135deg, #612481, #f62d64 80%);
+    margin-bottom: 50px;
+    background: #ffff;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -410,7 +411,7 @@ transform: translate(-50%, -50%) scale(1.005);
 
 
   #goedrek {
-    background: linear-gradient(180deg, rgba(92, 225, 255, 0.95), rgba(18, 198, 168, 0.95));
+    background: #10B981;
     border: 1px solid rgba(144, 224, 255, 0.4);
     color: white;
     box-shadow: 0 8px 22px rgba(30, 156, 210, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.28);
