@@ -28,11 +28,23 @@ const nextWordSound = new Audio("skip.mp3");
 const whoosh = new Audio("whoosh.wav");
 const correct = new Audio("correct.mp3");
 
+let muted = localStorage.getItem("muted") === "true";
+
 function playSound(sound, volume = 1) {
   sound.currentTime = 0;
   sound.volume = volume;
+  sound.muted = muted;
   sound.play();
 }
+function toggleMute() {
+  muted = !muted;
+  localStorage.setItem("muted", muted);
+
+  document.querySelectorAll("audio").forEach(sound => {
+    sound.muted = muted;
+  });
+}
+
 
 // ====================
 // TEKSTEN
