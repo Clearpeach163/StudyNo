@@ -99,13 +99,100 @@ function newWord() {
     toggle.style.display = "none";
     showQuestion();
   } else {
-        showQuestion();
+          if (Math.random() < 0.33) {
+          showMultipleChoice();
+      } else {
+                showQuestion();
+      }
+
+  
   }
 }
 
+function showMultipleChoice() {
+  // Hide the question and show the multiple choice buttons
+document.getElementById("choise").style.display = "block";
+document.getElementById("main_div").style.display = "none";
+//whole selection system
+if (!pickWord()) return;
+ h1.classList.remove("fade-in");
+  void h1.offsetWidth; // herstart animatie
+  h1.classList.add("fade-in");
+  //setting h1 text based on the mode
+    if (fnnf === 0) {
+    h1.textContent = currentWord.nl;
+  } else if (fnnf === 1) {
+    h1.textContent = currentWord.taal;
+  }
+
+const choices = [
+    currentWord.nl,
+    ...lists[activeList].words
+        .filter(word => word.nl !== currentWord.nl)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3)
+        .map(word => word.nl)
+];
+
+choices.sort(() => Math.random() - 0.5);
+
+document.getElementById("choiceA").innerHTML = choices[0];
+document.getElementById("choiceB").innerHTML = choices[1];
+document.getElementById("choiceC").innerHTML = choices[2];
+document.getElementById("choiceD").innerHTML = choices[3];
+
+
+}
+function checkAnswerABCD(choice) {
+    if (feedbackOpen) return;
+
+    const selectedAnswer = document
+        .getElementById("choice" + choice)
+        .textContent.trim();
+
+    // Juiste antwoord bepalen
+    let expected;
+
+    if (fnnf === 0) {
+        expected = currentWord.taal;
+    } else if (fnnf === 1) {
+        expected = currentWord.nl;
+    } else {
+        expected = shuffleran
+            ? currentWord.nl
+            : currentWord.taal;
+    }
+
+    if (selectedAnswer.toLowerCase() === expected.toLowerCase()) {
+        goed++;
+        streak++;
+        gehad_goed.push(currentWord);
+        streakcheck();
+        updateScore();
+        newWord();
+    } else {
+        playSound(whoosh, 0.1);
+        fout++;
+        streak = 0;
+
+        if (toetsModus) gehad_goed.push(currentWord);
+
+        feedbackOpen = true;
+
+        document.getElementById("correctwoord").innerText = expected;
+        document.getElementById("jijhad").innerText = selectedAnswer || "-";
+        document.getElementById("feedback").style.display = "block";
+
+        updateScore();
+    }
+}
+
+
+
 function showQuestion() {
-  document.getElementById("flashcard").style.display = "none";
-  document.getElementById("okflash").style.display = "none";
+document.getElementById("choise").style.display = "none";
+document.getElementById("main_div").style.display = "block";
+document.getElementById("h1").style.display = "block";
 
   if (!pickWord()) return;
 
@@ -125,14 +212,6 @@ function showQuestion() {
   input.value = "";
 }
 
-function showFlashcard() {
-  if (!pickWord()) return;
-
-  document.getElementById("flash_taal").textContent = currentWord.taal;
-  document.getElementById("flash_nl").textContent = currentWord.nl;
-  document.getElementById("flashcard").style.display = "block";
-  document.getElementById("okflash").style.display = "block";
-}
 
 // ====================
 // SCORE
@@ -206,9 +285,7 @@ function goedreken() {
   newWord();
 }
 // Knop "OK" op de flashcard
-function okflash() {
-  newWord();
-}
+
 input.addEventListener("keyup", (e) => {
   if (e.key !== "Enter") return;
   checkAnswer(input.value.trim().toLowerCase());
