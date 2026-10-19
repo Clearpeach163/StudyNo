@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#7b6fb5">
+<title>StudyNo</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="webmanifest.json">
+<script src="Update.js"></script>
+<script src="script.js" defer></script>
+<script src="database.js"></script>
+
+<style>
+  :root {
+    --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --gold: #e8ac51;
+    --mint: rgb(91, 202, 167);
+    --glass-line: rgba(255, 255, 255, 0.16);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html {
+    user-select: none;
+    -webkit-user-select: none;
+    overscroll-behavior: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar { display: none; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font);
+    color: white;
+    background-color: #7b6fb5;
+    background-image: url(https://images.squarespace-cdn.com/content/v1/5e949a92e17d55230cd1d44f/33cd4592-3dec-4b52-98b1-2749e24c7666/Seq1x1.png?format=2500w);
+    background-size: cover;
+    background-position: 100% 0%;
+    background-repeat: no-repeat;
+  }
+
+  a { text-decoration: none; }
+
+  /* ---------- TOP BAR ---------- */
+  nav {
+    padding: calc(env(safe-area-inset-top, 0px) + 18px) 22px 0;
+  }
+
+  .logo {
+    display: inline-block;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: white;
+    text-shadow: 0 2px 14px rgba(40, 10, 60, 0.45);
+  }
+
+  .logo span { color: #ffd27a; }
+
+  /* ---------- HERO (top part, left aligned) ---------- */
+  .hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 24px 28px;
+    animation: fadein_down 1.2s ease backwards;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+
+  .chip {
+    padding: 7px 13px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: rgba(30, 14, 56, 0.28);
+    border: 1px solid var(--glass-line);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .chip.new {
+    background: rgba(232, 172, 81, 0.32);
+    border-color: rgba(255, 221, 160, 0.5);
+    color: #fff6e0;
+  }
+
+  h1 {
+    margin: 0 0 16px;
+    font-size: clamp(3rem, 16vw, 4.6rem);
+    font-weight: 800;
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+    text-shadow: 0 4px 30px rgba(40, 10, 60, 0.35);
+  }
+
+  .gradient {
+    display: inline-block;
+    background: linear-gradient(105deg, #fff1c1 0%, #ffc247 28%, #ffb13b 50%, #ecc960 84%, #ffffff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 3px 16px rgba(60, 20, 70, 0.5));
+  }
+
+  #Message_home {
+    margin: 0;
+    max-width: 330px;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 1px 14px rgba(40, 10, 60, 0.5);
+  }
+
+  #hrefhome {
+    color: #ffe3a8;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 227, 168, 0.5);
+  }
+
+  /* ---------- BOTTOM SHEET ---------- */
+  .sheet {
+    padding: 22px 0 calc(env(safe-area-inset-bottom, 0px) + 12px);
+    border-radius: 32px 32px 0 0;
+    background: rgba(28, 12, 52, 0.34);
+    border: 1px solid var(--glass-line);
+    border-bottom: none;
+    backdrop-filter: blur(26px) saturate(140%);
+    -webkit-backdrop-filter: blur(26px) saturate(140%);
+    box-shadow: 0 -12px 40px rgba(30, 10, 60, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    animation: slide_up 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+  }
+
+  .cta {
+    display: block;
+    width: calc(100% - 44px);
+    height: 58px;
+    margin: 0 22px 18px;
+    border: none;
+    border-radius: 999px;
+    font-family: var(--font);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #3a1d00;
+    background: linear-gradient(105deg, #fff1c1 0%, #ffc247 55%, #ecc960 100%);
+    box-shadow: 0 10px 28px rgba(90, 40, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .cta:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 14px rgba(90, 40, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  /* swipeable feature cards */
+  .features {
+    display: flex;
+    gap: 12px;
+    padding: 0 22px 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 22px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .features::-webkit-scrollbar { display: none; }
+
+  .feature {
+    flex: 0 0 74%;
+    scroll-snap-align: start;
+    padding: 16px 18px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .feature h3 {
+    margin: 0 0 4px;
+    font-size: 1rem;
+    color: white;
+  }
+
+  .feature p {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 12px 0 0;
+  }
+
+  .dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    transition: all 0.25s ease;
+  }
+
+  .dots i.on {
+    width: 18px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  /* version + feedback row (sits inside the sheet, no overlap) */
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px 0;
+    font-size: 0.75rem;
+  }
+
+  #update {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  #submithref {
+    color: rgba(215, 250, 240, 0.9);
+  }
+
+  /* ---------- POPUP ---------- */
+  .popup {
+    position: fixed;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 90vw;
+    padding: 12px 18px;
+    border-radius: 24px;
+    background: rgba(30, 14, 56, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    text-align: center;
+    font-size: 0.9rem;
+    color: white;
+    opacity: 0;
+    z-index: 100000;
+    transition: top 0.45s ease, opacity 0.45s ease;
+  }
+
+  .popup.show {
+    top: calc(env(safe-area-inset-top, 0px) + 20px);
+    opacity: 1;
+  }
+
+  @keyframes fadein_down {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slide_up {
+    from { opacity: 0; transform: translateY(60px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="popup" class="popup">
+    Error loading popup, please report this to the developer.<br>
+  </div>
+
+  <nav>
+    <a href="index-mobile.html" class="logo">Study<span>Noooo</span></a>
+  </nav>
+
+  <main class="hero">
+    <div class="chips">
+      <span class="chip">Free forever</span>
+      <span class="chip">No ads</span>
+      <span class="chip">No premium plans</span>
+      <span class="chip new">New Planner</span>
+    </div>
+
+    <h1>
+      Study More.
+      <br>
+      <span class="gradient">Learn Faster.</span>
+    </h1>
+
+    <p id="Message_home">
+      Help StudyNo stay online and free for everyone at the <a href="donate.html" id="hrefhome">donation page</a>
+    </p>
+  </main>
+
+  <section class="sheet">
+    <button class="cta" onclick="window.location.href='homescreen.html'">Let's do it</button>
+
+    <div class="features" id="features">
+      <div class="feature">
+        <h3>Instant Start</h3>
+        <p>No complicated setup. Start learning immediately.</p>
+      </div>
+      <div class="feature">
+        <h3>Focused Learning</h3>
+        <p>Designed to keep distractions out and progress in.</p>
+      </div>
+      <div class="feature">
+        <h3>Forever Free</h3>
+        <p>No subscriptions. No paywalls. Ever.</p>
+      </div>
+    </div>
+
+    <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
+
+    <div class="foot">
+      <p onclick="version();" id="update">error loading version....</p>
+      <a href="ideas.html" id="submithref">Feedback or ideas?</a>
+    </div>
+  </section>
+
+  <script>
+    // Desktop-sized screens go back to the normal homepage
+    if (window.matchMedia("(min-width: 601px)").matches) {
+      window.location.href = "./index.html";
+    }
+
+    // Dots follow the swipeable cards
+    (function () {
+      var box = document.getElementById("features");
+      var dots = document.querySelectorAll("#dots i");
+      if (!box) return;
+      box.addEventListener("scroll", function () {
+        var max = box.scrollWidth - box.clientWidth;
+        var i = max > 0 ? Math.round((box.scrollLeft / max) * (dots.length - 1)) : 0;
+        dots.forEach(function (d, n) { d.classList.toggle("on", n === i); });
+      }, { passive: true });
+    })();
+  </script>
+</body>
+</html>
