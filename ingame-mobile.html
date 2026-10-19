@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#7b6fb5">
+<title>StudyNo</title>
+<link rel="icon" type="image/x-icon" href="studynologo.png">
+
+<script>
+  // Wide screens use the desktop game page
+  if (window.matchMedia("(min-width: 601px)").matches) {
+    window.location.replace("ingame.html");
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="words.js" defer></script>
+<script src="script.js" defer></script>
+<script src="Update.js" defer></script>
+
+<style>
+  :root {
+    --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --gold: #ffd27a;
+    --mint: #10b981;
+    --glass: rgba(30, 12, 52, 0.34);
+    --glass-strong: rgba(30, 12, 52, 0.55);
+    --line: rgba(255, 255, 255, 0.2);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  [hidden] { display: none !important; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  html { user-select: none; -webkit-user-select: none; }
+
+  body {
+    font-family: var(--font);
+    color: #fff;
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+    background-color: #7b6fb5;
+    background-image: url(https://images.squarespace-cdn.com/content/v1/5e949a92e17d55230cd1d44f/33cd4592-3dec-4b52-98b1-2749e24c7666/Seq1x1.png?format=2500w);
+    background-size: cover;
+    background-position: 100% 0%;
+    background-repeat: no-repeat;
+  }
+
+  /* soft top and bottom shading so white text stays readable on the bright wallpaper */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(30, 10, 60, 0.3) 0%, transparent 22%, transparent 55%, rgba(30, 10, 60, 0.4) 100%);
+  }
+
+  button {
+    font-family: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  :focus-visible { outline: 2px solid rgba(255, 255, 255, 0.85); outline-offset: 2px; }
+
+  /* ---------- APP SHELL (sized to the visible area, so the keyboard never covers it) ---------- */
+  #app {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---------- TOP BAR ---------- */
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: calc(env(safe-area-inset-top, 0px) + 10px) 16px 4px;
+  }
+
+  .round {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 6px 18px rgba(30, 10, 60, 0.25);
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+  .round:active { transform: scale(0.92); background: rgba(255, 255, 255, 0.24); }
+
+  .progress {
+    flex: 1;
+    height: 8px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.22);
+    overflow: hidden;
+  }
+
+  #bar {
+    height: 100%;
+    width: 0%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #fff1c1, #ffc247);
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .progtext {
+    flex: 0 0 auto;
+    min-width: 3.2em;
+    text-align: right;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-shadow: 0 1px 8px rgba(30, 10, 60, 0.5);
+  }
+
+  /* ---------- MODE CHIP ---------- */
+  .modebar {
+    display: flex;
+    justify-content: center;
+    padding: 8px 16px 0;
+  }
+
+  .modechip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 99px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    background: var(--glass);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: transform 0.15s ease;
+  }
+  .modechip:active { transform: scale(0.96); }
+
+  /* ---------- STAGE + WORD CARD ---------- */
+  .stage {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 440px;
+    height: min(100%, 380px);
+    padding: 24px 22px;
+    border-radius: 38px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
+    background: var(--glass);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    box-shadow: 0 18px 50px rgba(30, 10, 60, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: box-shadow 0.3s ease, opacity 0.3s ease;
+  }
+
+  .card.enter { animation: cardIn 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+  .card.ok { box-shadow: 0 0 0 2px rgba(126, 240, 200, 0.9), 0 0 44px rgba(16, 185, 129, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+  .card.bad { animation: shake 0.4s ease; }
+  .stage.fbopen .card { opacity: 0.25; }
+
+  .lang {
+    padding: 6px 14px;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .word {
+    margin: 0;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    overflow-wrap: anywhere;
+    text-shadow: 0 4px 28px rgba(30, 10, 60, 0.4);
+  }
+  .w-xl { font-size: 3.6rem; }
+  .w-l  { font-size: 2.8rem; }
+  .w-m  { font-size: 2.1rem; }
+  .w-s  { font-size: 1.6rem; }
+
+  /* ---------- FEEDBACK (replaces the old popup) ---------- */
+  .fb {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    width: calc(100% - 40px);
+    max-width: 420px;
+    max-height: calc(100% - 16px);
+    overflow: auto;
+    padding: 24px 20px 20px;
+    border-radius: 32px;
+    text-align: center;
+    background: var(--glass-strong);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(28px) saturate(150%);
+    -webkit-backdrop-filter: blur(28px) saturate(150%);
+    box-shadow: 0 24px 60px rgba(20, 5, 40, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    animation: fbIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  #juiste { margin: 0 0 4px; font-size: 1rem; font-weight: 500; color: #fff7ed; }
+  #jijhad { margin: 0 0 18px; font-size: 1.2rem; font-weight: 400; color: #fed7aa; overflow-wrap: anywhere; }
+  #correctwoord {
+    margin: 0 0 24px;
+    font-size: clamp(2rem, 9vw, 3rem);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    overflow-wrap: anywhere;
+    filter: drop-shadow(0 0 24px rgba(24, 139, 255, 0.35));
+  }
+
+  .fbbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .fbbtn {
+    min-height: 54px;
+    padding: 12px 14px;
+    border-radius: 99px;
+    font-size: 0.96rem;
+    font-weight: 600;
+    transition: transform 0.15s ease;
+  }
+  .fbbtn:active { transform: scale(0.96); }
+  #foutrek { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.22); }
+  #goedrek { background: var(--mint); border: 1px solid rgba(144, 224, 255, 0.4); box-shadow: 0 8px 22px rgba(16, 185, 129, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.28); }
+
+  #update {
+    position: absolute;
+    left: 16px;
+    bottom: 4px;
+    margin: 0;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  /* ---------- DOCK ---------- */
+  .dock {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 6px 16px calc(env(safe-area-inset-bottom, 0px) + 14px);
+  }
+  body.kb .dock { padding-bottom: 10px; }
+
+  .scorerow { display: flex; align-items: center; gap: 8px; }
+
+  .stat {
+    padding: 6px 12px;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: var(--glass);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .stat b { margin-left: 4px; font-weight: 800; }
+  #stGoed b { color: #7ef0c8; }
+  #stFout b { color: #ffb0bb; }
+  #stStreak b { color: var(--gold); }
+
+  .skip {
+    margin-left: auto;
+    padding: 10px 6px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    opacity: 0.92;
+    text-shadow: 0 1px 8px rgba(30, 10, 60, 0.5);
+  }
+
+  .inputbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 60px;
+    padding: 0 7px 0 22px;
+    border-radius: 99px;
+    background: var(--glass);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25), 0 8px 28px rgba(30, 10, 60, 0.25);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  .inputbar:focus-within { background: rgba(30, 12, 52, 0.48); border-color: rgba(255, 255, 255, 0.42); }
+
+  #Main_input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-size: 1.25rem; /* 16px+ stops iOS from zooming in on focus */
+    font-weight: 600;
+    caret-color: var(--gold);
+  }
+  #Main_input::placeholder { color: rgba(255, 255, 255, 0.5); font-weight: 500; }
+
+  #btnGo {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #3a1d00;
+    background: linear-gradient(105deg, #fff1c1 0%, #ffc247 55%, #ecc960 100%);
+    box-shadow: 0 6px 16px rgba(90, 40, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    transition: transform 0.15s ease;
+  }
+  #btnGo:active { transform: scale(0.92); }
+
+  .accents {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .accents::-webkit-scrollbar { display: none; }
+
+  .acc {
+    flex: 0 0 auto;
+    min-width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid var(--line);
+    transition: transform 0.12s ease, background 0.2s ease;
+  }
+  .acc:active { transform: scale(0.9); background: rgba(255, 255, 255, 0.3); }
+
+  .choices { display: grid; grid-template-columns: 1fr; gap: 10px; }
+
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 56px;
+    padding: 10px 20px 10px 12px;
+    border-radius: 28px;
+    text-align: left;
+    font-size: 1.05rem;
+    font-weight: 600;
+    background: var(--glass);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 22px rgba(30, 10, 60, 0.22);
+    transition: transform 0.15s ease, background 0.25s ease, border-color 0.25s ease;
+  }
+  .choice:active { transform: scale(0.98); }
+  .choice i {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-style: normal;
+    font-size: 0.85rem;
+    font-weight: 800;
+    background: rgba(255, 255, 255, 0.18);
+  }
+  .choice span { overflow-wrap: anywhere; }
+  .choice.right { background: rgba(16, 185, 129, 0.6); border-color: #7ef0c8; }
+  .choice.wrong { background: rgba(255, 90, 110, 0.5); border-color: #ffb0bb; }
+
+  /* ---------- POPUP (streak messages) ---------- */
+  .popup {
+    position: fixed;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 90vw;
+    padding: 12px 18px;
+    border-radius: 24px;
+    text-align: center;
+    font-size: 0.9rem;
+    background: rgba(30, 14, 56, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    opacity: 0;
+    z-index: 100000;
+    transition: top 0.45s ease, opacity 0.45s ease;
+  }
+  .popup.show { top: calc(env(safe-area-inset-top, 0px) + 20px); opacity: 1; }
+
+  /* ---------- ANIMATIONS ---------- */
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateX(28px) scale(0.98); }
+    to   { opacity: 1; transform: translateX(0) scale(1); }
+  }
+  @keyframes fbIn {
+    from { opacity: 0; scale: 0.94; }
+    to   { opacity: 1; scale: 1; }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-9px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(3px); }
+  }
+
+  @media (max-width: 340px) { .fbbtns { grid-template-columns: 1fr; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="popup" class="popup">
+    Error loading popup, please report this to the developer.<br>
+  </div>
+
+  <div id="app">
+
+    <header class="top">
+      <button id="btnBack" class="round" type="button" aria-label="Terug naar het menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 19 5 12 15 5"></polyline></svg>
+      </button>
+
+      <div class="progress" role="progressbar" aria-label="Voortgang"><div id="bar"></div></div>
+      <span class="progtext" id="progText">0/0</span>
+
+      <button id="btnMute" class="round" type="button" aria-label="Geluid aan of uit">
+        <svg id="iconOn" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+        <svg id="iconOff" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+      </button>
+    </header>
+
+    <div class="modebar" id="modebar">
+      <button id="modeBtn" class="modechip" type="button" data-keep>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h12l-3-3M17 17H5l3 3"></path></svg>
+        <span id="modeText">Nederlands</span>
+      </button>
+    </div>
+
+    <main class="stage" id="stage">
+      <section class="card enter" id="card">
+        <div class="lang" id="langLabel">Laden...</div>
+        <h1 class="word w-l" id="h1">...</h1>
+      </section>
+
+      <section class="fb" id="feedback" hidden aria-live="assertive">
+        <h4 id="juiste">Jij had:</h4>
+        <h3 id="jijhad">Error loading your answer</h3>
+        <h3 id="correctwoord">Woord</h3>
+        <div class="fbbtns">
+          <button id="foutrek" class="fbbtn" type="button" data-keep>Fout rekenen</button>
+          <button id="goedrek" class="fbbtn" type="button" data-keep>Goed rekenen</button>
+        </div>
+      </section>
+
+      <p onclick="version();" id="update">error loading version....</p>
+    </main>
+
+    <footer class="dock" id="dock">
+      <div class="scorerow">
+        <span class="stat" id="stGoed">Correct<b id="nGoed">0</b></span>
+        <span class="stat" id="stFout">Fout<b id="nFout">0</b></span>
+        <span class="stat" id="stStreak" hidden>Streak<b id="nStreak">0</b></span>
+        <button id="btnSkip" class="skip" type="button" data-keep>Overslaan &rsaquo;</button>
+      </div>
+
+      <div id="inputMode">
+        <div class="inputbar">
+          <input id="Main_input" type="text" placeholder="Jouw antwoord" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go" aria-label="Jouw antwoord">
+          <button id="btnGo" type="button" aria-label="Controleer" data-keep>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </button>
+        </div>
+        <div class="accents" id="accents" hidden></div>
+      </div>
+
+      <div id="choiceMode" class="choices" hidden>
+        <button class="choice" id="choiceA" type="button"><i>A</i><span></span></button>
+        <button class="choice" id="choiceB" type="button"><i>B</i><span></span></button>
+        <button class="choice" id="choiceC" type="button"><i>C</i><span></span></button>
+        <button class="choice" id="choiceD" type="button"><i>D</i><span></span></button>
+      </div>
+    </footer>
+  </div>
+
+<script>
+(function () {
+  'use strict';
+
+  function init() {
+    var $ = function (id) { return document.getElementById(id); };
+
+    var app = $('app'), stage = $('stage'), card = $('card'), h1 = $('h1'),
+        langLabel = $('langLabel'), input = $('Main_input'), accentsEl = $('accents'),
+        inputMode = $('inputMode'), choiceMode = $('choiceMode'), fb = $('feedback'),
+        popup = $('popup'), modeBtn = $('modeBtn'), modeText = $('modeText');
+    var choiceBtns = [$('choiceA'), $('choiceB'), $('choiceC'), $('choiceD')];
+
+    // ---------- DATA (same sources as the desktop game) ----------
+    var activeList = localStorage.getItem('activeList') || '';
+    var allLists = (typeof lists !== 'undefined') ? lists : null;
+    var words = (allLists && allLists[activeList] && allLists[activeList].words) || [];
+    var toetsModus = localStorage.getItem('toetsModus') === 'true';
+
+    var codes = ['du', 'eng', 'fr'];
+    var al = activeList.toLowerCase(), langCode = null, i;
+    for (i = 0; i < codes.length && !langCode; i++) if (al.indexOf(codes[i]) === 0) langCode = codes[i];
+    for (i = 0; i < codes.length && !langCode; i++) if (al.indexOf(codes[i]) !== -1) langCode = codes[i];
+    var langName = { du: 'Duits', eng: 'Engels', fr: 'Frans' }[langCode] || 'Vreemde taal';
+    var accentMap = {
+      fr: ['é', 'è', 'ê', 'ë', 'à', 'â', 'ç', 'î', 'ï', 'ô', 'û', 'ù', 'ü', 'œ'],
+      du: ['ä', 'ö', 'ü', 'ß']
+    };
+
+    // 0 = NL -> taal, 1 = taal -> NL, 2 = shuffle (same meaning as the desktop page)
+    function readMode() {
+      var raw = localStorage.getItem('fnnf');
+      if (raw === null) return 1;
+      var map = { NF: 0, FN: 1, Shuffle: 2 };
+      if (map.hasOwnProperty(raw)) return map[raw];
+      var n = Number(raw);
+      return (n === 0 || n === 1 || n === 2) ? n : 1;
+    }
+    var fnnf = readMode();
+
+    // ---------- STATE ----------
+    var goed = 0, fout = 0, streak = 0;
+    var current = null, prevWord = null, dir = 'nl2t', expected = '', choices = null;
+    var gehad = [];
+    var feedbackOpen = false, locked = false, isMC = false, kbWanted = false;
+
+    // ---------- SOUND ----------
+    var streakSound = new Audio('Streak.mp3');
+    var fnnfSound = new Audio('fnnfselect.mp3');
+    var fullScreenSound = new Audio('fullscreen.mp3');
+    var whoosh = new Audio('whoosh.wav');
+    var correctSound = new Audio('correct.mp3');
+    var muted = localStorage.getItem('muted') === 'true';
+
+    function playSound(s, v) {
+      try {
+        s.currentTime = 0;
+        s.volume = (v == null) ? 1 : v;
+        s.muted = muted;
+        var p = s.play();
+        if (p && p.catch) p.catch(function () {});
+      } catch (e) {}
+    }
+    function updateMuteIcon() {
+      $('iconOn').style.display = muted ? 'none' : '';
+      $('iconOff').style.display = muted ? '' : 'none';
+    }
+    $('btnMute').addEventListener('click', function () {
+      muted = !muted;
+      localStorage.setItem('muted', muted);
+      updateMuteIcon();
+    });
+    updateMuteIcon();
+
+    // ---------- TEXTS ----------
+    var messages = [
+      'Keep it up!', 'Great job!', 'You are doing well!', 'Keep going!',
+      'Error 404: To much motivation', 'crazy streak, keep it up!',
+      'You are a learning machine!', 'Keep up the good work!', 'You are a genius!',
+      'is this a streak or a bug?'
+    ];
+    var inARowPhrases = [
+      'in a row', 'straight', 'back to back', 'consecutive',
+      'unbroken', 'continuous', 'on a streak', 'clean streak'
+    ];
+    function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function shuffle(a) {
+      for (var k = a.length - 1; k > 0; k--) {
+        var j = Math.floor(Math.random() * (k + 1)), t = a[k]; a[k] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+    function norm(s) { return String(s).toLowerCase().trim(); }
+
+    // ---------- KEYBOARD-SAFE LAYOUT ----------
+    var vv = window.visualViewport;
+    function fit() {
+      var h = vv ? vv.height : window.innerHeight;
+      app.style.height = h + 'px';
+      app.style.transform = vv ? 'translateY(' + vv.offsetTop + 'px)' : '';
+      document.body.classList.toggle('kb', vv ? (window.innerHeight - vv.height > 120) : false);
+    }
+    if (vv) { vv.addEventListener('resize', fit); vv.addEventListener('scroll', fit); }
+    window.addEventListener('resize', fit);
+    fit();
+
+    // keep the keyboard open when tapping buttons that carry data-keep
+    document.addEventListener('mousedown', function (e) {
+      if (e.target.closest && e.target.closest('[data-keep]')) e.preventDefault();
+    });
+    input.addEventListener('focus', function () { kbWanted = true; });
+
+    function focusInput() {
+      if (kbWanted && !isMC) { try { input.focus({ preventScroll: true }); } catch (e) {} }
+    }
+
+    // ---------- SCORE + PROGRESS ----------
+    function updateScore() {
+      $('nGoed').textContent = goed;
+      $('nFout').textContent = fout;
+      $('stStreak').hidden = streak < 2;
+      $('nStreak').textContent = streak;
+      var total = words.length, done = Math.min(gehad.length, total);
+      $('bar').style.width = (total ? (done / total * 100) : 0) + '%';
+      $('progText').textContent = done + '/' + total;
+    }
+
+    function modeLabel() {
+      if (fnnf === 0) return 'Nederlands \u2192 ' + langName;
+      if (fnnf === 1) return langName + ' \u2192 Nederlands';
+      return 'Shuffle';
+    }
+    function updateMode() { modeText.textContent = modeLabel(); }
+
+    // ---------- WORD FLOW ----------
+    function finish() {
+      sessionStorage.setItem('goed', goed);
+      sessionStorage.setItem('fout', fout);
+      window.location.href = 'end_course.html';
+    }
+
+    function pickWord() {
+      var rem = words.filter(function (w) { return gehad.indexOf(w) === -1; });
+      if (rem.length === 0) { finish(); return false; }
+      if (rem.length > 1 && prevWord) {
+        var others = rem.filter(function (w) { return w !== prevWord; });
+        if (others.length) rem = others;
+      }
+      current = rand(rem);
+      prevWord = current;
+      return true;
+    }
+
+    function chooseDir() {
+      if (fnnf === 0) dir = 'nl2t';
+      else if (fnnf === 1) dir = 't2nl';
+      else dir = Math.random() < 0.5 ? 'nl2t' : 't2nl';
+    }
+
+    function newWord() {
+      if (!pickWord()) return;
+      chooseDir();
+      render(!toetsModus && Math.random() < 0.33);
+    }
+
+    function buildChoices(nl2t) {
+      var seen = {}, pool = [];
+      seen[norm(expected)] = true;
+      words.forEach(function (w) {
+        var t = nl2t ? w.taal : w.nl, k = norm(t);
+        if (!seen[k]) { seen[k] = true; pool.push(t); }
+      });
+      if (pool.length < 1) return null;
+      var picks = shuffle(pool).slice(0, 3);
+      picks.push(expected);
+      return shuffle(picks);
+    }
+
+    function sizeWord(t) {
+      var n = String(t).length;
+      h1.className = 'word ' + (n <= 8 ? 'w-xl' : n <= 14 ? 'w-l' : n <= 24 ? 'w-m' : 'w-s');
+    }
+
+    function buildAccents(nl2t) {
+      var set = (nl2t && langCode && accentMap[langCode]) || null;
+      accentsEl.hidden = !set;
+      if (!set || accentsEl.getAttribute('data-lang') === langCode) return;
+      accentsEl.textContent = '';
+      set.forEach(function (ch) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'acc';
+        b.textContent = ch;
+        b.setAttribute('data-keep', '');
+        b.addEventListener('click', function () { insertChar(ch); });
+        accentsEl.appendChild(b);
+      });
+      accentsEl.setAttribute('data-lang', langCode);
+    }
+
+    function insertChar(ch) {
+      if (feedbackOpen) return;
+      var s = input.selectionStart, e = input.selectionEnd;
+      if (s == null) {
+        input.value += ch;
+      } else {
+        input.value = input.value.slice(0, s) + ch + input.value.slice(e);
+        input.setSelectionRange(s + ch.length, s + ch.length);
+      }
+      try { input.focus({ preventScroll: true }); } catch (err) {}
+    }
+
+    function render(useMC) {
+      var nl2t = dir === 'nl2t';
+      expected = nl2t ? current.taal : current.nl;
+      var shown = nl2t ? current.nl : current.taal;
+
+      choices = useMC ? buildChoices(nl2t) : null;
+      isMC = !!choices;
+
+      h1.textContent = shown;
+      sizeWord(shown);
+      langLabel.textContent = nl2t ? 'Nederlands' : langName;
+
+      card.classList.remove('ok', 'bad', 'enter');
+      void card.offsetWidth; // restart the entrance animation
+      card.classList.add('enter');
+
+      inputMode.hidden = isMC;
+      choiceMode.hidden = !isMC;
+
+      if (isMC) {
+        kbWanted = false;
+        choiceBtns.forEach(function (b, n) {
+          b.classList.remove('right', 'wrong');
+          b.hidden = !choices[n];
+          if (choices[n]) b.querySelector('span').textContent = choices[n];
+        });
+      } else {
+        input.value = '';
+        buildAccents(nl2t);
+      }
+    }
+
+    // ---------- ANSWERING ----------
+    function onCorrect(delay, el) {
+      goed++; streak++;
+      gehad.push(current);
+      if (el) el.classList.add('right');
+      card.classList.add('ok');
+      locked = true;
+      streakcheck();
+      updateScore();
+      setTimeout(function () { locked = false; newWord(); focusInput(); }, delay);
+    }
+
+    function onWrong(given, el) {
+      playSound(whoosh, 0.1);
+      fout++; streak = 0;
+      if (toetsModus) gehad.push(current);
+      feedbackOpen = true;
+      $('correctwoord').textContent = expected;
+      $('jijhad').textContent = given || '-';
+      fb.hidden = false;
+      stage.classList.add('fbopen');
+      card.classList.remove('ok', 'bad');
+      void card.offsetWidth;
+      card.classList.add('bad');
+      if (el) el.classList.add('wrong');
+      updateScore();
+      if (navigator.vibrate) navigator.vibrate([30, 40, 30]);
+    }
+
+    function closeFb() {
+      feedbackOpen = false;
+      fb.hidden = true;
+      stage.classList.remove('fbopen');
+    }
+
+    function foutreken() {
+      if (!feedbackOpen) return;
+      closeFb();
+      updateScore();
+      newWord();
+      focusInput();
+    }
+
+    function goedreken() {
+      if (!feedbackOpen) return;
+      playSound(correctSound, 0.3);
+      if (fout > 0) fout--;
+      goed++; streak++;
+      if (gehad.indexOf(current) === -1) gehad.push(current);
+      closeFb();
+      streakcheck();
+      updateScore();
+      newWord();
+      focusInput();
+    }
+
+    function submitText() {
+      if (locked || feedbackOpen || isMC || !current) return;
+      var answer = input.value.trim().toLowerCase();
+      if (answer === norm(expected)) onCorrect(200, null);
+      else onWrong(answer, null);
+    }
+
+    function checkChoice(n) {
+      if (locked || feedbackOpen || !choices || !choices[n]) return;
+      if (norm(choices[n]) === norm(expected)) onCorrect(380, choiceBtns[n]);
+      else onWrong(choices[n], choiceBtns[n]);
+    }
+
+    // ---------- STREAK + POPUP ----------
+    function streakcheck() {
+      if (streak > 0 && streak % 5 === 0 && streak <= 50) {
+        fireConfetti();
+        showPopup(streak + ' ' + rand(inARowPhrases) + ', ' + rand(messages));
+      }
+    }
+    function showPopup(msg) {
+      playSound(streakSound, 1);
+      popup.textContent = msg;
+      popup.classList.add('show');
+      setTimeout(function () { popup.classList.remove('show'); }, 2500);
+    }
+    function fireConfetti() {
+      if (typeof confetti !== 'function') return;
+      var end = Date.now() + 100;
+      (function frame() {
+        confetti({
+          particleCount: 10,
+          spread: 160,
+          origin: { x: Math.random(), y: 0.6 },
+          colors: ['#ffd27a', '#ffb13b', '#5bcaa7', '#ffffff']
+        });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      })();
+    }
+
+    // ---------- EVENTS ----------
+    $('btnBack').addEventListener('click', function () { location.href = 'homescreen.html'; });
+
+    $('btnSkip').addEventListener('click', function () {
+      if (feedbackOpen || locked || !current) return;
+      playSound(fullScreenSound);
+      newWord();
+      focusInput();
+    });
+
+    modeBtn.addEventListener('click', function () {
+      if (feedbackOpen || locked || !current) return;
+      playSound(fnnfSound, 0.2);
+      fnnf = (fnnf + 1) % 3;
+      updateMode();
+      chooseDir();
+      render(isMC);
+    });
+
+    $('btnGo').addEventListener('click', submitText);
+    $('foutrek').addEventListener('click', foutreken);
+    $('goedrek').addEventListener('click', goedreken);
+    choiceBtns.forEach(function (b, n) { b.addEventListener('click', function () { checkChoice(n); }); });
+
+    card.addEventListener('click', function () {
+      if (!isMC && !feedbackOpen) input.focus();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' || e.repeat) return;
+      if (feedbackOpen) {
+        if (e.target && e.target.tagName === 'BUTTON') return; // let the focused button handle it
+        e.preventDefault();
+        foutreken();
+        return;
+      }
+      if (e.target === input) { e.preventDefault(); submitText(); }
+    });
+
+    // ---------- START ----------
+    if (toetsModus) $('modebar').hidden = true;
+
+    if (!words.length) {
+      langLabel.textContent = 'Geen lijst gekozen';
+      h1.textContent = 'Kies eerst een woordenlijst';
+      sizeWord('Kies eerst een woordenlijst');
+      $('dock').hidden = true;
+      $('modebar').hidden = true;
+      return;
+    }
+
+    updateMode();
+    updateScore();
+    newWord();
+  }
+
+  // words.js is deferred, so wait until the page has finished loading
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+</body>
+</html>

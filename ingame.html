@@ -21,6 +21,12 @@
         <span>$</span>
         <input id="terminal-input"/>
     </div>
+    
+<script>
+  if (window.matchMedia("(max-width: 600px)").matches) {
+    window.location.replace("ingame-mobile.html");
+  }
+</script>
 
     <!-- resize handle -->
     <div class="resizer" id="resizer"></div>
