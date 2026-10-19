@@ -377,7 +377,8 @@ wordCount: lists[activeList].words.length
     localStorage.setItem("studyStyle", result.studyStyle);
     localStorage.setItem("toetsModus", result.toetsModus);
 
-    window.location.href = "ingame.html";
+    const isPhone = window.innerWidth <= 600 || Math.min(screen.width, screen.height) <= 600;
+    window.location.href = isPhone ? "ingame-mobile.html" : "ingame.html";
   },
   () => {
     window.location.href = "homescreen.html";

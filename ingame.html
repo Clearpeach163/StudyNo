@@ -1,5 +1,12 @@
 <!DOCTYPE html>
     <head>
+        <script>
+          // Phones (and narrow windows) use the mobile game page
+          (function () {
+            var small = window.innerWidth <= 600 || Math.min(screen.width, screen.height) <= 600;
+            if (small) window.location.replace("ingame-mobile.html");
+          })();
+        </script>
         <title>StudyNo</title>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/x-icon" href="studynologo.png">
@@ -21,12 +28,6 @@
         <span>$</span>
         <input id="terminal-input"/>
     </div>
-    
-<script>
-  if (window.matchMedia("(max-width: 600px)").matches) {
-    window.location.replace("ingame-mobile.html");
-  }
-</script>
 
     <!-- resize handle -->
     <div class="resizer" id="resizer"></div>
