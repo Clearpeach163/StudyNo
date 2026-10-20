@@ -96,5 +96,40 @@ Help StudyNo stay online <br>and free for everyone at the <a href="donate.html" 
     window.location.replace("index-mobile.html");
   }
 </script>
+
+
+
+<div id="counter">
+  people: <span id="c-people">–</span>
+  · users: <span id="c-users">–</span>
+</div>
+
+<script>
+(function () {
+  var URL = 'https://script.google.com/macros/s/AKfycbymUkn9g9-20S4Mu22nGOitMTY9v9BbOMehsU7k69s8POtxNXFABSv7jTRDdwTs3PZPhA/exec';
+
+  var user = (localStorage.getItem('User') || '').trim().toLowerCase();
+  var group = 'main';
+  if (user === 'david') group = 'david';
+  if (user === 'hozea' || user === 'hosea') group = 'hosea';
+
+  var stored = localStorage.getItem('userGroup'); // null, main, david or hosea
+
+  // David/Hosea is sticky: once marked, this browser never goes back to main
+  if (stored === 'david' || stored === 'hosea') group = stored;
+
+  var isNew = (stored === null && group === 'main') ? 1 : 0;
+  var retract = (stored === 'main' && group !== 'main') ? 1 : 0;
+
+  fetch(URL + '?action=visit&group=' + group + '&isNew=' + isNew + '&retract=' + retract)
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      localStorage.setItem('userGroup', group);
+      document.getElementById('c-people').textContent = d.people;
+      document.getElementById('c-users').textContent = d.users;
+    })
+    .catch(function () {});
+})();
+</script>
 </body>
 </html>
